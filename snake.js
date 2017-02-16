@@ -1,4 +1,4 @@
-function Snake() {
+  function Snake() {
   this.x = 0;
   this.y = 0;
   this.xspeed = 1;
@@ -8,7 +8,7 @@ function Snake() {
   this.total = 0;
   this.tail = [];
   this.isdead=0;
-  
+
   this.eat = function(pos) {
     var d = dist(this.x, this.y, pos.x, pos.y);
     if (d < 1) {
@@ -29,8 +29,8 @@ function Snake() {
       var pos = this.tail[i];
       var d = dist(this.x, this.y, pos.x, pos.y);
       if (d < 1) {
-        s.isdead=1;
-		this.lvl=0;
+        this.isdead=1;//changed from s.isdead=1
+		    this.lvl=0;
         this.spd=7;
          noLoop();
         textSize(40);
@@ -42,8 +42,8 @@ function Snake() {
         console.log('starting over');
         this.total = 0;
         this.tail = [];
-		
-		
+
+
       }
     }
   }
@@ -67,7 +67,7 @@ function Snake() {
     if(this.y<0)
     this.y=height-scl;
 
-    
+
   }
 
   this.show = function() {
@@ -77,7 +77,7 @@ function Snake() {
     }
     fill(255,0,0);
     ellipse(this.x+10, this.y+10, scl, scl);
-	
+
 
   }
 }

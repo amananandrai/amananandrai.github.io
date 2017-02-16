@@ -13,14 +13,9 @@ function mousePressed()
   {
     yflag=0;
     xflag=1;
-    s.x = 0;
-    s.y = 0;
-    s.xspeed = 1;
-    s.yspeed = 0;
-    s.total = 0;
-    s.tail = [];
-    s.isdead=0;
-	
+    f=0;//added
+
+    setup();//added
     loop();
   }
 }
@@ -29,8 +24,7 @@ function setup() {
   createCanvas(400, 420);
   s = new Snake();
   frameRate(s.spd);
-  
-  pickLocation();
+    pickLocation();
 
 }
 
@@ -53,16 +47,17 @@ function draw() {
   s.show();
   fill(255, 0, 100);
   rect(food.x, food.y, scl, scl);
+  console.log(s.total+"\n");
    if(s.total%10==0 && s.total!=0 && f!=s.total){
 	  s.spd = s.spd+3;
+    console.log('updated s.spd'+s.spd);
 	  s.lvl= s.lvl+1;
 	  f=s.total;
 	  frameRate(s.spd);
-	  
   }
   fill("cyan");
   rect(0,400,400,420);
- 
+
   fill("Green");
   textSize(18);
  text("Total Score = "+s.total + "  Level : "+s.lvl , (width/2)-(3*25), height);
