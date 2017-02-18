@@ -4,9 +4,16 @@ var yflag=0;//moving in y
 var xflag=1;//moving in x
 
 var f=0;
-
+var last=0;
 var food;
-
+var bonus;
+var counter=0;
+var time;
+function timer()
+{
+  counter++;
+  time=floor(counter/10);
+}
 function mousePressed()
 {
   if(s.isdead===1)
@@ -14,7 +21,13 @@ function mousePressed()
     yflag=0;
     xflag=1;
     f=0;//added
-
+    s.x = 0;
+    s.y = 0;
+    s.xspeed = 1;
+    s.yspeed = 0;
+    s.total = 0;
+    s.tail = [];
+    s.isdead=0;
     setup();//added
     loop();
   }
@@ -25,34 +38,71 @@ function setup() {
   s = new Snake();
   frameRate(s.spd);
     pickLocation();
+    bonus=createVector(-100,-100);
 
 }
-
+function pickbonus()
+{
+  var cols = floor(width/scl);
+  var rows = floor((height-20)/scl);
+  bonus = createVector(floor(random(cols)), floor(random(rows)));
+  bonus.mult(scl);
+  s.bonusenable=1
+}
 function pickLocation() {
   var cols = floor(width/scl);
   var rows = floor((height-20)/scl);
   food = createVector(floor(random(cols)), floor(random(rows)));
   food.mult(scl);
 }
-
-
 function draw() {
   background(51);
-
+  if(time==11)
+  {
+    counter=0;
+    time=0;
+  }
+  if(s.bonusenable==1)
+  setTimeout(timer,1);
   if (s.eat(food)) {
     pickLocation();
   }
   s.death();
   s.update();
   s.show();
+//console.log("Bonus X:"+bonus.x+"Bonus Y:"+bonus.y);
+  if((s.total+s.score)%10==0 && s.total >last && s.bonusenable==0)
+  {
+    last=s.total;
+    //console.log("Reached here");
+      time=0;
+      counter=0;
+      pickbonus();
+      s.bonusenable=1;
+  }
+  if(time==10 && s.bonusenable==1)
+  {
+    console.log("Bonus Timedout");
+    s.bonusenable=0;
+    bonus.x=-100;
+    bonus.y=-100;
+  }
+
+  if(s.eatbonus(bonus,time))
+  {
+    console.log("Bonus got Eaten");
+    bonus.x=-100;
+    bonus.y=-100;
+  }
+if(s.bonusenable==1){
+  fill(0, 255, 100);
+  rect(bonus.x, bonus.y, scl, scl);}
   fill(255, 0, 100);
   rect(food.x, food.y, scl, scl);
-  console.log(s.total+"\n");
-   if(s.total%10==0 && s.total!=0 && f!=s.total){
-	  s.spd = s.spd+3;
-    console.log('updated s.spd'+s.spd);
+   if((s.total+s.score)%10==0 && (s.total+s.score)!=0 && f!=(s.total+s.score)){
+	  s.spd = s.spd+1;
 	  s.lvl= s.lvl+1;
-	  f=s.total;
+	  f=(s.total+s.score);
 	  frameRate(s.spd);
   }
   fill("cyan");
@@ -60,7 +110,9 @@ function draw() {
 
   fill("Green");
   textSize(18);
- text("Total Score = "+s.total + "  Level : "+s.lvl , (width/2)-(3*25), height);
+  if(s.bonusenable==1)
+  text("Time:"+(10-time),(width/2)-(50 *3),height);
+ text("Total Score = "+(s.total+s.score) + "  Level : "+s.lvl , (width/2)-(3*25), height);
 }
 
 
