@@ -13,7 +13,7 @@ this.score=0;
 
 this.eatbonus=function (pos,time)
 {
-  time=10-time;
+  time=5-time;
   var d = dist(this.x, this.y, pos.x, pos.y);
   if (d < 1 && this.bonusenable==1) {
     this.bonusenable=0;
@@ -87,6 +87,7 @@ this.update = function() {
 }
 
 this.show = function() {
+  noStroke();
   fill(255,255,9)
   for (var i = 0; i < this.tail.length; i++) {
     ellipse(this.tail[i].x+10, this.tail[i].y+10, scl, scl);
