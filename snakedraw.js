@@ -12,7 +12,7 @@ var time;
 function timer()
 {
   counter++;
-  time=floor(counter/10);
+  time=floor(counter/5);
 }
 function mousePressed()
 {
@@ -58,7 +58,7 @@ function pickLocation() {
 }
 function draw() {
   background(51);
-  if(time==11)
+  if(time==6)
   {
     counter=0;
     time=0;
@@ -72,7 +72,7 @@ function draw() {
   s.update();
   s.show();
 //console.log("Bonus X:"+bonus.x+"Bonus Y:"+bonus.y);
-  if((s.total+s.score)%10==0 && s.total >last && s.bonusenable==0)
+  if((s.total)%10==0 && s.total >last && s.bonusenable==0)
   {
     last=s.total;
     //console.log("Reached here");
@@ -81,7 +81,7 @@ function draw() {
       pickbonus();
       s.bonusenable=1;
   }
-  if(time==10 && s.bonusenable==1)
+  if(time==5 && s.bonusenable==1)
   {
     console.log("Bonus Timedout");
     s.bonusenable=0;
@@ -100,10 +100,10 @@ if(s.bonusenable==1){
   rect(bonus.x, bonus.y, scl, scl);}
   fill(255, 0, 100);
   rect(food.x, food.y, scl, scl);
-   if((s.total+s.score)%10==0 && (s.total+s.score)!=0 && f!=(s.total+s.score)){
+   if((s.total)%10==0 && (s.total)!=0 && f!=(s.total)){
 	  s.spd = s.spd+1;
 	  s.lvl= s.lvl+1;
-	  f=(s.total+s.score);
+	  f=(s.total);
 	  frameRate(s.spd);
   }
   fill("cyan");
@@ -112,7 +112,7 @@ if(s.bonusenable==1){
   fill("Green");
   textSize(18);
   if(s.bonusenable==1)
-  text("Time:"+(10-time),(width/2)-(50 *3),height);
+  text("Time:"+(5-time),(width/2)-(50 *3),height);
  text("Total Score = "+(s.total+s.score) + "  Level : "+s.lvl , (width/2)-(3*25), height);
 }
 
