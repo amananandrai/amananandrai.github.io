@@ -17,7 +17,7 @@ this.eatbonus=function (pos,time)
   var d = dist(this.x, this.y, pos.x, pos.y);
   if (d < 1 && this.bonusenable==1) {
     this.bonusenable=0;
-    this.score+=time;
+    this.score+=time*5;
     return true;
   } else {
     return false;
