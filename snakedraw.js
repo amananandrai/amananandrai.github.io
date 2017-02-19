@@ -37,6 +37,7 @@ function setup() {
   createCanvas(400, 420);
   s = new Snake();
   frameRate(s.spd);
+last=0;
     pickLocation();
     bonus=createVector(-100,-100);
 
