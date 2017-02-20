@@ -11,8 +11,10 @@ var counter=0;
 var time;
 function timer()
 {
+  var con=5/7;
+  //console.log(floor(s.spd*con));
   counter++;
-  time=floor(counter/5);
+  time=floor(counter/floor(s.spd*con));
 }
 function mousePressed()
 {
