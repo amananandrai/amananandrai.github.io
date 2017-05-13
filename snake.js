@@ -88,11 +88,11 @@ this.update = function() {
 
 this.show = function() {
   noStroke();
-  fill(255,255,9)
+  fill(178,223,219)
   for (var i = 0; i < this.tail.length; i++) {
     ellipse(this.tail[i].x+10, this.tail[i].y+10, scl, scl);
   }
-  fill(255,0,0);
+  fill(38,166,154);
   ellipse(this.x+10, this.y+10, scl, scl);
 
 
