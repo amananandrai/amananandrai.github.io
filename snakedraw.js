@@ -57,7 +57,7 @@ function pickLocation() {
   food.mult(scl);
 }
 function draw() {
-  background(234,128,252);
+  background(211,211,211);
   if(time==6)
   {
     counter=0;
