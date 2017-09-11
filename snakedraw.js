@@ -1,7 +1,7 @@
 var s;
 var scl = 20;
-var yflag=0;//moving in y
-var xflag=1;//moving in x
+var yflag=0;
+var xflag=1;
 
 var f=0;
 var last=0;
@@ -20,7 +20,7 @@ function mousePressed()
   {
     yflag=0;
     xflag=1;
-    f=0;//added
+    f=0;
     s.x = 0;
     s.y = 0;
     s.xspeed = 1;
@@ -28,7 +28,7 @@ function mousePressed()
     s.total = 0;
     s.tail = [];
     s.isdead=0;
-    setup();//added
+    setup();
     loop();
   }
 }
@@ -57,7 +57,7 @@ function pickLocation() {
   food.mult(scl);
 }
 function draw() {
-  background(211,211,211);
+  background(255,235,238);
   if(time==6)
   {
     counter=0;
@@ -71,11 +71,11 @@ function draw() {
   s.death();
   s.update();
   s.show();
-//console.log("Bonus X:"+bonus.x+"Bonus Y:"+bonus.y);
+
   if((s.total)%10==0 && s.total >last && s.bonusenable==0)
   {
     last=s.total;
-    //console.log("Reached here");
+   
       time=0;
       counter=0;
       pickbonus();
@@ -91,14 +91,14 @@ function draw() {
 
   if(s.eatbonus(bonus,time))
   {
-    console.log("Bonus got Eaten");
+   
     bonus.x=-100;
     bonus.y=-100;
   }
 if(s.bonusenable==1){
-  fill(0, 255, 100);
+  fill(156, 39, 176);
   rect(bonus.x, bonus.y, scl, scl);}
-  fill(255, 0, 100);
+  fill(240,98 ,146 );
   rect(food.x, food.y, scl, scl);
    if((s.total)%10==0 && (s.total)!=0 && f!=(s.total)){
 	  s.spd = s.spd+1;
@@ -106,10 +106,10 @@ if(s.bonusenable==1){
 	  f=(s.total);
 	  frameRate(s.spd);
   }
-  fill("cyan");
+  fill(239,154,154);
   rect(0,400,400,420);
 
-  fill("Green");
+  fill(183,28,28);
   textSize(18);
   if(s.bonusenable==1)
   text("Time:"+(5-time),(width/2)-(50 *3),height);
@@ -139,3 +139,4 @@ function keyPressed() {
     s.dir(-1, 0);
   }
 }
+
