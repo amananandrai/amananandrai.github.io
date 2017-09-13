@@ -9,7 +9,7 @@ var food;
 var bonus;
 var counter=0;
 var time;
-var img;
+var img1;
 function timer()
 {
   counter++;
@@ -35,7 +35,8 @@ function mousePressed()
 }
 
 function setup() {
-  createCanvas(400, 420);img=loadImage("s.png");
+  createCanvas(400, 420);
+	img1=loadImage("s.png");
   s = new Snake();
   frameRate(s.spd);
 last=0;
@@ -59,7 +60,7 @@ function pickLocation() {
 }
 function draw() {
   background(255,235,238);
-	image(img,0,0);
+	image(img1,0,0);
   if(time==6)
   {
     counter=0;
