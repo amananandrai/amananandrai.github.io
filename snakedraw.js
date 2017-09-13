@@ -35,7 +35,7 @@ function mousePressed()
 }
 
 function setup() {
-  createCanvas(400, 420);img=loadImage("img/s.png");
+  createCanvas(400, 420);img=loadImage("s.png");
   s = new Snake();
   frameRate(s.spd);
 last=0;
