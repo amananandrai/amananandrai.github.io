@@ -218,10 +218,10 @@ button:focus { outline: none; }
 /* footer */
 .tm-social-link {
 	background-color: white;
-    color: black;
+    color: grey;
     display: inline-block;
-    width: 46px;
-    height: 46px;
+    width: 60px;
+    height: 60px;
     text-align: center;
     padding-top: 10px;
     margin-right: 10px;
