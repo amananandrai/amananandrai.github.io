@@ -163,8 +163,8 @@ strong {
 }
 
 .avatar-image-large {
-  width: 70.4px;
-  height: 70.4px;
+  width: 90.4px;
+  height: 90.4px;
 }
 
 
@@ -512,7 +512,7 @@ strong {
   height: 350px;
   position: absolute;
   z-index: 22;
-  top: -50px;
+  top: -30px;
   right: 0;
   left: 0;
   margin: auto;
