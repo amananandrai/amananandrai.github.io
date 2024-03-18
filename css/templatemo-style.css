@@ -228,7 +228,7 @@ button:focus { outline: none; }
 }
 
 .tm-social-link:hover {
-	background-color: black;
+	background-color: grey;
 	color: white;
 }
 
