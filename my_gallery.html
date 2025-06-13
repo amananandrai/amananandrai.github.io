@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>My Gallery</title>
+    <title>My Art Gallery</title>
 
    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">  
@@ -27,18 +27,31 @@
         
     <style>
         body { background: #f8f9fa; }
+        .navbar-custom {
+            background: #535da1;
+            padding: 0.4rem 0.8rem;
+        }
+        .navbar-custom .navbar-brand {
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-custom .navbar-brand img {
+            height: 32px;
+            width: 32px;
+            margin-right: 10px;
+            border-radius: 6px;
+        }
         .gallery-header {
             text-align: center;
-            margin: 40px 0 30px 0;
-        }
-        .gallery-header h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            color: #535da1;
+            margin: 30px 0 20px 0;
         }
         .gallery-header p {
             color: #555;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
         .gallery-img {
             width: 100%;
@@ -67,18 +80,25 @@
             background: #535da1;
             color: #fff;
             text-align: center;
-            padding: 18px 0 8px 0;
-            margin-top: 40px;
+            font-size: 0.95rem;
+            padding: 8px 0 4px 0;
+            margin-top: 30px;
+            letter-spacing: 0.5px;
         }
     </style>
 </head>
 
     <body>
         
-        <!-- Slim Header -->
-        <header style="background:#535da1; color:#fff; padding:10px 0; text-align:center; font-size:1.3rem; font-weight:600; letter-spacing:1px;">
-            <span style="vertical-align:middle;"><i class="bi bi-images" style="font-size:1.2em; margin-right:8px;"></i>My Art Gallery</span>
-        </header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-custom">
+            <div class="container-fluid justify-content-start">
+                <a class="navbar-brand" href="#">
+                    <img src="images/hackerrank.png" alt="Logo">
+                    My Art Gallery
+                </a>
+            </div>
+        </nav>
         <div class="container mt-4">
             <!-- Content -->
             <div class="cd-hero">
@@ -245,5 +265,18 @@
             </script>            
 
         </div>
+
+        <!-- Modal for full-size image -->
+        <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-body p-0">
+                <img src="" id="modalImage" class="modal-img" alt="Full Size">
+                <div class="gallery-caption p-3" id="modalCaption"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
     </body>
 </html>
