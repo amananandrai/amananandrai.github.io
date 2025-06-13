@@ -586,6 +586,10 @@ strong {
   padding: 18px 22px;
   background: #f8f9fa;
   border-radius: 8px;
+  font-family: var(--body-font-family);
+  color: var(--p-color);
+  font-size: var(--p-font-size);
+  font-weight: var(--font-weight-normal);
 }
 
 
