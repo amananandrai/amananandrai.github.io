@@ -581,6 +581,13 @@ strong {
   padding-left: 20px;
 }
 
+.about-text {
+  margin-bottom: 18px;
+  padding: 18px 22px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
 
 /*---------------------------------------
   FEATURED              
