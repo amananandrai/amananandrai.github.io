@@ -42,6 +42,61 @@
             .section-heading-purple {
                 color: #535da1 !important;
             }
+
+            /* Pinterest Style Gallery */
+            .gallery-container {
+                columns: 3;
+                column-gap: 20px;
+                padding: 20px;
+            }
+
+            .gallery-item {
+                break-inside: avoid;
+                margin-bottom: 20px;
+                position: relative;
+                overflow: hidden;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                transition: transform 0.3s ease;
+            }
+
+            .gallery-item:hover {
+                transform: translateY(-5px);
+            }
+
+            .gallery-item img {
+                width: 100%;
+                display: block;
+                border-radius: 8px;
+            }
+
+            .gallery-item::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.2);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .gallery-item:hover::after {
+                opacity: 1;
+            }
+
+            @media (max-width: 992px) {
+                .gallery-container {
+                    columns: 2;
+                }
+            }
+
+            @media (max-width: 576px) {
+                .gallery-container {
+                    columns: 1;
+                }
+            }
         </style>
 
     </head>
@@ -266,53 +321,40 @@
 
                         <div class="clearfix"></div>
 
-                        <!-- First Row - Full Width Image -->
-                        <div class="col-12 mb-4">
-                            <div class="gallery-thumb">
+                        <div class="gallery-container">
+                            <div class="gallery-item">
                                 <a href="images/aman2.jpeg" class="popup-image">
-                                    <img src="images/aman2.jpeg" class="gallery-image img-fluid" alt="Aman 2" style="height: 400px; width: 100%; object-fit: cover;">
+                                    <img src="images/aman2.jpeg" alt="Aman 2">
                                 </a>
                             </div>
-                        </div>
 
-                        <!-- Second Row - Two Images -->
-                        <div class="col-lg-8 col-md-8 col-12 mb-4">
-                            <div class="gallery-thumb">
-                                <a href="images/aman3.jpeg" class="popup-image">
-                                    <img src="images/aman3.jpeg" class="gallery-image img-fluid" alt="Aman 3" style="height: 300px; width: 100%; object-fit: cover;">
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-4 col-md-4 col-12 mb-4">
-                            <div class="gallery-thumb">
+                            <div class="gallery-item">
                                 <a href="images/aman1.jpeg" class="popup-image">
-                                    <img src="images/aman1.jpeg" class="gallery-image img-fluid" alt="Aman 1" style="height: 300px; width: 100%; object-fit: cover;">
+                                    <img src="images/aman1.jpeg" alt="Aman 1">
                                 </a>
                             </div>
-                        </div>
 
-                        <!-- Third Row - Three Images -->
-                        <div class="col-lg-4 col-md-4 col-12 mb-4">
-                            <div class="gallery-thumb">
+                            <div class="gallery-item">
+                                <a href="images/aman3.jpeg" class="popup-image">
+                                    <img src="images/aman3.jpeg" alt="Aman 3">
+                                </a>
+                            </div>
+
+                            <div class="gallery-item">
                                 <a href="images/aman4.jpeg" class="popup-image">
-                                    <img src="images/aman4.jpeg" class="gallery-image img-fluid" alt="Aman 4" style="height: 250px; width: 100%; object-fit: cover;">
+                                    <img src="images/aman4.jpeg" alt="Aman 4">
                                 </a>
                             </div>
-                        </div>
 
-                        <div class="col-lg-4 col-md-4 col-12 mb-4">
-                            <div class="gallery-thumb">
+                            <div class="gallery-item">
                                 <a href="images/aman5.jpeg" class="popup-image">
-                                    <img src="images/aman5.jpeg" class="gallery-image img-fluid" alt="Aman 5" style="height: 250px; width: 100%; object-fit: cover;">
+                                    <img src="images/aman5.jpeg" alt="Aman 5">
                                 </a>
                             </div>
-                        </div>
 
-                        <div class="col-lg-4 col-md-4 col-12 mb-4">
-                            <div class="gallery-thumb">
+                            <div class="gallery-item">
                                 <a href="images/hogwarts_express.jpg" class="popup-image">
-                                    <img src="images/hogwarts_express.jpg" class="gallery-image img-fluid" alt="Hogwarts Express" style="height: 250px; width: 100%; object-fit: cover;">
+                                    <img src="images/hogwarts_express.jpg" alt="Hogwarts Express">
                                 </a>
                             </div>
                         </div>
