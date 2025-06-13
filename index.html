@@ -46,31 +46,38 @@
                 display: inline-block;
                 margin-right: 15px;
                 position: relative;
+                background: var(--primary-color);
+                border-radius: var(--border-radius-medium);
+                padding: 6px 20px 6px 15px;
+                transition: all ease 0.5s;
             }
 
             .projects-links .services-price-text {
-                color: #535da1;
+                color: var(--white-color);
                 text-decoration: none;
-                font-weight: 500;
-                transition: color 0.3s ease;
-            }
-
-            .projects-links .services-price-text:hover {
-                color: #20c997;
+                font-size: var(--copyright-font-size);
+                font-weight: var(--font-weight-bold);
+                transition: all ease 0.5s;
             }
 
             .projects-links .services-price-overlay {
+                background: var(--secondary-color);
+                border-bottom-left-radius: 100%;
                 position: absolute;
-                bottom: -2px;
-                left: 0;
-                width: 0;
-                height: 2px;
-                background-color: #20c997;
-                transition: width 0.3s ease;
+                top: 0;
+                right: 0;
+                width: 20px;
+                height: 20px;
+                pointer-events: none;
+                transition: all ease 0.5s;
+            }
+
+            .projects-links .services-price-wrap:hover {
+                background: var(--secondary-color);
             }
 
             .projects-links .services-price-wrap:hover .services-price-overlay {
-                width: 100%;
+                background: var(--primary-color);
             }
 
             /* Pinterest Style Gallery */
