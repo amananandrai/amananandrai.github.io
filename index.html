@@ -41,6 +41,38 @@
                 color: #535da1 !important;
             }
 
+            /* Project Links Styling */
+            .projects-links .services-price-wrap {
+                display: inline-block;
+                margin-right: 15px;
+                position: relative;
+            }
+
+            .projects-links .services-price-text {
+                color: #535da1;
+                text-decoration: none;
+                font-weight: 500;
+                transition: color 0.3s ease;
+            }
+
+            .projects-links .services-price-text:hover {
+                color: #20c997;
+            }
+
+            .projects-links .services-price-overlay {
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background-color: #20c997;
+                transition: width 0.3s ease;
+            }
+
+            .projects-links .services-price-wrap:hover .services-price-overlay {
+                width: 100%;
+            }
+
             /* Pinterest Style Gallery */
             .gallery-container {
                 columns: 3;
@@ -369,10 +401,16 @@
                                 </div>
                                 <img src="images/projects/ai-gallery.jpg" class="projects-image img-fluid" alt="AI Image Gallery Project">
                                 <div class="projects-links mt-3">
-                                    <a href="https://ai-image-gallery-chi.vercel.app/" target="_blank" class="btn btn-outline-primary btn-sm me-2">View Project</a>
-                                    <a href="https://github.com/amananandrai/ai-image-gallery" target="_blank" class="btn btn-outline-secondary btn-sm">
-                                        <i class="bi bi-github"></i> Code
-                                    </a>
+                                    <div class="services-price-wrap ms-auto">
+                                        <a href="https://ai-image-gallery-chi.vercel.app/" target="_blank" class="services-price-text mb-0">View Project</a>
+                                        <div class="services-price-overlay"></div>
+                                    </div>
+                                    <div class="services-price-wrap ms-auto">
+                                        <a href="https://github.com/amananandrai/ai-image-gallery" target="_blank" class="services-price-text mb-0">
+                                            <i class="bi bi-github"></i> Code
+                                        </a>
+                                        <div class="services-price-overlay"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -385,8 +423,14 @@
                                 </div>
                                 <img src="images/projects/ml-research.jpg" class="projects-image img-fluid" alt="ML Research Papers">
                                 <div class="projects-links mt-3">
-                                    <a href="https://link.springer.com/chapter/10.1007/978-981-19-5868-7_16" target="_blank" class="btn btn-outline-primary btn-sm me-2">Paper 1</a>
-                                    <a href="https://link.springer.com/chapter/10.1007/978-981-19-0019-8_36" target="_blank" class="btn btn-outline-secondary btn-sm">Paper 2</a>
+                                    <div class="services-price-wrap ms-auto">
+                                        <a href="https://link.springer.com/chapter/10.1007/978-981-19-5868-7_16" target="_blank" class="services-price-text mb-0">Paper 1</a>
+                                        <div class="services-price-overlay"></div>
+                                    </div>
+                                    <div class="services-price-wrap ms-auto">
+                                        <a href="https://link.springer.com/chapter/10.1007/978-981-19-0019-8_36" target="_blank" class="services-price-text mb-0">Paper 2</a>
+                                        <div class="services-price-overlay"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -399,8 +443,14 @@
                                 </div>
                                 <img src="images/projects/tech-blog.jpg" class="projects-image img-fluid" alt="Technical Blog">
                                 <div class="projects-links mt-3">
-                                    <a href="https://dev.to/amananandrai" target="_blank" class="btn btn-outline-primary btn-sm me-2">Dev.to</a>
-                                    <a href="https://amananandrai.hashnode.dev/" target="_blank" class="btn btn-outline-secondary btn-sm">Hashnode</a>
+                                    <div class="services-price-wrap ms-auto">
+                                        <a href="https://dev.to/amananandrai" target="_blank" class="services-price-text mb-0">Dev.to</a>
+                                        <div class="services-price-overlay"></div>
+                                    </div>
+                                    <div class="services-price-wrap ms-auto">
+                                        <a href="https://amananandrai.hashnode.dev/" target="_blank" class="services-price-text mb-0">Hashnode</a>
+                                        <div class="services-price-overlay"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
