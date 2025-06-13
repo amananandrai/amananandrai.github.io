@@ -50,9 +50,38 @@
             transform: scale(1.03);
             box-shadow: 0 3px 12px rgba(83,93,161,0.13);
         }
+        .modal-content {
+            background: transparent;
+            border: none;
+        }
+        .modal-body {
+            padding: 0;
+            position: relative;
+        }
         .modal-img {
             width: 100%;
+            height: auto;
+            max-height: 90vh;
+            object-fit: contain;
             border-radius: 8px;
+        }
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .close-modal:hover {
+            background: white;
         }
         .tm-footer {
             background: #535da1;
@@ -89,13 +118,16 @@
 
     <!-- Modal for full-size image -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-          <div class="modal-body p-0">
-            <img src="" id="modalImage" class="modal-img" alt="Full Size">
-          </div>
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                    <img src="" id="modalImage" class="modal-img" alt="Full Size">
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <script src="js/bootstrap.bundle.min.js"></script>
@@ -130,12 +162,28 @@
     });
 
     // Modal functionality
+    const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+    const modalImage = document.getElementById('modalImage');
+
     document.querySelectorAll('.masonry-img').forEach(img => {
         img.addEventListener('click', function() {
-            document.getElementById('modalImage').src = this.getAttribute('data-full');
-            var modal = new bootstrap.Modal(document.getElementById('imageModal'));
-            modal.show();
+            modalImage.src = this.getAttribute('data-full');
+            imageModal.show();
         });
+    });
+
+    // Close modal when clicking outside the image
+    document.getElementById('imageModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            imageModal.hide();
+        }
+    });
+
+    // Close modal when pressing Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && imageModal._element.classList.contains('show')) {
+            imageModal.hide();
+        }
     });
     </script>
 </body>
