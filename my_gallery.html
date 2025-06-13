@@ -45,33 +45,29 @@
             margin-right: 6px;
             border-radius: 6px;
         }
-        .gallery-header {
-            text-align: center;
-            margin: 10px 0 8px 0;
+        .masonry-gallery {
+            column-count: 3;
+            column-gap: 12px;
+            padding: 0;
         }
-        .gallery-header p {
-            color: #555;
-            font-size: 1rem;
-            margin-bottom: 8px;
+        @media (max-width: 900px) {
+            .masonry-gallery { column-count: 2; }
         }
-        .gallery-img {
+        @media (max-width: 600px) {
+            .masonry-gallery { column-count: 1; }
+        }
+        .masonry-img {
             width: 100%;
-            height: 180px;
-            object-fit: cover;
+            display: block;
+            margin-bottom: 12px;
             border-radius: 8px;
             box-shadow: 0 1px 4px rgba(0,0,0,0.06);
             transition: transform 0.2s, box-shadow 0.2s;
             cursor: pointer;
         }
-        .gallery-img:hover {
+        .masonry-img:hover {
             transform: scale(1.03);
             box-shadow: 0 3px 12px rgba(83,93,161,0.13);
-        }
-        .gallery-caption {
-            text-align: center;
-            margin-top: 4px;
-            font-size: 0.97rem;
-            color: #333;
         }
         .modal-img {
             width: 100%;
@@ -104,35 +100,13 @@
             </div>
         </nav>
         <div class="container mt-1">
-            <!-- Content -->
-            <div class="cd-hero">
-
-                <ul class="cd-hero-slider">
-
-                    <!-- Page 1 Gallery One -->
-                    <li class="selected">                    
-                        <div class="cd-full-width">
-                            <div class="container-fluid js-tm-page-content" data-page-no="1" data-page-type="gallery">
-                                <div class="gallery-header">
-                                    <h1>My Art Gallery</h1>
-                                    <p>Explore a curated collection of my digital and AI-generated artworks.<br>Click any image to view it in full size.</p>
-                                </div>
-                                <div class="container">
-                                    <div class="row" id="gallery-grid">
-                                        <!-- Images will be injected here by JavaScript -->
-                                    </div>
-                                </div>
-                            </div>                                                    
-                        </div>                    
-                    </li>
-
-                   
-                
-                <footer class="tm-footer" style="background:#535da1; color:#fff; text-align:center; font-size:0.95rem; padding:8px 0 4px 0; margin-top:30px; letter-spacing:0.5px;">
-                    &copy; 2024 Aman Anand Rai
-                </footer>
-                    
-            </div> <!-- .cd-hero -->
+            <div class="masonry-gallery" id="gallery-grid">
+                <!-- Images will be injected here by JavaScript -->
+            </div>
+        </div>
+        <footer class="tm-footer" style="background:#535da1; color:#fff; text-align:center; font-size:0.95rem; padding:4px 0 2px 0; margin-top:10px; letter-spacing:0.3px;">
+            &copy; 2024 Aman Anand Rai
+        </footer>
             
 
           
@@ -245,19 +219,17 @@
                 // Dynamically render the gallery
                 const galleryGrid = document.getElementById('gallery-grid');
                 galleryImages.forEach((img, idx) => {
-                    const col = document.createElement('div');
-                    col.className = 'col-12 col-sm-6 col-md-4 col-lg-3 mb-4';
-                    col.innerHTML = `
-                        <div class="gallery-item">
-                            <img src="${img.thumb}" class="gallery-img" alt="Artwork ${idx+1}" data-full="${img.full}" data-caption="${img.caption}">
-                            <div class="gallery-caption">${img.caption}</div>
-                        </div>
-                    `;
-                    galleryGrid.appendChild(col);
+                    const image = document.createElement('img');
+                    image.src = img.thumb;
+                    image.className = 'masonry-img';
+                    image.alt = `Artwork ${idx+1}`;
+                    image.setAttribute('data-full', img.full);
+                    image.setAttribute('data-caption', img.caption);
+                    galleryGrid.appendChild(image);
                 });
 
                 // Modal functionality
-                document.querySelectorAll('.gallery-img').forEach(img => {
+                document.querySelectorAll('.masonry-img').forEach(img => {
                     img.addEventListener('click', function() {
                         document.getElementById('modalImage').src = this.getAttribute('data-full');
                         document.getElementById('modalCaption').textContent = this.getAttribute('data-caption');
