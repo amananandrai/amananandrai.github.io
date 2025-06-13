@@ -162,28 +162,37 @@
     });
 
     // Modal functionality
-    const imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
-    const modalImage = document.getElementById('modalImage');
+    document.addEventListener('DOMContentLoaded', function() {
+        const modalElement = document.getElementById('imageModal');
+        const modal = new bootstrap.Modal(modalElement);
+        const modalImage = document.getElementById('modalImage');
 
-    document.querySelectorAll('.masonry-img').forEach(img => {
-        img.addEventListener('click', function() {
-            modalImage.src = this.getAttribute('data-full');
-            imageModal.show();
+        // Open modal when clicking on gallery images
+        document.querySelectorAll('.masonry-img').forEach(img => {
+            img.addEventListener('click', function() {
+                modalImage.src = this.getAttribute('data-full');
+                modal.show();
+            });
         });
-    });
 
-    // Close modal when clicking outside the image
-    document.getElementById('imageModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            imageModal.hide();
-        }
-    });
+        // Close modal when clicking the close button
+        document.querySelector('.close-modal').addEventListener('click', function() {
+            modal.hide();
+        });
 
-    // Close modal when pressing Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && imageModal._element.classList.contains('show')) {
-            imageModal.hide();
-        }
+        // Close modal when clicking outside the image
+        modalElement.addEventListener('click', function(e) {
+            if (e.target === modalElement) {
+                modal.hide();
+            }
+        });
+
+        // Close modal when pressing Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalElement.classList.contains('show')) {
+                modal.hide();
+            }
+        });
     });
     </script>
 </body>
