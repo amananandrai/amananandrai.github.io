@@ -75,186 +75,189 @@
 
     <body>
         
-        <!-- Content -->
-        <div class="cd-hero">
+        <!-- Slim Header -->
+        <header style="background:#535da1; color:#fff; padding:10px 0; text-align:center; font-size:1.3rem; font-weight:600; letter-spacing:1px;">
+            <span style="vertical-align:middle;"><i class="bi bi-images" style="font-size:1.2em; margin-right:8px;"></i>My Art Gallery</span>
+        </header>
+        <div class="container mt-4">
+            <!-- Content -->
+            <div class="cd-hero">
 
-            <!-- Navigation -->        
-            <div class="cd-slider-nav">
-                <nav class="navbar">
-                    <div class="tm-navbar-bg">
-                        
-                        <a class="navbar-brand text-uppercase" href="#"><i class="fa fa-picture-o tm-brand-icon"></i>My Gallery</a>
+                <!-- Navigation -->        
+                <div class="cd-slider-nav">
+                    <nav class="navbar">
+                        <div class="tm-navbar-bg">
+                            
+                            <a class="navbar-brand text-uppercase" href="#"><i class="fa fa-picture-o tm-brand-icon"></i>My Gallery</a>
 
-                       
-                        </div>                        
-                    </div>
-
-                </nav>
-            </div> 
-
-            <ul class="cd-hero-slider">
-
-                <!-- Page 1 Gallery One -->
-                <li class="selected">                    
-                    <div class="cd-full-width">
-                        <div class="container-fluid js-tm-page-content" data-page-no="1" data-page-type="gallery">
-                            <div class="gallery-header">
-                                <h1>My Art Gallery</h1>
-                                <p>Explore a curated collection of my digital and AI-generated artworks.<br>Click any image to view it in full size.</p>
-                            </div>
-                            <div class="container">
-                                <div class="row" id="gallery-grid">
-                                    <!-- Images will be injected here by JavaScript -->
-                                </div>
-                            </div>
-                        </div>                                                    
-                    </div>                    
-                </li>
-
-               
-            
-            <footer class="tm-footer">
-            
-               
-			    <p class="tm-copyright-text">Copyright &copy; <span class="tm-copyright-year">current year</span> </p>
-
-            </footer>
-                    
-        </div> <!-- .cd-hero -->
-        
-
-      
-        
-        
-        <script src="js/tether.min.js"></script> 
-        <script src="js/bootstrap.min.js"></script>            
-        <script src="js/hero-slider-main.js"></script>         
-        <script src="js/jquery.magnific-popup.min.js"></script> 
-        
-        <script>
-
-            function adjustHeightOfPage(pageNo) {
-
-                var pageContentHeight = 0;
-
-                var pageType = $('div[data-page-no="' + pageNo + '"]').data("page-type");
-
-                if( pageType != undefined && pageType == "gallery") {
-                    pageContentHeight = $(".cd-hero-slider li:nth-of-type(" + pageNo + ") .tm-img-gallery-container").height();
-                }
-                else {
-                    pageContentHeight = $(".cd-hero-slider li:nth-of-type(" + pageNo + ") .js-tm-page-content").height() + 20;
-                }
-               
-                // Get the page height
-                var totalPageHeight = $('.cd-slider-nav').height()
-                                        + pageContentHeight
-                                        + $('.tm-footer').outerHeight();
-
-                // Adjust layout based on page height and window height
-                if(totalPageHeight > $(window).height()) 
-                {
-                    $('.cd-hero-slider').addClass('small-screen');
-                    $('.cd-hero-slider li:nth-of-type(' + pageNo + ')').css("min-height", totalPageHeight + "px");
-                }
-                else 
-                {
-                    $('.cd-hero-slider').removeClass('small-screen');
-                    $('.cd-hero-slider li:nth-of-type(' + pageNo + ')').css("min-height", "100%");
-                }
-            }
-
-            /*
-                Everything is loaded including images.
-            */
-            $(window).load(function(){
-
-                adjustHeightOfPage(1); // Adjust page height
-
-                /* Gallery One pop up
-                -----------------------------------------*/
-                $('.gallery-one').magnificPopup({
-                    delegate: 'a', // child items selector, by clicking on it popup will open
-                    type: 'image',
-                    gallery:{enabled:true}                
-                });
-				
-				
-
-                /* Collapse menu after click 
-                -----------------------------------------*/
-                $('#tmNavbar a').click(function(){
-                    $('#tmNavbar').collapse('hide');
-
-                    adjustHeightOfPage($(this).data("no")); // Adjust page height       
-                });
-
-                /* Browser resized 
-                -----------------------------------------*/
-                $( window ).resize(function() {
-                    var currentPageNo = $(".cd-hero-slider li.selected .js-tm-page-content").data("page-no");
-                    
-                    // wait 3 seconds
-                    setTimeout(function() {
-                        adjustHeightOfPage( currentPageNo );
-                    }, 1000);
-                    
-                });
-        
-                // Remove preloader (https://ihatetomatoes.net/create-custom-preloading-screen/)
-                $('body').addClass('loaded');
-
-                // Write current year in copyright text.
-                $(".tm-copyright-year").text(new Date().getFullYear());
                            
-            });
+                            </div>                        
+                        </div>
 
-            // Array of gallery images. To add more, just add objects to this array.
-            const galleryImages = [
-                {
-                    thumb: 'img/tm-img-01-tn.jpg',
-                    full: 'img/tm-img-01.jpg',
-                    caption: 'Tyger Tyger, burning bright, In the forests of the night; What immortal hand or eye, Dare frame thy fearful symmetry?'
-                },
-                {
-                    thumb: 'img/tm-img-02-tn.jpg',
-                    full: 'img/tm-img-02.jpg',
-                    caption: 'It is a beauteous evening, calm and free, The holy time is quiet as a Nun, Breathless with adoration; the broad sun'
-                },
-                {
-                    thumb: 'img/tm-img-03-tn.jpg',
-                    full: 'img/tm-img-03.jpg',
-                    caption: 'Immersed in great meditation is the mighty cosmic dancer, Shiva is a supreme soul, a supreme brahman.'
-                },
-                // Add more images here:
-                // { thumb: 'img/your-thumb.jpg', full: 'img/your-full.jpg', caption: 'Your caption here' },
-            ];
+                    </nav>
+                </div> 
 
-            // Dynamically render the gallery
-            const galleryGrid = document.getElementById('gallery-grid');
-            galleryImages.forEach((img, idx) => {
-                const col = document.createElement('div');
-                col.className = 'col-12 col-sm-6 col-md-4 col-lg-3 mb-4';
-                col.innerHTML = `
-                    <div class="gallery-item">
-                        <img src="${img.thumb}" class="gallery-img" alt="Artwork ${idx+1}" data-full="${img.full}" data-caption="${img.caption}">
-                        <div class="gallery-caption">${img.caption}</div>
-                    </div>
-                `;
-                galleryGrid.appendChild(col);
-            });
+                <ul class="cd-hero-slider">
 
-            // Modal functionality
-            document.querySelectorAll('.gallery-img').forEach(img => {
-                img.addEventListener('click', function() {
-                    document.getElementById('modalImage').src = this.getAttribute('data-full');
-                    document.getElementById('modalCaption').textContent = this.getAttribute('data-caption');
-                    var modal = new bootstrap.Modal(document.getElementById('imageModal'));
-                    modal.show();
+                    <!-- Page 1 Gallery One -->
+                    <li class="selected">                    
+                        <div class="cd-full-width">
+                            <div class="container-fluid js-tm-page-content" data-page-no="1" data-page-type="gallery">
+                                <div class="gallery-header">
+                                    <h1>My Art Gallery</h1>
+                                    <p>Explore a curated collection of my digital and AI-generated artworks.<br>Click any image to view it in full size.</p>
+                                </div>
+                                <div class="container">
+                                    <div class="row" id="gallery-grid">
+                                        <!-- Images will be injected here by JavaScript -->
+                                    </div>
+                                </div>
+                            </div>                                                    
+                        </div>                    
+                    </li>
+
+                   
+                
+                <footer class="tm-footer" style="background:#535da1; color:#fff; text-align:center; font-size:0.95rem; padding:8px 0 4px 0; margin-top:30px; letter-spacing:0.5px;">
+                    &copy; 2024 Aman Anand Rai
+                </footer>
+                    
+            </div> <!-- .cd-hero -->
+            
+
+          
+            
+            
+            <script src="js/tether.min.js"></script> 
+            <script src="js/bootstrap.min.js"></script>            
+            <script src="js/hero-slider-main.js"></script>         
+            <script src="js/jquery.magnific-popup.min.js"></script> 
+            
+            <script>
+
+                function adjustHeightOfPage(pageNo) {
+
+                    var pageContentHeight = 0;
+
+                    var pageType = $('div[data-page-no="' + pageNo + '"]').data("page-type");
+
+                    if( pageType != undefined && pageType == "gallery") {
+                        pageContentHeight = $(".cd-hero-slider li:nth-of-type(" + pageNo + ") .tm-img-gallery-container").height();
+                    }
+                    else {
+                        pageContentHeight = $(".cd-hero-slider li:nth-of-type(" + pageNo + ") .js-tm-page-content").height() + 20;
+                    }
+                   
+                    // Get the page height
+                    var totalPageHeight = $('.cd-slider-nav').height()
+                                            + pageContentHeight
+                                            + $('.tm-footer').outerHeight();
+
+                    // Adjust layout based on page height and window height
+                    if(totalPageHeight > $(window).height()) 
+                    {
+                        $('.cd-hero-slider').addClass('small-screen');
+                        $('.cd-hero-slider li:nth-of-type(' + pageNo + ')').css("min-height", totalPageHeight + "px");
+                    }
+                    else 
+                    {
+                        $('.cd-hero-slider').removeClass('small-screen');
+                        $('.cd-hero-slider li:nth-of-type(' + pageNo + ')').css("min-height", "100%");
+                    }
+                }
+
+                /*
+                    Everything is loaded including images.
+                */
+                $(window).load(function(){
+
+                    adjustHeightOfPage(1); // Adjust page height
+
+                    /* Gallery One pop up
+                    -----------------------------------------*/
+                    $('.gallery-one').magnificPopup({
+                        delegate: 'a', // child items selector, by clicking on it popup will open
+                        type: 'image',
+                        gallery:{enabled:true}                
+                    });
+					
+					
+
+                    /* Collapse menu after click 
+                    -----------------------------------------*/
+                    $('#tmNavbar a').click(function(){
+                        $('#tmNavbar').collapse('hide');
+
+                        adjustHeightOfPage($(this).data("no")); // Adjust page height       
+                    });
+
+                    /* Browser resized 
+                    -----------------------------------------*/
+                    $( window ).resize(function() {
+                        var currentPageNo = $(".cd-hero-slider li.selected .js-tm-page-content").data("page-no");
+                        
+                        // wait 3 seconds
+                        setTimeout(function() {
+                            adjustHeightOfPage( currentPageNo );
+                        }, 1000);
+                        
+                    });
+            
+                    // Remove preloader (https://ihatetomatoes.net/create-custom-preloading-screen/)
+                    $('body').addClass('loaded');
+
+                    // Write current year in copyright text.
+                    $(".tm-copyright-year").text(new Date().getFullYear());
+                               
                 });
-            });
 
-        </script>            
+                // Array of gallery images. To add more, just add objects to this array.
+                const galleryImages = [
+                    {
+                        thumb: 'img/tm-img-01-tn.jpg',
+                        full: 'img/tm-img-01.jpg',
+                        caption: 'Tyger Tyger, burning bright, In the forests of the night; What immortal hand or eye, Dare frame thy fearful symmetry?'
+                    },
+                    {
+                        thumb: 'img/tm-img-02-tn.jpg',
+                        full: 'img/tm-img-02.jpg',
+                        caption: 'It is a beauteous evening, calm and free, The holy time is quiet as a Nun, Breathless with adoration; the broad sun'
+                    },
+                    {
+                        thumb: 'img/tm-img-03-tn.jpg',
+                        full: 'img/tm-img-03.jpg',
+                        caption: 'Immersed in great meditation is the mighty cosmic dancer, Shiva is a supreme soul, a supreme brahman.'
+                    },
+                    // Add more images here:
+                    // { thumb: 'img/your-thumb.jpg', full: 'img/your-full.jpg', caption: 'Your caption here' },
+                ];
 
+                // Dynamically render the gallery
+                const galleryGrid = document.getElementById('gallery-grid');
+                galleryImages.forEach((img, idx) => {
+                    const col = document.createElement('div');
+                    col.className = 'col-12 col-sm-6 col-md-4 col-lg-3 mb-4';
+                    col.innerHTML = `
+                        <div class="gallery-item">
+                            <img src="${img.thumb}" class="gallery-img" alt="Artwork ${idx+1}" data-full="${img.full}" data-caption="${img.caption}">
+                            <div class="gallery-caption">${img.caption}</div>
+                        </div>
+                    `;
+                    galleryGrid.appendChild(col);
+                });
+
+                // Modal functionality
+                document.querySelectorAll('.gallery-img').forEach(img => {
+                    img.addEventListener('click', function() {
+                        document.getElementById('modalImage').src = this.getAttribute('data-full');
+                        document.getElementById('modalCaption').textContent = this.getAttribute('data-caption');
+                        var modal = new bootstrap.Modal(document.getElementById('imageModal'));
+                        modal.show();
+                    });
+                });
+
+            </script>            
+
+        </div>
     </body>
 </html>
