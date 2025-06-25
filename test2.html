@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aman Anand Rai - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.16.5/framer-motion.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        
+        .gradient-border {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.8);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .hover-glow:hover {
+            transition: all 0.3s ease;
+        }
+        
+        .dark .hover-glow:hover {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+        
+        .hover-glow:hover {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .slide-up {
+            animation: slideUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            to { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+        }
+        
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-5 { animation-delay: 0.5s; }
+        .stagger-6 { animation-delay: 0.6s; }
+        
+        .theme-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #374151;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle.active {
+            background: #3b82f6;
+        }
+        
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .theme-toggle.active::before {
+            transform: translateX(30px);
+        }
+    </style>
+</head>
+<body class="min-h-screen transition-colors duration-300 bg-gray-50 text-gray-900 dark:bg-slate-900 dark:text-slate-100">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-xl font-semibold fade-in">
+                    <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                        Aman Anand Rai
+                    </span>
+                </div>
+                <div class="hidden md:flex space-x-8 items-center fade-in stagger-1">
+                    <a href="#about" class="hover:text-blue-400 transition-colors duration-300">About</a>
+                    <a href="#work" class="hover:text-blue-400 transition-colors duration-300">Work</a>
+                    <a href="#gallery" class="hover:text-blue-400 transition-colors duration-300">Gallery</a>
+                    <a href="#contact" class="hover:text-blue-400 transition-colors duration-300">Contact</a>
+                    <a href="#links" class="hover:text-blue-400 transition-colors duration-300">Links</a>
+                    <!-- <div class="theme-toggle ml-4" id="themeToggle" title="Toggle theme"></div> -->
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center px-6 pt-20">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="mb-8 fade-in">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                    <span class="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+                        Blending Creativity
+                    </span>
+                    <br>
+                    <span class="text-slate-200">with Technology</span>
+                </h1>
+            </div>
+            
+            <p class="text-xl md:text-2xl text-slate-400 mb-12 leading-relaxed slide-up stagger-1">
+                Transforming ideas into solutions that make an impact through AI, data analytics, 
+                and machine learning innovation.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center slide-up stagger-2">
+                <a href="#work" class="px-8 py-4 rounded-lg font-medium transition-all duration-300 hover-glow text-center bg-blue-600 hover:bg-blue-700 text-white">
+                    View My Work
+                </a>
+                <a href="#contact" class="px-8 py-4 rounded-lg font-medium transition-all duration-300 text-center border border-gray-300 hover:border-gray-400 hover:bg-gray-100 text-gray-700 dark:border-slate-600 dark:hover:border-slate-500 dark:hover:bg-slate-800 dark:text-slate-200">
+                    Get In Touch
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 slide-up">About Me</h2>
+                <div class="w-24 h-1 gradient-border mx-auto rounded-full slide-up stagger-1"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="slide-up stagger-2">
+                    <p class="text-lg leading-relaxed mb-6 text-gray-600 dark:text-slate-300">
+                        Hello and welcome to my portfolio! I'm someone who thrives on blending creativity with 
+                        technology, transforming ideas into solutions that make an impact. My passions include 
+                        exploring AI art, diving deep into data analytics, unraveling machine learning mysteries, 
+                        innovating with generative AI, and honing my skills in competitive coding.
+                    </p>
+                    <p class="text-lg leading-relaxed mb-6 text-gray-600 dark:text-slate-300">
+                        Alongside this, I blog about my journey in machine learning and computer science, sharing 
+                        insights, challenges, and breakthroughs with like-minded enthusiasts. What drives me is a 
+                        genuine curiosity to understand and create.
+                    </p>
+                    <p class="text-lg leading-relaxed text-gray-600 dark:text-slate-300">
+                        This portfolio is not just a showcase of skills and projects but a testament to my journey, 
+                        my growth, and my aspirations. I hope you'll enjoy exploring my work as much as I've enjoyed creating it.
+                    </p>
+                </div>
+                
+                <div class="glass-effect rounded-2xl p-8 slide-up stagger-3">
+                    <h3 class="text-2xl font-semibold mb-6 text-center">Interests & Expertise</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center p-4 rounded-lg transition-colors duration-300 bg-gray-200 hover:bg-gray-300 dark:bg-slate-800/50 dark:hover:bg-slate-700/50">
+                            <div class="text-2xl mb-2">🎨</div>
+                            <div class="font-medium">AI Art</div>
+                        </div>
+                        <div class="text-center p-4 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 transition-colors duration-300">
+                            <div class="text-2xl mb-2">🖼️</div>
+                            <div class="font-medium">Painting</div>
+                        </div>
+                        <div class="text-center p-4 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 transition-colors duration-300">
+                            <div class="text-2xl mb-2">💻</div>
+                            <div class="font-medium">Competitive Coding</div>
+                        </div>
+                        <div class="text-center p-4 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 transition-colors duration-300">
+                            <div class="text-2xl mb-2">🎬</div>
+                            <div class="font-medium">Movies</div>
+                        </div>
+                        <div class="text-center p-4 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 transition-colors duration-300">
+                            <div class="text-2xl mb-2">📚</div>
+                            <div class="font-medium">Publications</div>
+                        </div>
+                        <div class="text-center p-4 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 transition-colors duration-300">
+                            <div class="text-2xl mb-2">🔬</div>
+                            <div class="font-medium">Research</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="py-20 px-6 bg-slate-800/30">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 slide-up">Technologies & Activities</h2>
+                <div class="w-24 h-1 gradient-border mx-auto rounded-full slide-up stagger-1"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-effect rounded-2xl p-8 hover-glow transition-all duration-300 slide-up stagger-2">
+                    <div class="text-4xl mb-4 text-center">🤖</div>
+                    <h3 class="text-xl font-semibold mb-4 text-center">Machine Learning</h3>
+                    <p class="text-slate-300 text-center">
+                        Unraveling ML mysteries and building intelligent models that solve real-world problems.
+                    </p>
+                </div>
+                
+                <div class="glass-effect rounded-2xl p-8 hover-glow transition-all duration-300 slide-up stagger-3">
+                    <div class="text-4xl mb-4 text-center">📊</div>
+                    <h3 class="text-xl font-semibold mb-4 text-center">Data Analytics</h3>
+                    <p class="text-slate-300 text-center">
+                        Diving deep into data to extract meaningful insights and drive decision-making.
+                    </p>
+                </div>
+                
+                <div class="glass-effect rounded-2xl p-8 hover-glow transition-all duration-300 slide-up stagger-4">
+                    <div class="text-4xl mb-4 text-center">✨</div>
+                    <h3 class="text-xl font-semibold mb-4 text-center">Generative AI</h3>
+                    <p class="text-slate-300 text-center">
+                        Innovating with cutting-edge AI to create content and explore artistic potential.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 slide-up">Gallery</h2>
+                <div class="w-24 h-1 gradient-border mx-auto rounded-full slide-up stagger-1"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-effect rounded-2xl overflow-hidden hover-glow transition-all duration-300 slide-up stagger-2">
+                    <div class="aspect-square bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                                <img src="images/aman2.jpeg" alt="Aman 2">
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-2xl overflow-hidden hover-glow transition-all duration-300 slide-up stagger-3">
+                    <div class="aspect-square bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
+                                <img src="images/aman1.jpeg" alt="Aman 1">
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-2xl overflow-hidden hover-glow transition-all duration-300 slide-up stagger-4">
+                    <div class="aspect-square bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                                <img src="images/aman3.jpeg" alt="Aman 3">
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-2xl overflow-hidden hover-glow transition-all duration-300 slide-up stagger-5">
+                    <div class="aspect-square bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center">
+                                <img src="images/aman4.jpeg" alt="Aman 4">
+                    </div>
+                </div>
+                <div class="glass-effect rounded-2xl overflow-hidden hover-glow transition-all duration-300 slide-up stagger-5">
+                    <div class="aspect-square bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center">
+                                <img src="images/aman5.jpeg" alt="Aman 5">
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-2xl overflow-hidden hover-glow transition-all duration-300 slide-up stagger-6 md:col-span-2">
+                    <div class="aspect-video bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                                <img src="images/hogwarts_express.jpg" alt="Hogwarts Express">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Links Section -->
+    <section id="links" class="py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 slide-up">Connect & Explore</h2>
+                <div class="w-24 h-1 gradient-border mx-auto rounded-full slide-up stagger-1"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <a href="https://github.com/amananandrai" class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-2 text-center group">
+                    <div class="text-3xl mb-4">🐙</div>
+                    <h3 class="text-lg font-semibold mb-2">GitHub</h3>
+                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">View my code repositories</p>
+                </a>
+                
+                <a href="https://www.linkedin.com/in/amananandrai/" class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-3 text-center group">
+                    <div class="text-3xl mb-4">💼</div>
+                    <h3 class="text-lg font-semibold mb-2">LinkedIn</h3>
+                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">Professional network</p>
+                </a>
+                
+                <a href="https://medium.com/@amananandrai" class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-4 text-center group">
+                    <div class="text-3xl mb-4">📝</div>
+                    <h3 class="text-lg font-semibold mb-2">Medium</h3>
+                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">Technical blog posts</p>
+                </a>
+                
+                <a href="https://stackoverflow.com/users/your-id" class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-5 text-center group">
+                    <div class="text-3xl mb-4">❓</div>
+                    <h3 class="text-lg font-semibold mb-2">Stack Overflow</h3>
+                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">Q&A contributions</p>
+                </a>
+                
+                <a href="https://twitter.com/amananandrai" class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-6 text-center group">
+                    <div class="text-3xl mb-4">🐦</div>
+                    <h3 class="text-lg font-semibold mb-2">Twitter</h3>
+                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">Latest thoughts & updates</p>
+                </a>
+                
+                <a href="https://kaggle.com/amananandrai" class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-2 text-center group">
+                    <div class="text-3xl mb-4">📊</div>
+                    <h3 class="text-lg font-semibold mb-2">Kaggle</h3>
+                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">Data science competitions</p>
+                </a>
+                
+                <a href="https://scholar.google.com/citations?user=your-id" class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-3 text-center group">
+                    <div class="text-3xl mb-4">🎓</div>
+                    <h3 class="text-lg font-semibold mb-2">Google Scholar</h3>
+                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">Research publications</p>
+                </a>
+                
+                <a href="mailto:aman@example.com" class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-4 text-center group">
+                    <div class="text-3xl mb-4">📧</div>
+                    <h3 class="text-lg font-semibold mb-2">Email</h3>
+                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">Direct contact</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-6 bg-slate-800/30">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="mb-16">
+                <h2 class="text-4xl font-bold mb-4 slide-up">Let's Connect</h2>
+                <div class="w-24 h-1 gradient-border mx-auto rounded-full slide-up stagger-1"></div>
+            </div>
+            
+            <p class="text-xl mb-12 slide-up stagger-2 text-gray-600 dark:text-slate-300">
+                I'm always excited to discuss new opportunities, collaborations, or simply chat about 
+                technology and innovation. Let's create something amazing together.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-6 justify-center slide-up stagger-3">
+                <a href="mailto:aman@example.com" class="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-medium transition-all duration-300 hover-glow text-center text-white">
+                    Send Message
+                </a>
+                <a href="#" class="px-8 py-4 rounded-lg font-medium transition-all duration-300 text-center border border-gray-300 hover:border-gray-400 hover:bg-gray-100 text-gray-700 dark:border-slate-600 dark:hover:border-slate-500 dark:hover:bg-slate-800 dark:text-slate-200">
+                    Download Resume
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="fade-in text-gray-600 dark:text-slate-400">
+                © 2025 Aman Anand Rai. Crafted with passion and precision.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        // Initialize theme - default to dark
+        let isDarkMode = true;
+        html.classList.add('dark');
+        themeToggle.classList.add('active');
+        
+        themeToggle.addEventListener('click', () => {
+            isDarkMode = !isDarkMode;
+            
+            if (isDarkMode) {
+                html.classList.add('dark');
+                themeToggle.classList.add('active');
+            } else {
+                html.classList.remove('dark');
+                themeToggle.classList.remove('active');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.slide-up, .fade-in').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+
+        // Initialize animations for elements in view on load
+        setTimeout(() => {
+            document.querySelectorAll('.fade-in, .slide-up').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    el.style.animationPlayState = 'running';
+                }
+            });
+        }, 100);
+    </script>
+</body>
+</html>
