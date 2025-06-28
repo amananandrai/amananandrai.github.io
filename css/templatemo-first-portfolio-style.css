@@ -41,9 +41,21 @@ https://templatemo.com/tm-578-first-portfolio
   --font-weight-bold:             700;
 }
 
+:root.dark {
+  --white-color:                  #1a1a1a;
+  --primary-color:                #8c9eff;
+  --secondary-color:              #66ffcc;
+  --section-bg-color:             #2a2a2a;
+  --dark-color:                   #ffffff;
+  --p-color:                      #b0b0b0;
+  --border-color:                 #3a3a3a;
+  --featured-border-color:        #a0a8d0;
+}
+
 body {
     background: var(--white-color);
     font-family: var(--body-font-family); 
+    color: var(--p-color);
 }
 
 
