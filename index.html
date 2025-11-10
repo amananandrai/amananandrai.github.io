@@ -1,568 +1,473 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aman Anand Rai - Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        // Configure Tailwind to use class strategy for dark mode
-        tailwind.config = {
-            darkMode: 'class'
-        }
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.16.5/framer-motion.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        <title>Aman Anand Rai's Portfolio</title>
 
-        body {
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
-        }
+        <!-- CSS FILES -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
-        .gradient-border {
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
-            background-size: 200% 200%;
-            animation: gradientShift 3s ease infinite;
-        }
+        <link href="css/bootstrap.min.css" rel="stylesheet">
 
-        @keyframes gradientShift {
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
-            0%,
-            100% {
-                background-position: 0% 50%;
+        <link href="css/templatemo-first-portfolio-style.css" rel="stylesheet">
+        
+        <style>
+            html, body {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            body { 
+                background: #f8f9fa;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+           
+            .card-header[style*="#535da1"] h4 {
+                color: white !important;
+            }
+            .card-header[style*="#20c997"] h4 {
+                color: white !important;
+            }
+            .section-heading-purple {
+                color: #535da1 !important;
             }
 
-            50% {
-                background-position: 100% 50%;
+            /* Project Links Styling */
+            .projects-links .services-price-wrap {
+                display: inline-block;
+                margin-right: 15px;
+                position: relative;
+                background: var(--primary-color);
+                border-radius: var(--border-radius-medium);
+                padding: 6px 20px 6px 15px;
+                transition: all ease 0.5s;
             }
-        }
 
-        .glass-effect {
-            backdrop-filter: blur(20px);
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.8);
-            /* Light mode default */
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            /* Light mode default */
-        }
+            .projects-links .services-price-text {
+                color: var(--white-color);
+                text-decoration: none;
+                font-size: var(--copyright-font-size);
+                font-weight: var(--font-weight-bold);
+                transition: all ease 0.5s;
+            }
 
-        .dark .glass-effect {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            /* Dark mode border */
-        }
+            .projects-links .services-price-overlay {
+                background: var(--secondary-color);
+                border-bottom-left-radius: 100%;
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 20px;
+                height: 20px;
+                pointer-events: none;
+                transition: all ease 0.5s;
+            }
 
-        .hover-glow:hover {
-            transition: all 0.3s ease;
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
-            /* Light mode default */
-        }
+            .projects-links .services-price-wrap:hover {
+                background: var(--secondary-color);
+            }
 
-        .dark .hover-glow:hover {
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
-            /* Dark mode shadow */
-        }
+            .projects-links .services-price-wrap:hover .services-price-overlay {
+                background: var(--primary-color);
+            }
 
-        .fade-in {
-            animation: fadeIn 0.8s ease-out forwards;
-            opacity: 0;
-        }
+            /* Pinterest Style Gallery */
+            .gallery-container {
+                columns: 3;
+                column-gap: 20px;
+                padding: 20px;
+            }
 
-        .slide-up {
-            animation: slideUp 0.8s ease-out forwards;
-            opacity: 0;
-            transform: translateY(30px);
-        }
+            .gallery-item {
+                break-inside: avoid;
+                margin-bottom: 20px;
+                position: relative;
+                overflow: hidden;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                transition: transform 0.3s ease;
+            }
 
-        @keyframes fadeIn {
-            to {
+            .gallery-item:hover {
+                transform: translateY(-5px);
+            }
+
+            .gallery-item img {
+                width: 100%;
+                display: block;
+                border-radius: 8px;
+            }
+
+            .gallery-item::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0,0,0,0.2);
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .gallery-item:hover::after {
                 opacity: 1;
             }
-        }
 
-        @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            @media (max-width: 992px) {
+                .gallery-container {
+                    columns: 2;
+                }
             }
-        }
 
-        .stagger-1 {
-            animation-delay: 0.1s;
-        }
-
-        .stagger-2 {
-            animation-delay: 0.2s;
-        }
-
-        .stagger-3 {
-            animation-delay: 0.3s;
-        }
-
-        .stagger-4 {
-            animation-delay: 0.4s;
-        }
-
-        .stagger-5 {
-            animation-delay: 0.5s;
-        }
-
-        .stagger-6 {
-            animation-delay: 0.6s;
-        }
-
-        .theme-toggle {
-            position: relative;
-            width: 60px;
-            height: 30px;
-            background: #374151;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle.active {
-            background: #3b82f6;
-        }
-
-        .theme-toggle::before {
-            content: '';
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 24px;
-            height: 24px;
-            background: white;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .theme-toggle.active::before {
-            transform: translateX(30px);
-        }
-    </style>
-</head>
-
-<body
-    class="min-h-screen transition-colors duration-300 bg-gray-50 text-gray-900 dark:bg-slate-900 dark:text-slate-100">
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 glass-effect">
-        <div class="max-w-6xl mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
-                <div class="text-xl font-semibold fade-in">
-                    <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                        Aman Anand Rai
-                    </span>
-                </div>
-                <div class="hidden md:flex space-x-8 items-center fade-in stagger-1">
-                    <a href="#about" class="hover:text-blue-400 transition-colors duration-300">About</a>
-                    <a href="#work" class="hover:text-blue-400 transition-colors duration-300">Work</a>
-                    <a href="#contact" class="hover:text-blue-400 transition-colors duration-300">Contact</a>
-                    <a href="#research" class="hover:text-blue-400 transition-colors duration-300">Research</a>
-                    <a href="#links" class="hover:text-blue-400 transition-colors duration-300">Links</a>
-                    <button id="themeToggle"
-                        class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-slate-700 text-gray-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors duration-300"
-                        title="Toggle theme">
-                        <span id="themeIcon" class="text-xl">☀️</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center px-6 pt-20 bg-gray-50 dark:bg-slate-900 ">
-        <div class="max-w-4xl mx-auto text-center">
-            <div class="mb-8 fade-in">
-                <h1 class="text-5xl md:text-7xl font-bold mb-6">
-                    <span
-                        class="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
-                        Blending Creativity
-                    </span>
-                    <br>
-                    <span class="text-gray-700 dark:text-slate-200">with Technology</span>
-                </h1>
-            </div>
-
-            <p class="text-xl md:text-2xl text-gray-600 dark:text-slate-400 mb-12 leading-relaxed slide-up stagger-1">
-                Transforming ideas into solutions that make an impact through AI, data analytics,
-                and machine learning innovation.
-            </p>
-
-            <div class="flex flex-col sm:flex-row gap-4 justify-center slide-up stagger-2">
-                <a href="#work"
-                    class="px-8 py-4 rounded-lg font-medium transition-all duration-300 hover-glow text-center bg-blue-600 hover:bg-blue-700 text-white">
-                    View My Work
-                </a>
-                <a href="#contact"
-                    class="px-8 py-4 rounded-lg font-medium transition-all duration-300 text-center border border-gray-300 hover:border-gray-400 hover:bg-gray-100 text-gray-700 dark:border-slate-600 dark:hover:border-slate-500 dark:hover:bg-slate-800 dark:text-slate-200">
-                    Get In Touch
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-20 px-6 bg-gray-50 dark:bg-slate-900">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4 slide-up">About Me</h2>
-                <div class="w-24 h-1 gradient-border mx-auto rounded-full slide-up stagger-1"></div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="slide-up stagger-2">
-                    <p class="text-lg leading-relaxed mb-6 text-gray-600 dark:text-slate-300">
-                        Hello and welcome to my portfolio! I'm someone who thrives on blending creativity with
-                        technology, transforming ideas into solutions that make an impact. My passions include
-                        exploring AI art, diving deep into data analytics, unraveling machine learning mysteries,
-                        innovating with generative AI, and honing my skills in competitive coding.
-                    </p>
-                    <p class="text-lg leading-relaxed mb-6 text-gray-600 dark:text-slate-300">
-                        Alongside this, I blog about my journey in machine learning and computer science, sharing
-                        insights, challenges, and breakthroughs with like-minded enthusiasts. What drives me is a
-                        genuine curiosity to understand and create.
-                    </p>
-                    <p class="text-lg leading-relaxed text-gray-600 dark:text-slate-300">
-                        This portfolio is not just a showcase of skills and projects but a testament to my journey,
-                        my growth, and my aspirations. I hope you'll enjoy exploring my work as much as I've enjoyed
-                        creating it.
-                    </p>
-                </div>
-
-                <div class="glass-effect rounded-2xl p-8 slide-up stagger-3">
-                    <h3 class="text-2xl font-semibold mb-6 text-center">Interests & Expertise</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div
-                            class="text-center p-4 rounded-lg transition-colors duration-300 bg-gray-200 hover:bg-gray-300 dark:bg-slate-800/50 dark:hover:bg-slate-700/50">
-                            <div class="text-2xl mb-2">🎨</div>
-                            <div class="font-medium">AI Art</div>
-                        </div>
-
-                        <div
-                            class="text-center p-4 rounded-lg transition-colors duration-300 bg-gray-200 hover:bg-gray-300 dark:bg-slate-800/50 dark:hover:bg-slate-700/50">
-                            <div class="text-2xl mb-2">🖼️</div>
-                            <div class="font-medium">Painting</div>
-                        </div>
-                        <div
-                            class="text-center p-4 rounded-lg transition-colors duration-300 bg-gray-200 hover:bg-gray-300 dark:bg-slate-800/50 dark:hover:bg-slate-700/50">
-                            <div class="text-2xl mb-2">💻</div>
-                            <div class="font-medium">Competitive Coding</div>
-                        </div>
-                        <div
-                            class="text-center p-4 rounded-lg transition-colors duration-300 bg-gray-200 hover:bg-gray-300 dark:bg-slate-800/50 dark:hover:bg-slate-700/50">
-                            <div class="text-2xl mb-2">🎬</div>
-                            <div class="font-medium">Movies</div>
-                        </div>
-                        <div
-                            class="text-center p-4 rounded-lg transition-colors duration-300 bg-gray-200 hover:bg-gray-300 dark:bg-slate-800/50 dark:hover:bg-slate-700/50">
-                            <div class="text-2xl mb-2">📚</div>
-                            <div class="font-medium">Publications</div>
-                        </div>
-                        <div
-                            class="text-center p-4 rounded-lg transition-colors duration-300 bg-gray-200 hover:bg-gray-300 dark:bg-slate-800/50 dark:hover:bg-slate-700/50">
-                            <div class="text-2xl mb-2">🔬</div>
-                            <div class="font-medium">Research</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Work Section -->
-    <section id="work" class="py-20 px-6 bg-gray-100 dark:bg-slate-800/30">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4 slide-up">Technologies & Activities</h2>
-                <div class="w-24 h-1 gradient-border mx-auto rounded-full slide-up stagger-1"></div>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass-effect rounded-2xl p-8 hover-glow transition-all duration-300 slide-up stagger-2">
-                    <div class="text-4xl mb-4 text-center">🤖</div>
-                    <h3 class="text-xl font-semibold mb-4 text-center">Machine Learning</h3>
-                    <p class="text-gray-600 dark:text-slate-300 text-center">
-                        Unraveling ML mysteries and building intelligent models that solve real-world problems.
-                    </p>
-                </div>
-
-                <div class="glass-effect rounded-2xl p-8 hover-glow transition-all duration-300 slide-up stagger-3">
-                    <div class="text-4xl mb-4 text-center">📊</div>
-                    <h3 class="text-xl font-semibold mb-4 text-center">Data Analytics</h3>
-                    <p class="text-gray-600 dark:text-slate-300 text-center">
-                        Diving deep into data to extract meaningful insights and drive decision-making.
-                    </p>
-                </div>
-
-                <div class="glass-effect rounded-2xl p-8 hover-glow transition-all duration-300 slide-up stagger-4">
-                    <div class="text-4xl mb-4 text-center">✨</div>
-                    <h3 class="text-xl font-semibold mb-4 text-center">Generative AI</h3>
-                    <p class="text-gray-600 dark:text-slate-300 text-center">
-                        Innovating with cutting-edge AI to create content and explore artistic potential.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <!-- <section id="gallery" class="py-20 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4 slide-up">Gallery</h2>
-                <div class="w-24 h-1 gradient-border mx-auto rounded-full slide-up stagger-1"></div>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="glass-effect rounded-2xl overflow-hidden hover-glow transition-all duration-300 slide-up stagger-2">
-                    <div class="aspect-square bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                                <img src="images/aman2.jpeg" alt="Aman 2">
-                    </div>
-                </div>
-                
-                <div class="glass-effect rounded-2xl overflow-hidden hover-glow transition-all duration-300 slide-up stagger-3">
-                    <div class="aspect-square bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
-                                <img src="images/aman1.jpeg" alt="Aman 1">
-                    </div>
-                </div>
-                
-                <div class="glass-effect rounded-2xl overflow-hidden hover-glow transition-all duration-300 slide-up stagger-4">
-                    <div class="aspect-square bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
-                                <img src="images/aman3.jpeg" alt="Aman 3">
-                    </div>
-                </div>
-                
-                <div class="glass-effect rounded-2xl overflow-hidden hover-glow transition-all duration-300 slide-up stagger-5">
-                    <div class="aspect-square bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center">
-                                <img src="images/aman4.jpeg" alt="Aman 4">
-                    </div>
-                </div>
-                <div class="glass-effect rounded-2xl overflow-hidden hover-glow transition-all duration-300 slide-up stagger-5">
-                    <div class="aspect-square bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center">
-                                <img src="images/aman5.jpeg" alt="Aman 5">
-                    </div>
-                </div>
-                
-                <div class="glass-effect rounded-2xl overflow-hidden hover-glow transition-all duration-300 slide-up stagger-6 md:col-span-2">
-                    <div class="aspect-video bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-                                <img src="images/hogwarts_express.jpg" alt="Hogwarts Express">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-    <!-- Links Section -->
-    <section id="research" class="py-20 px-6 bg-gray-50 dark:bg-slate-900">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4 slide-up">Research Paper</h2>
-                <div class="w-24 h-1 gradient-border mx-auto rounded-full slide-up stagger-1"></div>
-            </div>
-            <div class="grid grid-cols-2 gap-6">
-                <a target="_blank" rel="noopener noreferrer"
-                    href="https://link.springer.com/chapter/10.1007/978-981-19-5868-7_16"
-                    class="glass-effect  rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-2 text-center group">
-                    <div class="text-3xl mb-4">📖</div>
-                    <h3 class="text-lg font-semibold mb-2">Cognitive Load Classification During Arithmetic Task Using
-                        Single Convolution Layer-Based 2D-CNN Model</h3>
-                </a>
-                <a target="_blank" rel="noopener noreferrer"
-                    href="https://link.springer.com/chapter/10.1007/978-981-19-0019-8_36"
-                    class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-2 text-center group">
-                    <div class="text-3xl mb-4">📖</div>
-                    <h3 class="text-lg font-semibold mb-2">Electroencephalogram-based
-                        Cognitive Load Classification During Mental Arithmetic Task</h3>
-                </a>
-
-
-
-
-            </div>
-
-        </div>
-    </section>
-    <section id="links" class="py-20 px-6 bg-gray-100 dark:bg-slate-800/30">
-        <div class=" max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4 slide-up">Connect & Explore</h2>
-                <div class="w-24 h-1 gradient-border mx-auto rounded-full slide-up stagger-1"></div>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <a target="_blank" rel="noopener noreferrer" href="https://github.com/amananandrai"
-                    class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-2 text-center group">
-                    <div class="text-3xl mb-4">🐙</div>
-                    <h3 class="text-lg font-semibold mb-2">GitHub</h3>
-                    <p class="text-gray-600 dark:text-slate-400 text-sm">View my code repositories</p>
-                </a>
-
-                <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/aman-anand-1b7823178/"
-                    class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-3 text-center group">
-                    <div class="text-3xl mb-4">💼</div>
-                    <h3 class="text-lg font-semibold mb-2">LinkedIn</h3>
-                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">Professional network</p>
-                </a>
-                <a target="_blank" rel="noopener noreferrer" href="https://dev.to/amananandrai"
-                    class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-3 text-center group">
-                    <div class="text-3xl mb-4">💼</div>
-                    <h3 class="text-lg font-semibold mb-2">Dev.to</h3>
-                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">Blogs</p>
-                </a>
-
-                <!-- <a target="_blank" rel="noopener noreferrer" href="https://medium.com/@amananandrai" class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-4 text-center group">
-                    <div class="text-3xl mb-4">📝</div>
-                    <h3 class="text-lg font-semibold mb-2">Medium</h3>
-                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">Technical blog posts</p>
-                </a> -->
-
-                <!-- <a target="_blank" rel="noopener noreferrer" href="https://stackoverflow.com/users/your-id" class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-5 text-center group">
-                    <div class="text-3xl mb-4">❓</div>
-                    <h3 class="text-lg font-semibold mb-2">Stack Overflow</h3>
-                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">Q&A contributions</p>
-                </a> -->
-
-                <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/amananandrai"
-                    class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-6 text-center group">
-                    <div class="text-3xl mb-4">🐦</div>
-                    <h3 class="text-lg font-semibold mb-2">Twitter</h3>
-                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">Latest thoughts & updates</p>
-                </a>
-
-                <a target="_blank" rel="noopener noreferrer" href="https://kaggle.com/amananandrai"
-                    class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-2 text-center group">
-                    <div class="text-3xl mb-4">📊</div>
-                    <h3 class="text-lg font-semibold mb-2">Kaggle</h3>
-                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">Data science competitions</p>
-                </a>
-
-                <a target="_blank" rel="noopener noreferrer"
-                    href="https://scholar.google.com/citations?user=khuuiBIAAAAJ&hl=en"
-                    class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-3 text-center group">
-                    <div class="text-3xl mb-4">🎓</div>
-                    <h3 class="text-lg font-semibold mb-2">Google Scholar</h3>
-                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">Research publications</p>
-                </a>
-
-                <a target="_blank" rel="noopener noreferrer" href="mailto:amananandrai@gmail.com"
-                    class="glass-effect rounded-2xl p-6 hover-glow transition-all duration-300 slide-up stagger-4 text-center group">
-                    <div class="text-3xl mb-4">📧</div>
-                    <h3 class="text-lg font-semibold mb-2">Email</h3>
-                    <p class="text-slate-400 dark:text-slate-400 text-gray-600 text-sm">Direct contact</p>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <div class="mb-16">
-                <h2 class="text-4xl font-bold mb-4 slide-up">Let's Connect</h2>
-                <div class="w-24 h-1 gradient-border mx-auto rounded-full slide-up stagger-1"></div>
-            </div>
-
-            <p class="text-xl mb-12 slide-up stagger-2 text-gray-600 dark:text-slate-300">
-                I'm always excited to discuss new opportunities, collaborations, or simply chat about
-                technology and innovation. Let's create something amazing together.
-            </p>
-
-            <div class="flex flex-col sm:flex-row gap-6 justify-center slide-up stagger-3">
-                <a target="_blank" rel="noopener noreferrer" href="mailto:amananandrai@gmail.com"
-                    class="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-medium transition-all duration-300 hover-glow text-center text-white">
-                    Send Message
-                </a>
-                <!-- <a href="#" class="px-8 py-4 rounded-lg font-medium transition-all duration-300 text-center border border-gray-300 hover:border-gray-400 hover:bg-gray-100 text-gray-700 dark:border-slate-600 dark:hover:border-slate-500 dark:hover:bg-slate-800 dark:text-slate-200">
-                    Download Resume
-                </a> -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-12 px-6 border-t border-slate-800">
-        <div class="max-w-6xl mx-auto text-center">
-            <p class="fade-in text-gray-600 dark:text-slate-400">
-                © 2025 Aman Anand Rai. Crafted with passion and precision.
-            </p>
-        </div>
-    </footer>
-
-    <script>
-        // Theme Toggle Functionality
-        const themeToggle = document.getElementById('themeToggle');
-        const html = document.documentElement;
-        const themeIcon = document.getElementById('themeIcon');
-
-        // Initialize theme based on localStorage or default to dark
-        if (localStorage.getItem('theme') === 'light') {
-            html.classList.remove('dark');
-            themeIcon.textContent = '🌙'; // Moon icon for light mode
-        } else {
-            html.classList.add('dark');
-            themeIcon.textContent = '☀️'; // Sun icon for dark mode
-        }
-
-        themeToggle.addEventListener('click', () => {
-            if (html.classList.contains('dark')) {
-                html.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-                themeIcon.textContent = '🌙'; // Moon icon for light mode
-            } else {
-                html.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-                themeIcon.textContent = '☀️'; // Sun icon for dark mode
+            @media (max-width: 576px) {
+                .gallery-container {
+                    columns: 1;
+                }
             }
-        });
+        </style>
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+    </head>
+    
+    <body>
+
+        <section class="preloader">
+            <div class="spinner">
+                <span class="spinner-rotate"></span>    
+            </div>
+        </section>
+
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <a href="index.html" class="navbar-brand mx-auto mx-lg-0">Aman</a>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-lg-5">
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_1">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_2">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_3">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+
+        <main>
+
+            <section class="hero d-flex justify-content-center align-items-center" id="section_1">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-7 col-12">
+                            <div class="hero-text">
+                                <div class="hero-title-wrap d-flex align-items-center mb-4">
+                                    <img src="images/aman_profile-removebg.png" class="avatar-image avatar-image-large img-fluid" alt="">
+
+                                    <h1 class="hero-title ms-3 mb-0">Hello friend!</h1>
+                                </div>
+
+                                <h2 class="mb-4">Let's build something great together.</h2>
+                                <p class="mb-4"><a class="custom-btn btn custom-link" href="#section_2">Let's begin</a></p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-5 col-12 position-relative">
+                            <div class="hero-image-wrap"></div>
+                            <img src="images/aman_profile_normal.png" class="hero-image img-fluid" alt="">
+                        </div>
+
+                    </div>
+                </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#535da1" fill-opacity="1" d="M0,160L24,160C48,160,96,160,144,138.7C192,117,240,75,288,64C336,53,384,75,432,106.7C480,139,528,181,576,208C624,235,672,245,720,240C768,235,816,213,864,186.7C912,160,960,128,1008,133.3C1056,139,1104,181,1152,202.7C1200,224,1248,224,1296,197.3C1344,171,1392,117,1416,90.7L1440,64L1440,0L1416,0C1392,0,1344,0,1296,0C1248,0,1200,0,1152,0C1104,0,1056,0,1008,0C960,0,912,0,864,0C816,0,768,0,720,0C672,0,624,0,576,0C528,0,480,0,432,0C384,0,336,0,288,0C240,0,192,0,144,0C96,0,48,0,24,0L0,0Z"></path></svg>
+            </section>
+
+
+            <section class="about section-padding" id="section_2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 text-center mb-5">
+                            <h2 class="display-4">About Me</h2>
+                            <h5 class="text-secondary">Blending Creativity with Technology</h5>
+                        </div>
+
+                        <div class="col-lg-6 col-12">
+                            <div class="about-thumb">
+                                <div class="about-text">Hello and welcome to my portfolio! I'm someone who thrives on blending creativity with technology, transforming ideas into solutions that make an impact. My passions include exploring AI art, diving deep into data analytics, unraveling machine learning mysteries, innovating with generative AI, and honing my skills in competitive coding. Alongside this, I blog about my journey in machine learning and computer science, sharing insights, challenges, and breakthroughs with like-minded enthusiasts.</div>
+                                <div class="about-text">What drives me is a genuine curiosity to understand and create. From decoding complex algorithms to crafting intelligent models and experimenting with the artistic potential of AI, I find joy in every discovery and every challenge overcome. My blog reflects this spirit—a place where I demystify technical concepts, share projects I'm working on, and spark engaging conversations about the future of computer science.</div>                            
+                                <div class="about-text">This portfolio is not just a showcase of skills and projects but a testament to my journey, my growth, and my aspirations. I hope you'll enjoy exploring my work as much as I've enjoyed creating it.</div>
+                                <div class="creativity-section mt-5">
+                                    <h3 class="pt-2 mb-4 section-heading-purple">Creativity</h3>
+
+                                    <!-- AI Art Card -->
+                                    <div class="card mb-4 shadow-sm">
+                                        <div class="card-header border-bottom" style="background-color: #20c997; color: white;">
+                                            <h4 class="mb-0"><i class="bi bi-palette me-2"></i>AI Art</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="mb-2">
+                                                <a href="https://creator.nightcafe.studio/u/Aman_Anand" target="_blank" class="text-decoration-none"><h6><img src="images/logos/nightcafe.png" alt="NightCafe Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">NightCafe</h6></a>
+                                            </p>
+                                            <p class="mb-0">
+                                                <a href="https://ai-album.vercel.app/" target="_blank" class="text-decoration-none"><h6><img src="images/logos/ai_image_gallery.jpg" alt="AI Image Gallery Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">AI Image Gallery</h6></a>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Painting Card -->
+                                    <div class="card mb-4 shadow-sm">
+                                        <div class="card-header border-bottom" style="background-color: #20c997; color: white;">
+                                            <h4 class="mb-0"><i class="bi bi-brush me-2"></i>Painting</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="mb-0">
+                                                <a href="my_gallery.html" target="_blank" class="text-decoration-none"><h6><img src="images/logos/gallery.jpg" alt="Gallery Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">Gallery</h6></a>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Stack Exchange Card -->
+                                    <div class="card mb-4 shadow-sm">
+                                        <div class="card-header border-bottom" style="background-color: #20c997; color: white;">
+                                            <h4 class="mb-0"><i class="bi bi-stack me-2"></i>Stack Exchange</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="mb-2">
+                                                <a href="https://stackexchange.com/users/7329417/codeczar" target="_blank" class="text-decoration-none"><h6><img src="images/logos/stackexchange.png" alt="Stack Exchange Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">Stack Exchange</h6></a>
+                                            </p>
+                                            <p class="mb-0">
+                                                <img src="https://stackexchange.com/users/flair/7329417.png" width="208" height="58" alt="profile for codeczar on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for codeczar on Stack Exchange, a network of free, community-driven Q&amp;A sites" />
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Movies Card -->
+                                    <div class="card mb-4 shadow-sm">
+                                        <div class="card-header border-bottom" style="background-color: #20c997; color: white;">
+                                            <h4 class="mb-0"><i class="bi bi-film me-2"></i>Movies</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="mb-0">
+                                                <a href="https://letterboxd.com/aman_anand/" target="_blank" class="text-decoration-none">
+                                                    <h6><img src="images/logos/letterboxd.png" alt="Letterboxd Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">Letterboxd</h6>
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Goodreads Card -->
+                                    <div class="card mb-4 shadow-sm">
+                                        <div class="card-header border-bottom" style="background-color: #20c997; color: white;">
+                                            <h4 class="mb-0"><i class="bi bi-book me-2"></i>Books</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="mb-0">
+                                                <a href="https://www.goodreads.com/user/show/191410906-aman-anand" target="_blank" class="text-decoration-none">
+                                                    <h6><img src="images/logos/goodreads.jpg" alt="Goodreads Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">Goodreads</h6>
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <div class="about-thumb">
+                                <h3 class="pt-2 mb-4 section-heading-purple">Technologies & Activities</h3>
+                                <!-- Competitive Coding Card -->
+                                <div class="card mb-4 shadow-sm">
+                                    <div class="card-header border-bottom" style="background-color: #20c997; color: white;">
+                                        <h4 class="mb-0"><i class="bi bi-code-square me-2"></i>Competitive Coding</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-2"> 
+                                            <a href="https://www.hackerrank.com/aman_rai" target="_blank" class="text-decoration-none"><h6><img src="images/logos/hackerrank.png" alt="Hackerrank Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">Hackerrank</h6></a>
+                                        </p>  
+                                        <p class="mb-2">   
+                                            <a href="https://www.hackerearth.com/@amananandrai" target="_blank" class="text-decoration-none"><h6><img src="images/logos/hackerearth.png" alt="HackerEarth Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">HackerEarth</h6></a>
+                                        </p>   
+                                        <p class="mb-2"> 
+                                            <a href="https://www.spoj.com/users/amananandrai" target="_blank" class="text-decoration-none"><h6><img src="images/logos/spoj.png" alt="Spoj Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">Spoj</h6></a> 
+                                        </p>
+                                        <p class="mb-2"> 
+                                            <a href="https://leetcode.com/u/aman_rai/" target="_blank" class="text-decoration-none"><h6><img src="images/logos/leetcode.png" alt="Leetcode Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">Leetcode</h6></a> 
+                                        </p>
+                                        <p class="mb-0"> 
+                                            <a href="https://www.codechef.com/users/sangadak" target="_blank" class="text-decoration-none"><h6><img src="images/logos/codechef.png" alt="Codechef Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">Codechef</h6></a>
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- Blogging Card -->
+                                <div class="card mb-4 shadow-sm">
+                                    <div class="card-header border-bottom" style="background-color: #20c997; color: white;">
+                                        <h4 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Blogging</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-2">   
+                                            <a href="https://dev.to/amananandrai" target="_blank" class="text-decoration-none"><h6><img src="images/logos/devto.png" alt="Dev.to Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">Dev.to</h6></a>
+                                        </p>  
+                                        <p class="mb-0">   
+                                            <a href="https://amananandrai.hashnode.dev/" target="_blank" class="text-decoration-none"><h6><img src="images/logos/hashnode.png" alt="Hashnode Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">Hashnode</h6></a>
+                                        </p>  
+                                    </div>
+                                </div>
+                                <!-- Programming Card -->
+                                <div class="card mb-4 shadow-sm">
+                                    <div class="card-header border-bottom" style="background-color: #20c997; color: white;">
+                                        <h4 class="mb-0"><i class="bi bi-github me-2"></i>Programming</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-2">   
+                                            <a href="https://github.com/amananandrai" target="_blank" class="text-decoration-none"><h6><img src="images/logos/github.png" alt="Github Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">Github</h6></a>
+                                        </p> 
+                                        <p class="mb-0">   
+                                            <a href="https://www.kaggle.com/amananandrai" target="_blank" class="text-decoration-none"><h6><img src="images/logos/kaggle.png" alt="Kaggle Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">Kaggle</h6></a>
+                                        </p> 
+                                    </div>
+                                </div>
+                                <!-- Publications Card -->
+                                <div class="card mb-4 shadow-sm">
+                                    <div class="card-header border-bottom" style="background-color: #20c997; color: white;">
+                                        <h4 class="mb-0"><i class="bi bi-journal-text me-2"></i>Publications</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5><i class="bi bi-file-earmark-text me-2"></i>Paper 1</h5>
+                                        <p class="mb-2">   
+                                            <a href="https://link.springer.com/chapter/10.1007/978-981-19-5868-7_16" target="_blank" class="text-decoration-none"><h6><i class="bi bi-link-45deg me-2"></i>Cognitive Load Classification During Arithmetic Task Using Single Convolution Layer-Based 2D-CNN Model</h6></a>
+                                        </p>
+                                        <h5><i class="bi bi-file-earmark-text me-2"></i>Paper 2</h5>
+                                        <p class="mb-0">   
+                                            <a href="https://link.springer.com/chapter/10.1007/978-981-19-0019-8_36" target="_blank" class="text-decoration-none"><h6><i class="bi bi-link-45deg me-2"></i>Electroencephalogram-based Cognitive Load Classification During Mental Arithmetic Task</h6></a>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Credly Card -->
+                                <div class="card mb-4 shadow-sm">
+                                    <div class="card-header border-bottom" style="background-color: #20c997; color: white;">
+                                        <h4 class="mb-0"><i class="bi bi-award me-2"></i>Certifications</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-2">
+                                            <a href="https://www.credly.com/users/aman-anand-rai/" target="_blank" class="text-decoration-none">
+                                                <h6><img src="images/logos/credly.png" alt="Credly Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">Credly</h6>
+                                            </a>
+                                        </p>
+                                        <p class="mb-0">
+                                            <a href="https://www.credential.net/profile/amananandrai53325/wallet" target="_blank" class="text-decoration-none">
+                                                <h6><img src="images/logos/accredible.jpg" alt="Accredible Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">Accredible</h6>
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- Research Card -->
+                                <div class="card mb-4 shadow-sm">
+                                    <div class="card-header border-bottom" style="background-color: #20c997; color: white;">
+                                        <h4 class="mb-0"><i class="bi bi-search me-2"></i>Research</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-2">
+                                            <a href="https://www.researchgate.net/profile/Aman-Rai-9?ev=prf_overview" target="_blank" class="text-decoration-none">
+                                                <h6><img src="images/logos/researchgate.png" alt="ResearchGate Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">ResearchGate</h6>
+                                            </a>
+                                        </p>
+                                        <p class="mb-0">
+                                            <a href="https://scholar.google.com/citations?user=khuuiBIAAAAJ&hl=en" target="_blank" class="text-decoration-none">
+                                                <h6><img src="images/logos/googlescholar.png" alt="Google Scholar Logo" class="me-2" style="height: 27px; width: 27px; vertical-align: middle;">Google Scholar</h6>
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="contact section-padding" id="section_3">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6 col-md-8 col-12">
+                            <div class="section-title-wrap d-flex justify-content-center align-items-center mb-5">
+                                <img src="images/aerial-view-man-using-computer-laptop-wooden-table.jpg" class="avatar-image img-fluid" alt="">
+                                <h2 class="text-white ms-4 mb-0">Say Hi</h2>
+                            </div>
+                            <div class="contact-info d-flex flex-column align-items-center h-100 p-4 bg-white rounded shadow-sm">
+                                <h3 class="mb-4">Contact Info</h3>
+                                <div class="d-flex align-items-center mb-4">
+                                    <i class="bi bi-envelope me-3 fs-4"></i>
+                                    <a href="mailto:amananandrai@gmail.com" class="text-decoration-none">amananandrai@gmail.com</a>
+                                </div>
+                                <h4 class="mb-3">Follow Me</h4>
+                                <div class="social-icons d-flex gap-3 justify-content-center mb-2">
+                                    <a href="https://www.linkedin.com/in/aman-anand-1b7823178/" class="social-icon-link bi-linkedin fs-4" target="_blank"></a>
+                                    <a href="https://www.instagram.com/ai_man_and_art/" class="social-icon-link bi-instagram fs-4" target="_blank"></a>
+                                    <a href="https://www.youtube.com/@Ai_man_0822" class="social-icon-link bi-youtube fs-4" target="_blank"></a>
+                                    <a href="https://github.com/amananandrai" class="social-icon-link bi-github fs-4" target="_blank"></a>
+                                    <a href="https://x.com/amananandrai" class="social-icon-link bi-twitter-x fs-4" target="_blank"></a>
+                                    <a href="https://in.pinterest.com/aiman25842/" class="social-icon-link bi-pinterest fs-4" target="_blank"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="site-footer">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-12 col-12">
+                        <div class="copyright-text-wrap">
+                            <p class="mb-0">
+                                <span class="copyright-text">Copyright © <span id="currentYear"></span>. All rights reserved.</span>
+                    
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+
+        <!-- JAVASCRIPT FILES -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/jquery.sticky.js"></script>
+        <script src="js/click-scroll.js"></script>
+        <script src="js/custom.js"></script>
+        <script>
+            $(document).ready(function(){
+                $(".navbar").sticky({
+                    topSpacing: 0,
+                    zIndex: 1000
+                });
             });
-        });
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+        </script>
 
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationPlayState = 'running';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all animated elements
-        document.querySelectorAll('.slide-up, .fade-in').forEach(el => {
-            el.style.animationPlayState = 'paused';
-            observer.observe(el);
-        });
-
-        // Initialize animations for elements in view on load
-        setTimeout(() => {
-            document.querySelectorAll('.fade-in, .slide-up').forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    el.style.animationPlayState = 'running';
-                }
-            });
-        }, 100);
-    </script>
-</body>
-
+    </body>
 </html>
