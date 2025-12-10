@@ -1,5 +1,5 @@
 /*---------------------------------------
-  CUSTOM PROPERTIES ( VARIABLES )             
+  1. CUSTOM PROPERTIES ( VARIABLES )             
 -----------------------------------------*/
 :root {
   --white-color:                  #ffffff;
@@ -51,21 +51,20 @@ body {
 
 
 /*---------------------------------------
-  TYPOGRAPHY & UTILITIES               
+  2. TYPOGRAPHY & UTILITIES               
 -----------------------------------------*/
-
 h1, h2, h3, h4, h5, h6 {
   font-weight: var(--font-weight-bold);
   letter-spacing: -1px;
 }
 
-h2, h3, h4, h5, h6 {
-  color: var(--secondary-color);
-}
+h2, h3, h4, h5, h6 { color: var(--secondary-color); }
 
 h1 {
   font-size: var(--h1-font-size);
   letter-spacing: -3px;
+  /* Ensure H1 has a base color if not overridden */
+  color: var(--primary-color); 
 }
 
 h2 {
@@ -103,17 +102,10 @@ a, button {
 
 a:hover { color: var(--secondary-color); }
 
-::selection {
-  background: var(--secondary-color);
-  color: var(--white-color);
-}
-
 .section-padding {
   padding-top: 120px;
   padding-bottom: 120px;
 }
-
-b, strong { font-weight: var(--font-weight-bold); }
 
 .section-title-wrap {
   background: var(--secondary-color);
@@ -121,14 +113,14 @@ b, strong { font-weight: var(--font-weight-bold); }
   padding: 10px 30px;
 }
 
-/* --- New Gradient Utility --- */
+/* Gradient Text Utility */
 .text-gradient {
     background: linear-gradient(to right, var(--secondary-color), var(--primary-color), var(--secondary-color));
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: textShine 5s linear infinite;
-    color: var(--secondary-color); /* Fallback */
+    color: var(--secondary-color);
 }
 
 @keyframes textShine {
@@ -137,24 +129,9 @@ b, strong { font-weight: var(--font-weight-bold); }
 
 
 /*---------------------------------------
-  AVATAR IMAGE               
+  3. COMPONENTS (Preloader, Icons, Buttons)             
 -----------------------------------------*/
-.avatar-image {
-  border-radius: var(--border-radius-large);
-  width: 160px;
-  height: 160px;
-  object-fit: cover;
-}
-
-.avatar-image-large {
-  width: 90.4px;
-  height: 90.4px;
-}
-
-
-/*---------------------------------------
-  PRE LOADER               
------------------------------------------*/
+/* Preloader */
 .preloader {
   position: fixed;
   top: 0;
@@ -190,14 +167,9 @@ b, strong { font-weight: var(--font-weight-bold); }
   animation: spinner .9s linear infinite;
 }
 
-@keyframes spinner {
-  to { transform: rotate(360deg); }
-}
+@keyframes spinner { to { transform: rotate(360deg); } }
 
-
-/*---------------------------------------
-  CUSTOM ELEMENTS (Icons, Buttons)             
------------------------------------------*/
+/* Icons */
 .navbar-icon {
   background: var(--white-color);
   border-radius: var(--border-radius-large);
@@ -208,15 +180,15 @@ b, strong { font-weight: var(--font-weight-bold); }
   text-align: center;
 }
 
-.is-sticky .navbar-icon {
+.sticky-wrapper.is-sticky .navbar-icon {
   background: var(--secondary-color);
   color: var(--white-color);
 }
 
 .form-check-icon { color: var(--secondary-color); }
 
+/* Buttons */
 .custom-btn {
-  /* Gradient Button Style */
   background-image: linear-gradient(to right, var(--secondary-color) 0%, var(--primary-color) 51%, var(--secondary-color) 100%);
   background-size: 200% auto;
   border-radius: var(--border-radius-large);
@@ -249,7 +221,7 @@ b, strong { font-weight: var(--font-weight-bold); }
 .custom-link { background-color: var(--primary-color); }
 .custom-link:hover { background-color: var(--secondary-color); }
 
-/* Navbar Specific Button Override */
+/* Navbar Button Override */
 .navbar .custom-btn {
   background: transparent;
   border: 2px solid var(--white-color);
@@ -262,10 +234,19 @@ b, strong { font-weight: var(--font-weight-bold); }
   color: var(--secondary-color);
   box-shadow: none;
 }
+/* Ensure button changes color when sticky */
+.sticky-wrapper.is-sticky .navbar .custom-btn {
+  border-color: var(--secondary-color);
+  color: var(--secondary-color);
+}
+.sticky-wrapper.is-sticky .navbar .custom-btn:hover {
+  background: var(--secondary-color);
+  color: var(--white-color);
+}
 
 
 /*---------------------------------------
-  NAVIGATION              
+  4. NAVIGATION (Fixed Sticky Issue)             
 -----------------------------------------*/
 .sticky-wrapper {
   position: relative;
@@ -273,27 +254,18 @@ b, strong { font-weight: var(--font-weight-bold); }
   height: auto !important;
 }
 
-.is-sticky,
-.is-sticky .navbar .container {
-  background: rgba(255, 255, 255, 0.85); /* Glassmorphism Base */
-  backdrop-filter: blur(10px);            /* Blur Effect */
+/* Glassmorphism Effect when Sticky */
+.sticky-wrapper.is-sticky .navbar {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
-.is-sticky .navbar-brand,
-.is-sticky .navbar-brand:hover { color: var(--dark-color); }
+.sticky-wrapper.is-sticky .navbar-brand,
+.sticky-wrapper.is-sticky .navbar-brand:hover { color: var(--dark-color); }
 
-.is-sticky .navbar-nav .nav-link { color: var(--p-color); }
-
-.is-sticky .navbar .custom-btn {
-  border-color: var(--secondary-color);
-  color: var(--secondary-color);
-}
-
-.is-sticky .navbar .custom-btn:hover {
-  background: var(--secondary-color);
-  color: var(--white-color);
-}
+.sticky-wrapper.is-sticky .navbar-nav .nav-link { color: var(--p-color); }
 
 .navbar {
   background: transparent;
@@ -304,6 +276,7 @@ b, strong { font-weight: var(--font-weight-bold); }
   transition: all 0.3s;
   padding-top: 15px;
   padding-bottom: 0;
+  width: 100%;
 }
 
 .navbar .container {
@@ -345,14 +318,10 @@ b, strong { font-weight: var(--font-weight-bold); }
 }
 
 .navbar-nav .nav-link.active::after, 
-.navbar-nav .nav-link:hover::after {
-  background: var(--secondary-color);
-}
+.navbar-nav .nav-link:hover::after { background: var(--secondary-color); }
 
 .navbar-nav .nav-link.active, 
-.navbar-nav .nav-link:hover {
-  color: var(--secondary-color);
-}
+.navbar-nav .nav-link:hover { color: var(--secondary-color); }
 
 .navbar-toggler {
   border: 0;
@@ -365,7 +334,6 @@ b, strong { font-weight: var(--font-weight-bold); }
 }
 .navbar-toggler:focus { box-shadow: none; }
 
-/* Toggler Animation Simplification */
 .navbar-toggler .navbar-toggler-icon {
   background: var(--white-color);
   transition: background 10ms 300ms ease;
@@ -401,10 +369,9 @@ b, strong { font-weight: var(--font-weight-bold); }
 
 
 /*---------------------------------------
-  HERO SECTION (Animated Gradient)             
+  5. HERO SECTION             
 -----------------------------------------*/
 .hero {
-  /* Animated Gradient Background */
   background: linear-gradient(-45deg, #535da1, #14B789, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradient-animation 15s ease infinite;
@@ -434,7 +401,12 @@ b, strong { font-weight: var(--font-weight-bold); }
   padding: 8px 24px;
 }
 
-.hero-title { font-size: 44px; }
+/* Fix for White Text on White Background */
+.hero-title { 
+  font-size: 44px;
+  color: var(--primary-color); /* Explicitly set color */
+}
+
 .hero h2 { font-size: 38px; }
 
 .hero-text {
@@ -478,7 +450,7 @@ b, strong { font-weight: var(--font-weight-bold); }
 
 
 /*---------------------------------------
-  ABOUT              
+  6. ABOUT & CARDS             
 -----------------------------------------*/
 .profile-thumb {
   border: 1px solid var(--border-color);
@@ -516,13 +488,13 @@ b, strong { font-weight: var(--font-weight-bold); }
   color: var(--p-color);
 }
 
-/* --- Card Gradient Borders (Added) --- */
+/* Card Gradient Borders */
 .card {
     position: relative;
     z-index: 1;
     overflow: hidden;
     transition: transform 0.3s ease;
-    border: none !important; /* Override bootstrap */
+    border: none !important;
 }
 
 .card::before {
@@ -537,6 +509,7 @@ b, strong { font-weight: var(--font-weight-bold); }
     mask-composite: exclude;
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: none; /* FIX: Allows clicks to pass through to links */
 }
 
 .card:hover {
@@ -547,7 +520,7 @@ b, strong { font-weight: var(--font-weight-bold); }
 
 
 /*---------------------------------------
-  FEATURED & SERVICES             
+  7. SERVICES & PROJECTS             
 -----------------------------------------*/
 .featured-numbers {
   font-size: var(--h1-font-size);
@@ -649,10 +622,6 @@ b, strong { font-weight: var(--font-weight-bold); }
   pointer-events: none;
 }
 
-
-/*---------------------------------------
-  PROJECTS              
------------------------------------------*/
 .projects-thumb {
   background: var(--section-bg-color);
   border: 2px solid var(--white-color);
@@ -698,7 +667,7 @@ b, strong { font-weight: var(--font-weight-bold); }
 
 
 /*---------------------------------------
-  CONTACT & FORM             
+  8. CONTACT & FOOTER             
 -----------------------------------------*/
 .contact { background: var(--section-bg-color); }
 
@@ -793,10 +762,6 @@ b, strong { font-weight: var(--font-weight-bold); }
   border-color: transparent;
 }
 
-
-/*---------------------------------------
-  SITE FOOTER & SOCIALS             
------------------------------------------*/
 .site-footer {
   border-top: 1px solid var(--border-color);
   padding-top: 50px;
@@ -822,10 +787,7 @@ b, strong { font-weight: var(--font-weight-bold); }
 
 .copyright-text-wrap a { font-weight: var(--font-weight-bold); }
 
-.footer-menu {
-  margin: 0;
-  padding: 0;
-}
+.footer-menu { margin: 0; padding: 0; }
 
 .footer-menu-item {
   list-style: none;
@@ -883,7 +845,7 @@ b, strong { font-weight: var(--font-weight-bold); }
 
 
 /*---------------------------------------
-  RESPONSIVE STYLES               
+  9. RESPONSIVE STYLES               
 -----------------------------------------*/
 @media screen and (min-width: 1600px) {
   .hero { padding: 380px 0; }
@@ -946,7 +908,6 @@ b, strong { font-weight: var(--font-weight-bold); }
   }
 
   .about-thumb { padding: 0; }
-  .about-numbers { font-size: 42px; }
 
   .services-thumb-up {
     bottom: 0;
@@ -1003,15 +964,4 @@ b, strong { font-weight: var(--font-weight-bold); }
 
   .navbar-icon {
     font-size: var(--copyright-font-size);
-    width: 35.5px;
-    height: 35.5px;
-    line-height: 35.5px;
-  }
-
-  .hero-image-wrap {
-    width: 300px;
-    height: 300px;
-  }
-
-  .hero-image { min-width: inherit; }
-}
+    width: 35
