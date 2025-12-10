@@ -252,6 +252,7 @@ strong {
 }
 
 
+
 /*---------------------------------------
   CUSTOM BUTTON               
 -----------------------------------------*/
@@ -480,12 +481,24 @@ strong {
 /*---------------------------------------
   HERO              
 -----------------------------------------*/
+/* Add this keyframe animation at the bottom of your CSS file */
+@keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Update the .hero class */
 .hero {
-  background: var(--secondary-color);
-  position: relative;
-  overflow: hidden;
-  padding-top: 330px;
-  padding-bottom: 330px;
+    /* Replace the solid background color with this gradient */
+    background: linear-gradient(-45deg, #535da1, #14B789, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient-animation 15s ease infinite;
+    
+    position: relative;
+    overflow: hidden;
+    padding-top: 330px;
+    padding-bottom: 330px;
 }
 
 @media  screen and (min-width: 991px) {
