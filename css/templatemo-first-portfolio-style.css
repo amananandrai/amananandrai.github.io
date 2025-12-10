@@ -476,7 +476,68 @@ strong {
 .navbar-toggler .navbar-toggler-icon::after {
   top: 8px;
 }
+/* Ensure the card has relative positioning */
+.card {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    border: none; /* Remove default bootstrap border */
+}
 
+/* Create the gradient pseudo-element */
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px; /* Thickness of the border */
+    border-radius: 8px; /* Match card radius */
+    background: linear-gradient(45deg, #14B789, #535da1);
+    -webkit-mask: 
+       linear-gradient(#fff 0 0) content-box, 
+       linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* On hover, show the border and lift the card */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.is-sticky,
+.is-sticky .navbar .container {
+    background: rgba(255, 255, 255, 0.85); /* Semi-transparent */
+    backdrop-filter: blur(10px); /* The blur effect */
+    -webkit-backdrop-filter: blur(10px); /* Safari support */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.custom-btn {
+    background-image: linear-gradient(to right, #14B789 0%, #535da1 51%, #14B789 100%);
+    background-size: 200% auto;
+    border-radius: var(--border-radius-large);
+    color: var(--white-color);
+    font-weight: var(--font-weight-bold);
+    padding: 12px 24px;
+    border: none;
+    transition: 0.5s;
+}
+
+.custom-btn:hover {
+    background-position: right center; /* Moves the gradient */
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+}
 
 /*---------------------------------------
   HERO              
