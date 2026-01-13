@@ -1,206 +1,350 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>My Art Gallery</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-icons.css" rel="stylesheet">
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Framed Gallery</title>
     <style>
-        body { 
-            background: #f8f9fa;
-            min-height: 100vh;
+        :root {
+            --bg-main: #fafaf9;
+            --text-main: #1c1917;
+            --accent: #44403c;
+            --modal-overlay: rgba(0, 0, 0, 0.4);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 2rem 1rem;
             display: flex;
             flex-direction: column;
-        }
-        .navbar-custom {
-            background: #535da1;
-            padding: 0.2rem 0.5rem;
-        }
-        .navbar-custom .navbar-brand {
-            color: #fff;
-            font-weight: 600;
-            font-size: 2rem;
-            letter-spacing: 1px;
-            display: flex;
             align-items: center;
         }
-        .navbar-custom .navbar-brand .bi {
-            font-size: 2.3rem;
-            margin-right: 16px;
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            max-width: 600px;
         }
-        .masonry-gallery {
-            column-count: 3;
-            column-gap: 12px;
-            padding: 0;
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
         }
-        @media (max-width: 900px) {
-            .masonry-gallery { column-count: 2; }
+
+        p {
+            color: #78716c;
+            margin-bottom: 1.5rem;
         }
-        @media (max-width: 600px) {
-            .masonry-gallery { column-count: 1; }
-        }
-        .masonry-img {
-            width: 100%;
-            display: block;
-            margin-bottom: 12px;
-            border-radius: 8px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            transition: transform 0.2s, box-shadow 0.2s;
+
+        /* Trigger Button */
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            border: none;
+            font-weight: 600;
             cursor: pointer;
+            transition: transform 0.1s ease, background-color 0.2s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
-        .masonry-img:hover {
-            transform: scale(1.03);
-            box-shadow: 0 3px 12px rgba(83,93,161,0.13);
+
+        .btn-primary:hover {
+            background-color: #292524;
+            transform: translateY(-1px);
         }
-        .modal-content {
-            background: transparent;
-            border: none;
-        }
-        .modal-body {
-            padding: 0;
-            position: relative;
-        }
-        .modal-img {
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
             width: 100%;
-            height: auto;
-            max-height: 90vh;
-            object-fit: contain;
-            border-radius: 8px;
+            max-width: 1200px;
+            padding: 1rem;
         }
-        .close-modal {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
+
+        .art-item {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: background-color 0.2s;
         }
-        .close-modal:hover {
+
+        .image-wrapper {
+            width: 100%;
+            aspect-ratio: 1 / 1;
             background: white;
+            transition: all var(--transition-speed) ease;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .tm-footer {
-            background: #535da1;
-            color: #fff;
-            text-align: center;
-            font-size: 1.25rem;
-            padding: 4px 0 2px 0;
-            margin-top: auto;
-            letter-spacing: 0.3px;
+
+        .image-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+            object-fit: contain;
         }
-        .container, .container-fluid { padding-left: 5px !important; padding-right: 5px !important; }
-        .row { margin-left: 0 !important; margin-right: 0 !important; }
-        .mb-4 { margin-bottom: 10px !important; }
+
+        /* Frame Styles */
+        .frame-none {
+            border: none;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .frame-classic {
+            border: 18px solid #5d4037;
+            outline: 4px solid #3e2723;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            padding: 4px;
+        }
+
+        .frame-gold {
+            border: 15px solid #d4af37;
+            border-image: linear-gradient(45deg, #af9533, #fcf6ba, #b38728, #fbf5b7, #aa771c) 1;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            background: #fff;
+            padding: 8px;
+        }
+
+        .frame-modern {
+            border: 2px solid #1c1917;
+            padding: 15px;
+            background-color: white;
+            box-shadow: 8px 8px 0px #d6d3d1;
+        }
+
+        .frame-neon {
+            border: 3px solid #f472b6;
+            box-shadow: 0 0 15px #f472b6, inset 0 0 10px #f472b6;
+            padding: 10px;
+            background: #000;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background-color: var(--modal-overlay);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(4px);
+            padding: 1rem;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 1.25rem;
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(15px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title { font-size: 1.25rem; font-weight: 700; }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #a8a29e;
+        }
+
+        .frame-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+
+        .frame-option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            border: 2px solid #f5f5f4;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            background: white;
+            width: 100%;
+        }
+
+        .frame-option:hover { border-color: var(--accent); background-color: #fafaf9; }
+        .frame-option.selected { border-color: var(--accent); background-color: #f5f5f4; }
+
+        .preview-box {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+        }
+
+        .p-classic { background: #5d4037; border: 3px solid #3e2723; }
+        .p-gold { background: #d4af37; border: 2px solid #b38728; }
+        .p-modern { background: #fff; border: 2px solid #1c1917; }
+        .p-neon { background: #000; border: 2px solid #f472b6; box-shadow: 0 0 5px #f472b6; }
+        .p-none { background: #f5f5f4; border: 1px dashed #d6d3d1; }
+
+        .frame-info h4 { font-size: 0.95rem; font-weight: 600; }
+        .frame-info p { font-size: 0.75rem; margin: 0; color: #78716c; }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-custom">
-        <div class="container-fluid px-0">
-            <div class="d-flex align-items-center w-100">
-                <i class="bi bi-brush" style="font-size:2.3rem; color:#fff; margin-right:18px;"></i>
-                <a class="navbar-brand mb-0" href="#" style="font-size:2rem;">My Art Gallery</a>
+
+    <header>
+        <h1>Portfolio Gallery</h1>
+        <p>Choose a presentation style for your creative works.</p>
+        <button class="btn-primary" id="openModal">Change Frame Style</button>
+    </header>
+
+    <main class="gallery-grid" id="gallery">
+        <div class="art-item">
+            <div class="image-wrapper frame-modern">
+                <img src="images/logos/ai_image_gallery.jpg" alt="AI Image Gallery" onerror="this.src='https://picsum.photos/id/1/400/400'">
             </div>
         </div>
-    </nav>
-    <div class="container mt-1">
-        <div class="masonry-gallery" id="gallery-grid">
-            <!-- Images will be injected here by JavaScript -->
+        <div class="art-item">
+            <div class="image-wrapper frame-modern">
+                <img src="images/logos/gallery.jpg" alt="Gallery" onerror="this.src='https://picsum.photos/id/2/400/400'">
+            </div>
         </div>
-    </div>
-    <footer class="tm-footer">
-        &copy; 2025 Aman Anand Rai
-    </footer>
+        <div class="art-item">
+            <div class="image-wrapper frame-modern">
+                <img src="images/logos/github.png" alt="Github" onerror="this.src='https://picsum.photos/id/3/400/400'">
+            </div>
+        </div>
+        <div class="art-item">
+            <div class="image-wrapper frame-modern">
+                <img src="images/logos/leetcode.png" alt="Leetcode" onerror="this.src='https://picsum.photos/id/4/400/400'">
+            </div>
+        </div>
+        <div class="art-item">
+            <div class="image-wrapper frame-modern">
+                <img src="images/logos/hashnode.png" alt="Hashnode" onerror="this.src='https://picsum.photos/id/5/400/400'">
+            </div>
+        </div>
+        <div class="art-item">
+            <div class="image-wrapper frame-modern">
+                <img src="images/logos/devto.png" alt="Dev.to" onerror="this.src='https://picsum.photos/id/6/400/400'">
+            </div>
+        </div>
+    </main>
 
-    <!-- Modal for full-size image -->
-    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="close-modal" data-bs-dismiss="modal" aria-label="Close">
-                        <i class="bi bi-x-lg"></i>
-                    </button>
-                    <img src="" id="modalImage" class="modal-img" alt="Full Size">
-                </div>
+    <!-- Selection Modal -->
+    <div class="modal" id="frameModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Select Frame</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            
+            <div class="frame-grid">
+                <button class="frame-option" data-frame="frame-none">
+                    <div class="preview-box p-none"></div>
+                    <div class="frame-info">
+                        <h4>None</h4>
+                        <p>Standard clean edges</p>
+                    </div>
+                </button>
+                <button class="frame-option" data-frame="frame-modern">
+                    <div class="preview-box p-modern"></div>
+                    <div class="frame-info">
+                        <h4>Modern</h4>
+                        <p>Studio white with drop shadow</p>
+                    </div>
+                </button>
+                <button class="frame-option" data-frame="frame-classic">
+                    <div class="preview-box p-classic"></div>
+                    <div class="frame-info">
+                        <h4>Mahogany</h4>
+                        <p>Dark polished wood</p>
+                    </div>
+                </button>
+                <button class="frame-option" data-frame="frame-gold">
+                    <div class="preview-box p-gold"></div>
+                    <div class="frame-info">
+                        <h4>Gilded Gold</h4>
+                        <p>Regal metallic finish</p>
+                    </div>
+                </button>
+                <button class="frame-option" data-frame="frame-neon">
+                    <div class="preview-box p-neon"></div>
+                    <div class="frame-info">
+                        <h4>Neon Glow</h4>
+                        <p>Vibrant pink illumination</p>
+                    </div>
+                </button>
             </div>
         </div>
     </div>
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/click-scroll.js"></script>
     <script>
-    // Array of gallery images. To add more, just add objects to this array.
-    const galleryImages = [
-        {
-            thumb: 'img/tm-img-01-tn.jpg',
-            full: 'img/tm-img-01.jpg',
-        },
-        {
-            thumb: 'img/tm-img-02-tn.jpg',
-            full: 'img/tm-img-02.jpg',
-        },
-        {
-            thumb: 'img/tm-img-03-tn.jpg',
-            full: 'img/tm-img-03.jpg',
-        },
-        // Add more images here:
-        // { thumb: 'img/your-thumb.jpg', full: 'img/your-full.jpg' },
-    ];
+        const modal = document.getElementById('frameModal');
+        const openBtn = document.getElementById('openModal');
+        const closeBtn = document.getElementById('closeModal');
+        const frameOptions = document.querySelectorAll('.frame-option');
+        const wrappers = document.querySelectorAll('.image-wrapper');
 
-    // Dynamically render the gallery
-    const galleryGrid = document.getElementById('gallery-grid');
-    galleryImages.forEach((img, idx) => {
-        const image = document.createElement('img');
-        image.src = img.thumb;
-        image.className = 'masonry-img';
-        image.alt = `Artwork ${idx+1}`;
-        image.setAttribute('data-full', img.full);
-        galleryGrid.appendChild(image);
-    });
+        const toggleModal = (show) => {
+            modal.classList.toggle('active', show);
+            document.body.style.overflow = show ? 'hidden' : '';
+        };
 
-    // Modal functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        const modalElement = document.getElementById('imageModal');
-        const modal = new bootstrap.Modal(modalElement);
-        const modalImage = document.getElementById('modalImage');
+        openBtn.addEventListener('click', () => toggleModal(true));
+        closeBtn.addEventListener('click', () => toggleModal(false));
+        modal.addEventListener('click', (e) => e.target === modal && toggleModal(false));
 
-        // Open modal when clicking on gallery images
-        document.querySelectorAll('.masonry-img').forEach(img => {
-            img.addEventListener('click', function() {
-                modalImage.src = this.getAttribute('data-full');
-                modal.show();
+        frameOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                const selectedFrame = option.getAttribute('data-frame');
+                
+                // Update Gallery images
+                wrappers.forEach(wrapper => {
+                    wrapper.className = 'image-wrapper ' + selectedFrame;
+                });
+
+                // Update selected UI state
+                frameOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+
+                // Close modal
+                setTimeout(() => toggleModal(false), 200);
             });
         });
-
-        // Close modal when clicking the close button
-        document.querySelector('.close-modal').addEventListener('click', function() {
-            modal.hide();
-        });
-
-        // Close modal when clicking outside the image
-        modalElement.addEventListener('click', function(e) {
-            if (e.target === modalElement) {
-                modal.hide();
-            }
-        });
-
-        // Close modal when pressing Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && modalElement.classList.contains('show')) {
-                modal.hide();
-            }
-        });
-    });
     </script>
 </body>
 </html>
