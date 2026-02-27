@@ -15,16 +15,16 @@ html.gray #loader-wrapper {
 }
 
 :root {
-	--body-bg-color: #FEFFD3;
-	--body-color: #2b2b2b;
-	--navbar-bg-color: rgba(188, 217, 162, 0.7);
-	--navbar-link-color: #A82323;
-	--social-link-bg: #6D9E51;
-	--social-link-color: #FEFFD3;
-	--form-control-bg: rgba(188, 217, 162, 0.7);
-	--form-control-color: #2b2b2b;
-	--copyright-bg: rgba(109, 158, 81, 0.2);
-	--copyright-color: #2b2b2b;
+	--body-bg-color: #DDDDDD;
+	--body-color: black;
+	--navbar-bg-color: rgba(255, 255, 255, 0.7);
+	--navbar-link-color: black;
+	--social-link-bg: white;
+	--social-link-color: black;
+	--form-control-bg: rgba(255, 255, 255, 0.7);
+	--form-control-color: #000000;
+	--copyright-bg: rgba(0, 0, 0, 0.2);
+	--copyright-color: black;
 }
 
 :root.dark {
