@@ -887,8 +887,8 @@ a:hover {
 
 .site-footer {
   border-top: 1px solid var(--border-color);
-  padding-top: 25px;
-  padding-bottom: 25px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   text-align: center;
 }
 
@@ -903,11 +903,7 @@ a:hover {
   font-size: var(--copyright-font-size);
 }
 
-.copyright-text {
-  border-right: 1px solid var(--border-color);
-  padding-right: 25px;
-  margin-right: 20px;
-}
+
 
 .copyright-text-wrap a {
   font-weight: var(--font-weight-bold);
