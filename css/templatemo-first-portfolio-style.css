@@ -217,21 +217,25 @@ a:hover {
 
 /* Buttons */
 .custom-btn {
-  background-image: linear-gradient(to right, var(--secondary-color) 0%, var(--primary-color) 51%, var(--secondary-color) 100%);
-  background-size: 200% auto;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--border-radius-large);
   color: var(--white-color);
   font-size: var(--p-font-size);
   font-weight: var(--font-weight-bold);
   padding: 12px 24px;
-  border: none;
-  transition: 0.5s;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .custom-btn:hover {
-  background-position: right center;
-  box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 20px rgba(20, 183, 137, 0.4), 0 0 40px rgba(20, 183, 137, 0.2);
   color: var(--white-color);
+  transform: translateY(-3px);
 }
 
 .custom-border-btn {
@@ -247,11 +251,11 @@ a:hover {
 }
 
 .custom-link {
-  background-color: var(--primary-color);
+  background: rgba(83, 93, 161, 0.4);
 }
 
 .custom-link:hover {
-  background-color: var(--secondary-color);
+  background: rgba(20, 183, 137, 0.6);
 }
 
 /* Navbar Button Override */
