@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Art Gallery</title>
     <style>
         :root {
-            --bg-main: #fafaf9;
-            --text-main: #1c1917;
-            --accent: #44403c;
+            --bg-main: #FEFFD3;
+            --text-main: #2b2b2b;
+            --accent: #A82323;
             --modal-overlay: rgba(0, 0, 0, 0.4);
             --transition-speed: 0.3s;
         }
@@ -118,7 +119,7 @@
         .frame-gold {
             border: 15px solid #d4af37;
             border-image: linear-gradient(45deg, #af9533, #fcf6ba, #b38728, #fbf5b7, #aa771c) 1;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             background: #fff;
             padding: 8px;
         }
@@ -150,7 +151,9 @@
             padding: 1rem;
         }
 
-        .modal.active { display: flex; }
+        .modal.active {
+            display: flex;
+        }
 
         .modal-content {
             background: white;
@@ -163,8 +166,15 @@
         }
 
         @keyframes slideUp {
-            from { transform: translateY(15px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(15px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .modal-header {
@@ -174,7 +184,10 @@
             margin-bottom: 1.5rem;
         }
 
-        .modal-title { font-size: 1.25rem; font-weight: 700; }
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
 
         .close-modal {
             background: none;
@@ -204,8 +217,15 @@
             width: 100%;
         }
 
-        .frame-option:hover { border-color: var(--accent); background-color: #fafaf9; }
-        .frame-option.selected { border-color: var(--accent); background-color: #f5f5f4; }
+        .frame-option:hover {
+            border-color: var(--accent);
+            background-color: #fafaf9;
+        }
+
+        .frame-option.selected {
+            border-color: var(--accent);
+            background-color: #f5f5f4;
+        }
 
         .preview-box {
             width: 32px;
@@ -213,16 +233,45 @@
             flex-shrink: 0;
         }
 
-        .p-classic { background: #5d4037; border: 3px solid #3e2723; }
-        .p-gold { background: #d4af37; border: 2px solid #b38728; }
-        .p-modern { background: #fff; border: 2px solid #1c1917; }
-        .p-neon { background: #000; border: 2px solid #f472b6; box-shadow: 0 0 5px #f472b6; }
-        .p-none { background: #f5f5f4; border: 1px dashed #d6d3d1; }
+        .p-classic {
+            background: #5d4037;
+            border: 3px solid #3e2723;
+        }
 
-        .frame-info h4 { font-size: 0.95rem; font-weight: 600; }
-        .frame-info p { font-size: 0.75rem; margin: 0; color: #78716c; }
+        .p-gold {
+            background: #d4af37;
+            border: 2px solid #b38728;
+        }
+
+        .p-modern {
+            background: #fff;
+            border: 2px solid #1c1917;
+        }
+
+        .p-neon {
+            background: #000;
+            border: 2px solid #f472b6;
+            box-shadow: 0 0 5px #f472b6;
+        }
+
+        .p-none {
+            background: #f5f5f4;
+            border: 1px dashed #d6d3d1;
+        }
+
+        .frame-info h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .frame-info p {
+            font-size: 0.75rem;
+            margin: 0;
+            color: #78716c;
+        }
     </style>
 </head>
+
 <body>
 
     <header>
@@ -256,7 +305,7 @@
                 <h2 class="modal-title">Select Frame</h2>
                 <button class="close-modal" id="closeModal">&times;</button>
             </div>
-            
+
             <div class="frame-grid">
                 <button class="frame-option" data-frame="frame-none">
                     <div class="preview-box p-none"></div>
@@ -316,7 +365,7 @@
         frameOptions.forEach(option => {
             option.addEventListener('click', () => {
                 const selectedFrame = option.getAttribute('data-frame');
-                
+
                 // Update Gallery images
                 wrappers.forEach(wrapper => {
                     wrapper.className = 'image-wrapper ' + selectedFrame;
@@ -332,4 +381,5 @@
         });
     </script>
 </body>
+
 </html>
