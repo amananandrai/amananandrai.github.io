@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1280, height=720" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1280px;
+        height: 720px;
+        overflow: hidden;
+        background: #1b1f45;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      .clip {
+        position: absolute;
+        inset: 0;
+      }
+      #field {
+        width: 1280px;
+        height: 720px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+      Seamless 6s loop used as the portfolio hero backdrop.
+      Every motion term is periodic in the loop phase p (0 → 1), so frame 0 follows the last frame.
+    -->
+    <div id="root" data-composition-id="main" data-start="0" data-duration="6" data-width="1280" data-height="720">
+      <canvas id="field" class="clip" width="1280" height="720" data-start="0" data-duration="6" data-track-index="0"></canvas>
+    </div>
+    <script>
+      const W = 1280
+      const H = 720
+      const TAU = Math.PI * 2
+      const canvas = document.getElementById('field')
+      const ctx = canvas.getContext('2d')
+
+      function mulberry32(seed) {
+        return function () {
+          seed |= 0
+          seed = (seed + 0x6d2b79f5) | 0
+          let t = Math.imul(seed ^ (seed >>> 15), 1 | seed)
+          t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+        }
+      }
+      const rand = mulberry32(535)
+
+      const PURPLE = [139, 147, 230]
+      const TEAL = [20, 183, 137]
+      const nodes = Array.from({ length: 54 }, () => ({
+        x: rand() * W,
+        y: rand() * H,
+        ax: 18 + rand() * 34,
+        ay: 14 + rand() * 26,
+        k: rand() < 0.5 ? 1 : 2,
+        phase: rand(),
+        r: 1.6 + rand() * 2.6,
+        teal: rand() < 0.32,
+      }))
+
+      const pos = (n, p) => [
+        n.x + n.ax * Math.sin(TAU * (p * n.k + n.phase)),
+        n.y + n.ay * Math.cos(TAU * (p * n.k + n.phase)),
+      ]
+
+      const pairs = []
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x
+          const dy = nodes[i].y - nodes[j].y
+          if (dx * dx + dy * dy < 210 * 210) pairs.push([i, j])
+        }
+      }
+      const pulses = pairs.filter((_, idx) => idx % 5 === 0).map((pair, idx) => ({ pair, k: 1 + (idx % 2), offset: rand() }))
+
+      const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`
+
+      function blob(x, y, radius, color, alpha) {
+        const g = ctx.createRadialGradient(x, y, 0, x, y, radius)
+        g.addColorStop(0, rgba(color, alpha))
+        g.addColorStop(1, rgba(color, 0))
+        ctx.fillStyle = g
+        ctx.fillRect(0, 0, W, H)
+      }
+
+      function draw(p) {
+        const bg = ctx.createRadialGradient(W * 0.82, H * 0.08, 0, W * 0.82, H * 0.08, W * 1.1)
+        bg.addColorStop(0, '#535da1')
+        bg.addColorStop(0.45, '#2c3270')
+        bg.addColorStop(1, '#1b1f45')
+        ctx.fillStyle = bg
+        ctx.fillRect(0, 0, W, H)
+
+        blob(W * 0.2 + Math.cos(TAU * p) * 120, H * 0.85 + Math.sin(TAU * p) * 60, 520, TEAL, 0.28)
+        blob(W * 0.75 + Math.sin(TAU * p) * 140, H * 0.3 + Math.cos(TAU * p) * 80, 460, PURPLE, 0.22)
+
+        const pts = nodes.map((n) => pos(n, p))
+
+        ctx.lineWidth = 1
+        for (const [i, j] of pairs) {
+          const [ax, ay] = pts[i]
+          const [bx, by] = pts[j]
+          const d = Math.hypot(ax - bx, ay - by)
+          const a = Math.max(0, 1 - d / 210) * 0.38
+          if (a <= 0.01) continue
+          ctx.strokeStyle = rgba(nodes[i].teal ? TEAL : PURPLE, a)
+          ctx.beginPath()
+          ctx.moveTo(ax, ay)
+          ctx.lineTo(bx, by)
+          ctx.stroke()
+        }
+
+        for (const pulse of pulses) {
+          const [i, j] = pulse.pair
+          const t = (p * pulse.k + pulse.offset) % 1
+          const [ax, ay] = pts[i]
+          const [bx, by] = pts[j]
+          const x = ax + (bx - ax) * t
+          const y = ay + (by - ay) * t
+          const fade = Math.sin(Math.PI * t)
+          blob(x, y, 16, TEAL, 0.55 * fade)
+          ctx.fillStyle = rgba([220, 255, 240], 0.9 * fade)
+          ctx.beginPath()
+          ctx.arc(x, y, 1.6, 0, TAU)
+          ctx.fill()
+        }
+
+        nodes.forEach((n, i) => {
+          const [x, y] = pts[i]
+          const beat = 0.5 + 0.5 * Math.sin(TAU * (p * 2 + n.phase))
+          const color = n.teal ? TEAL : PURPLE
+          const g = ctx.createRadialGradient(x, y, 0, x, y, n.r * 6)
+          g.addColorStop(0, rgba(color, 0.35 + beat * 0.35))
+          g.addColorStop(1, rgba(color, 0))
+          ctx.fillStyle = g
+          ctx.beginPath()
+          ctx.arc(x, y, n.r * 6, 0, TAU)
+          ctx.fill()
+          ctx.fillStyle = rgba(color, 0.95)
+          ctx.beginPath()
+          ctx.arc(x, y, n.r * (0.85 + beat * 0.3), 0, TAU)
+          ctx.fill()
+        })
+      }
+
+      const state = { p: 0 }
+      const tl = gsap.timeline({ paused: true })
+      tl.to(state, { p: 1, duration: 6, ease: 'none', onUpdate: () => draw(state.p) }, 0)
+      window.__timelines = window.__timelines || {}
+      window.__timelines['main'] = tl
+      draw(0)
+      tl.seek(0)
+    </script>
+  </body>
+</html>
