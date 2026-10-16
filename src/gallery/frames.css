@@ -1,0 +1,72 @@
+.frame {
+  transition:
+    border-color 0.4s ease,
+    border-width 0.4s ease,
+    padding 0.4s ease,
+    box-shadow 0.4s ease,
+    background-color 0.4s ease;
+}
+
+.frame-none {
+  border: 0 solid transparent;
+  padding: 0;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.25);
+}
+
+.frame-modern {
+  border: 2px solid #1c1917;
+  padding: 15px;
+  background-color: white;
+  box-shadow: 8px 8px 0px #d6d3d1;
+}
+
+.frame-classic {
+  border: 18px solid #5d4037;
+  outline: 4px solid #3e2723;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.35);
+  padding: 4px;
+  background: #3e2723;
+}
+
+.frame-gold {
+  border: 15px solid #d4af37;
+  border-image: linear-gradient(45deg, #af9533, #fcf6ba, #b38728, #fbf5b7, #aa771c) 1;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+  background: #fff;
+  padding: 8px;
+}
+
+.frame-neon {
+  border: 3px solid #f472b6;
+  box-shadow:
+    0 0 15px #f472b6,
+    inset 0 0 10px #f472b6;
+  padding: 10px;
+  background: #000;
+}
+
+.swatch-none {
+  background: #f5f5f4;
+  border: 1px dashed #d6d3d1;
+}
+
+.swatch-modern {
+  background: #fff;
+  border: 2px solid #1c1917;
+}
+
+.swatch-classic {
+  background: #5d4037;
+  border: 3px solid #3e2723;
+}
+
+.swatch-gold {
+  background: linear-gradient(45deg, #af9533, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+  border: 2px solid #b38728;
+}
+
+.swatch-neon {
+  background: #000;
+  border: 2px solid #f472b6;
+  box-shadow: 0 0 6px #f472b6;
+}
