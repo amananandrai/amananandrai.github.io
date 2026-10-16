@@ -110,6 +110,46 @@
   }
 }
 
+.card-line-art {
+  color: #7a4e32;
+  opacity: 0.2;
+  transition:
+    color 0.65s var(--ease-out-expo),
+    opacity 0.65s var(--ease-out-expo);
+}
+
+.group:hover .card-line-art,
+.group:focus-within .card-line-art {
+  color: #0f8f6b;
+  opacity: 0.58;
+}
+
+.card-line-art path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.15;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .group:hover .card-line-art path,
+  .group:focus-within .card-line-art path {
+    animation: card-line-draw 1.15s var(--ease-out-expo) both;
+  }
+}
+
+@keyframes card-line-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -117,5 +157,15 @@
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.15s !important;
+  }
+
+  .card-line-art,
+  .card-line-art path {
+    transition: none !important;
+  }
+
+  .card-line-art path {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
   }
 }

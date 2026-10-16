@@ -1,4 +1,12 @@
-import { motion, useInView, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion'
+import {
+  motion,
+  useInView,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from 'framer-motion'
 import { lazy, Suspense, useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNode } from 'react'
 import { hero } from '../content'
 import { MagneticLink } from '../lib/Magnetic'
@@ -8,6 +16,101 @@ import { useSmoothScroll } from '../lib/smoothScroll'
 const NeuralField = lazy(() => import('../three/NeuralField'))
 
 const ease = [0.16, 1, 0.3, 1] as const
+
+/** Circle, dropped square, golden cut, compass arcs, and a spiral. Anchors drive the pen. */
+const STUDY: { d: string; ax: number; ay: number; width: number }[] = [
+  { d: 'M 100 28 A 72 72 0 1 1 100 172 A 72 72 0 1 1 100 28', ax: 172, ay: 100, width: 1.35 },
+  { d: 'M 32 38 H 168 V 174 H 32 Z', ax: 168, ay: 38, width: 1.25 },
+  { d: 'M 116 38 V 174', ax: 116, ay: 38, width: 0.9 },
+  { d: 'M 116 38 H 168 V 174 H 116 Z', ax: 168, ay: 106, width: 0.85 },
+  { d: 'M 32 122 H 168', ax: 32, ay: 122, width: 0.75 },
+  { d: 'M 22 100 H 178', ax: 22, ay: 100, width: 0.6 },
+  { d: 'M 100 22 V 178', ax: 100, ay: 22, width: 0.6 },
+  { d: 'M 150 16 A 46 46 0 0 1 192 62', ax: 192, ay: 62, width: 0.9 },
+  { d: 'M 12 112 A 44 44 0 0 0 52 184', ax: 12, ay: 112, width: 0.9 },
+  { d: 'M 176 118 A 30 30 0 0 1 154 162', ax: 176, ay: 118, width: 0.85 },
+  { d: 'M 32 38 L 48 54', ax: 32, ay: 38, width: 0.8 },
+  { d: 'M 168 38 L 152 54', ax: 168, ay: 38, width: 0.8 },
+  { d: 'M 32 174 L 48 158', ax: 32, ay: 174, width: 0.8 },
+  { d: 'M 168 174 L 152 158', ax: 168, ay: 174, width: 0.8 },
+  { d: 'M 46 150 A 7 7 0 0 1 53 157 A 12 12 0 0 1 41 169 A 18 18 0 0 1 23 151', ax: 40, ay: 162, width: 1.05 },
+]
+
+function VitruvianStudy({ progress, reduced }: { progress: MotionValue<number>; reduced: boolean }) {
+  const svgRef = useRef<SVGSVGElement>(null)
+  const pen = useRef({ x: 100, y: 92 })
+  const drawn = useRef<number[]>([])
+  const opacity = useTransform(progress, [0.06, 0.52], [1, 0])
+
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      const svg = svgRef.current
+      if (!svg) return
+      const rect = svg.getBoundingClientRect()
+      if (rect.width === 0 || rect.height === 0) return
+      pen.current.x = ((e.clientX - rect.left) / rect.width) * 200
+      pen.current.y = ((e.clientY - rect.top) / rect.height) * 200
+    }
+    window.addEventListener('pointermove', onMove, { passive: true })
+    return () => window.removeEventListener('pointermove', onMove)
+  }, [])
+
+  useEffect(() => {
+    const paths = svgRef.current?.querySelectorAll('path')
+    if (!paths?.length) return
+    if (reduced) {
+      paths.forEach((el) => {
+        el.style.strokeDashoffset = '0'
+      })
+      return
+    }
+    drawn.current = Array.from(paths, () => 0)
+    let frame = 0
+    const started = performance.now()
+    const step = (now: number) => {
+      const base = Math.min(1, (now - started) / 3600)
+      let pending = false
+      paths.forEach((el, i) => {
+        const spec = STUDY[i]
+        const near = Math.max(0, 1 - Math.hypot(pen.current.x - spec.ax, pen.current.y - spec.ay) / 100)
+        const draw = Math.min(1, base + near * (1 - base) * 0.92)
+        const next = Math.max(drawn.current[i] ?? 0, draw)
+        drawn.current[i] = next
+        el.style.strokeDashoffset = (1 - next).toFixed(4)
+        if (next < 0.999) pending = true
+      })
+      if (pending) frame = requestAnimationFrame(step)
+    }
+    frame = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(frame)
+  }, [reduced])
+
+  return (
+    <motion.svg
+      ref={svgRef}
+      viewBox="0 0 200 200"
+      aria-hidden="true"
+      style={{ opacity }}
+      className="pointer-events-none absolute left-1/2 top-1/2 w-[186%] -translate-x-1/2 -translate-y-[62%] sm:w-[178%] sm:-translate-y-1/2 md:w-[184%] lg:w-[196%]"
+    >
+      {STUDY.map((spec) => (
+        <path
+          key={spec.d}
+          d={spec.d}
+          pathLength={1}
+          stroke="#f0d2ae"
+          strokeOpacity={0.92}
+          strokeWidth={spec.width}
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeDasharray={1}
+          strokeDashoffset={reduced ? 0 : 1}
+        />
+      ))}
+    </motion.svg>
+  )
+}
 
 /**
  * Touch and small screens get the 3D field only after the first interaction, so the static gradient
@@ -121,7 +224,10 @@ export function Hero() {
       )}
 
       <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-6 md:grid-cols-[1.25fr_1fr] md:gap-8 lg:px-8">
-        <motion.div style={{ y: reduced ? 0 : textY }} className="order-2 text-center md:order-1 md:text-left">
+        <motion.div
+          style={{ y: reduced ? 0 : textY }}
+          className="relative z-10 order-2 text-center md:order-1 md:text-left"
+        >
           <h1 className="text-5xl font-bold leading-[1.02] tracking-[-0.035em] sm:text-6xl lg:text-7xl xl:text-8xl">
             <WordReveal text={hero.greeting} delay={0.15} />
           </h1>
@@ -161,11 +267,12 @@ export function Hero() {
             transition={{ duration: 1.1, ease, delay: 0.05 }}
             className="relative"
           >
+            <VitruvianStudy progress={scrollYProgress} reduced={!!reduced} />
             <div
               aria-hidden="true"
-              className="absolute -inset-3 rounded-full bg-[conic-gradient(from_200deg,#14b789,#535da1,#8b93e6,#14b789)] opacity-90 blur-[2px]"
+              className="absolute -inset-3 z-10 rounded-full bg-[conic-gradient(from_200deg,#14b789,#535da1,#8b93e6,#14b789)] opacity-90 blur-[2px]"
             />
-            <div className="relative size-48 overflow-hidden rounded-full border-4 border-brand-900 bg-gradient-to-b from-white to-brand-50 sm:size-60 lg:size-72 xl:size-80">
+            <div className="relative z-10 size-48 overflow-hidden rounded-full border-4 border-brand-900 bg-gradient-to-b from-white to-brand-50 sm:size-60 lg:size-72 xl:size-80">
               <img
                 src={hero.portrait}
                 alt={hero.portraitAlt}
