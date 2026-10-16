@@ -74,13 +74,13 @@ export function Contact() {
     <section id="section_3" className="bg-paper px-3 pb-10 sm:px-5">
       <div className="relative isolate mx-auto max-w-6xl overflow-hidden rounded-[2rem] px-4 py-14 sm:rounded-[2.5rem] sm:px-12 sm:py-20 lg:py-24">
         <MeshBackground />
-        <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-[1fr_1.05fr] md:gap-12">
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-12">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.9, ease }}
-            className="text-center text-6xl font-bold tracking-[-0.04em] text-white sm:text-7xl md:text-left lg:text-8xl"
+            className="text-center text-6xl font-bold tracking-[-0.04em] text-white sm:text-7xl lg:text-left lg:text-8xl"
           >
             <span className="bg-[linear-gradient(110deg,#fff_35%,#14b789_50%,#fff_65%)] bg-[length:250%_100%] bg-clip-text text-transparent [animation:shimmer_6s_ease-in-out_infinite]">
               {contact.banner}
@@ -92,7 +92,7 @@ export function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.9, ease, delay: 0.1 }}
-            className="min-w-0 rounded-3xl bg-white p-5 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.5)] sm:p-8"
+            className="mx-auto w-full min-w-0 max-w-lg rounded-3xl bg-white p-5 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.5)] sm:p-8"
           >
             <h3 className="text-2xl font-bold tracking-tight text-brand-900">{contact.heading}</h3>
 
@@ -118,7 +118,7 @@ export function Contact() {
                   </AnimatePresence>
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-base font-medium text-brand-900 sm:text-lg">
+                  <span className="block break-all text-[15px] font-medium text-brand-900 sm:text-lg">
                     {contact.email}
                   </span>
                   <span className="block text-xs text-slate-500">

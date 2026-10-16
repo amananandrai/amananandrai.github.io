@@ -63,7 +63,7 @@ export function GalleryPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease }}
-            className="flex flex-col items-center gap-6 text-center md:flex-row md:items-end md:justify-between md:text-left"
+            className="flex flex-col items-center gap-6 text-center lg:flex-row lg:items-end lg:justify-between lg:text-left"
           >
             <div>
               <h1 className="text-5xl font-bold tracking-[-0.035em] text-brand-900 sm:text-6xl">{gallery.heading}</h1>
@@ -120,7 +120,7 @@ export function GalleryPage() {
             <div className="mt-12">
               {view === '3d' ? (
                 <div className="space-y-4">
-                  <div className="relative h-[62vh] min-h-[420px] overflow-hidden rounded-[2rem] bg-brand-900 shadow-[0_30px_80px_-40px_rgba(27,31,69,0.8)]">
+                  <div className="relative h-[clamp(380px,48vw,620px)] overflow-hidden rounded-[2rem] bg-brand-900 shadow-[0_30px_80px_-40px_rgba(27,31,69,0.8)]">
                     <Suspense
                       fallback={
                         <div className="grid h-full place-items-center text-sm text-brand-100">
