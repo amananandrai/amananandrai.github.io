@@ -1,8 +1,11 @@
 import { MotionConfig } from 'framer-motion'
 import { SmoothScrollProvider } from './lib/smoothScroll'
 import { About } from './sections/About'
+import { Contact } from './sections/Contact'
+import { Footer } from './sections/Footer'
 import { Hero } from './sections/Hero'
 import { Nav } from './sections/Nav'
+import { Publications } from './sections/Publications'
 
 export default function App() {
   return (
@@ -18,8 +21,10 @@ export default function App() {
         <main>
           <Hero />
           <About />
-          <section id="section_3" className="h-screen p-10" />
+          <Publications />
+          <Contact />
         </main>
+        <Footer />
       </SmoothScrollProvider>
     </MotionConfig>
   )
