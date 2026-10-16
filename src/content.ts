@@ -64,7 +64,7 @@ export const hero = {
   greeting: 'Hello friend!',
   tagline: "Let's build something great together.",
   cta: { label: "Let's begin", href: '#section_2' },
-  portrait: '/images/aman_profile-removebg.png',
+  portrait: '/images/aman_profile-removebg.webp',
   portraitAlt: 'Portrait of Aman Anand Rai',
   introClip: { webm: '/media/hero-intro.webm', mp4: '/media/hero-intro.mp4', poster: '/media/hero-intro-poster.webp' },
 }
@@ -80,7 +80,7 @@ export const about = {
   highlights: ['AI art', 'data analytics', 'machine learning', 'generative AI', 'competitive coding'],
 }
 
-const logo = (file: string) => `/images/logos/${file}`
+const logo = (file: string) => `/images/logos/webp/${file.replace(/\.(png|jpe?g)$/i, '.webp')}`
 
 export const creativity: { heading: string; cards: LinkCard[] } = {
   heading: 'Creativity',

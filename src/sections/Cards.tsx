@@ -43,7 +43,7 @@ const technologyLayout: Record<string, string> = {
 }
 
 const logoFit: Record<string, string> = {
-  '/images/logos/codechef.png': 'scale-[1.45]',
+  '/images/logos/webp/codechef.webp': 'scale-[1.45]',
 }
 
 export function LogoTile({ link, size = 'md' }: { link: CardLink; size?: 'sm' | 'md' }) {

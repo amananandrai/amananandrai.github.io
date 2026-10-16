@@ -7,6 +7,8 @@ export default defineConfig({
   base: '/',
   plugins: [react(), tailwindcss()],
   build: {
+    // three.js lives in lazily loaded chunks; it is never on the critical path.
+    chunkSizeWarningLimit: 1100,
     rollupOptions: {
       input: {
         main: resolve(import.meta.dirname, 'index.html'),

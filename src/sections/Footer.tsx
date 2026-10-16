@@ -16,7 +16,7 @@ export function Footer() {
               {words.map((word) => (
                 <li
                   key={`${copy}-${word}`}
-                  className="flex items-center whitespace-nowrap text-2xl font-bold tracking-tight text-brand-100 sm:text-3xl"
+                  className="flex items-center whitespace-nowrap text-2xl font-bold tracking-tight text-brand/80 sm:text-3xl"
                 >
                   <span className="px-6">{word}</span>
                   <span className="size-2 rounded-full bg-teal/60" />

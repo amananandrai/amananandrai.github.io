@@ -33,6 +33,21 @@ export function Nav() {
       if (e.key === 'Escape') {
         setOpen(false)
         toggleRef.current?.focus()
+        return
+      }
+      if (e.key !== 'Tab') return
+      const menu = document.getElementById('mobile-menu')
+      const focusables = [toggleRef.current, ...(menu?.querySelectorAll<HTMLElement>('a[href]') ?? [])].filter(
+        (el): el is HTMLElement => Boolean(el),
+      )
+      const first = focusables[0]
+      const last = focusables[focusables.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
       }
     }
     window.addEventListener('keydown', onKey)
@@ -53,6 +68,7 @@ export function Nav() {
         animate={{ y: hidden ? '-130%' : '0%' }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5"
+        onFocusCapture={() => setHidden(false)}
       >
         <nav
           aria-label="Primary"

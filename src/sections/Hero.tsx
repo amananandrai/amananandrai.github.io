@@ -9,10 +9,44 @@ const NeuralField = lazy(() => import('../three/NeuralField'))
 
 const ease = [0.16, 1, 0.3, 1] as const
 
+/**
+ * Touch and small screens get the 3D field only after the first interaction, so the HyperFrames
+ * clip carries the hero on first load. Larger screens wait for page load plus an idle slot.
+ */
+function whenReadyFor3D(start: () => void): () => void {
+  const idle = (cb: () => void) =>
+    window.requestIdleCallback ? window.requestIdleCallback(cb, { timeout: 1500 }) : window.setTimeout(cb, 300)
+  const deferToInteraction = window.matchMedia('(pointer: coarse), (max-width: 767px)').matches
+  const events = ['pointerdown', 'touchstart', 'wheel', 'keydown', 'scroll'] as const
+  let done = false
+  const fire = () => {
+    if (done) return
+    done = true
+    cleanup()
+    idle(start)
+  }
+  const cleanup = () => {
+    events.forEach((e) => window.removeEventListener(e, fire))
+    window.removeEventListener('load', fire)
+  }
+  if (deferToInteraction) {
+    events.forEach((e) => window.addEventListener(e, fire, { passive: true, once: true }))
+  } else if (document.readyState === 'complete') {
+    fire()
+  } else {
+    window.addEventListener('load', fire, { once: true })
+  }
+  return () => {
+    done = true
+    cleanup()
+  }
+}
+
 function WordReveal({ text, delay = 0, className }: { text: string; delay?: number; className?: string }) {
   const words = text.split(' ')
   return (
-    <span className={className} aria-label={text} role="text">
+    <span className={className}>
+      <span className="sr-only">{text}</span>
       {words.map((word, i) => (
         <span key={i} aria-hidden="true" className="inline-block overflow-hidden pb-[0.12em] align-bottom">
           <motion.span
@@ -46,11 +80,9 @@ export function Hero() {
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 })
 
   useEffect(() => {
-    if (reduced || !supportsWebGL()) return
-    const idle = window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 200))
-    const handle = idle(() => setCanRender3D(true))
-    return () => (window.cancelIdleCallback ?? window.clearTimeout)(handle as number)
-  }, [reduced])
+    if (reduced || canRender3D || !inView || !supportsWebGL()) return
+    return whenReadyFor3D(() => setCanRender3D(true))
+  }, [reduced, inView, canRender3D])
 
   const begin = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
@@ -156,10 +188,10 @@ export function Hero() {
           scrollTo('section_2')
         }}
         style={{ opacity: cueOpacity }}
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs font-medium uppercase tracking-[0.25em] text-brand-100/80 sm:flex"
+        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs font-semibold uppercase tracking-[0.25em] text-brand-100 sm:flex"
         aria-label="Scroll to About"
       >
-        <span className="flex h-9 w-5 justify-center rounded-full border border-brand-100/50 pt-1.5">
+        <span className="flex h-9 w-5 justify-center rounded-full border border-brand-100/70 pt-1.5">
           <span className="h-2 w-0.5 rounded bg-teal [animation:scroll-cue_1.8s_ease-in-out_infinite]" />
         </span>
         Scroll

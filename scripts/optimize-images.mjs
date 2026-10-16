@@ -17,3 +17,20 @@ for (const file of paintings) {
     console.log('wrote', out)
   }
 }
+
+const logosDir = join(root, 'images/logos')
+await mkdir(join(logosDir, 'webp'), { recursive: true })
+const { readdir } = await import('node:fs/promises')
+for (const file of await readdir(logosDir)) {
+  if (!/\.(png|jpe?g)$/i.test(file)) continue
+  const out = join(logosDir, 'webp', `${basename(file, extname(file))}.webp`)
+  await sharp(join(logosDir, file))
+    .rotate()
+    .resize({ width: 128, height: 128, fit: 'inside', withoutEnlargement: true })
+    .webp({ quality: 90 })
+    .toFile(out)
+  console.log('wrote', out)
+}
+
+await sharp(join(root, 'images/aman_profile-removebg.png')).webp({ quality: 90, alphaQuality: 100 }).toFile(join(root, 'images/aman_profile-removebg.webp'))
+console.log('wrote portrait webp')
