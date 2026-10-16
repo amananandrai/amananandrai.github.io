@@ -4,21 +4,20 @@ function ring(cx: number, cy: number, r: number) {
   return `M ${cx} ${cy - r} A ${r} ${r} 0 1 1 ${cx} ${cy + r} A ${r} ${r} 0 1 1 ${cx} ${cy - r}`
 }
 
-function Stroke({ d, delay = 0 }: { d: string; delay?: number }) {
-  return <path d={d} pathLength={1} style={{ animationDelay: `${delay}ms` }} />
-}
-
-const cornerClass: Record<string, string> = {
-  painting: 'top-16 right-2 size-36 sm:size-44',
-  'stack-exchange': 'top-9 right-1 size-28 sm:size-32',
-  movies: 'right-1 bottom-1 size-24',
-  books: 'right-1 bottom-1 size-24',
-}
-
-function Art({ id, children }: { id: string; children: ReactNode }) {
-  const place = cornerClass[id] ?? 'bottom-1 right-14 size-24 sm:right-16 sm:size-28'
+function Stroke({ d, delay = 0, accent = false }: { d: string; delay?: number; accent?: boolean }) {
   return (
-    <svg viewBox="0 0 120 120" aria-hidden="true" className={`card-line-art pointer-events-none absolute ${place}`}>
+    <path d={d} pathLength={1} className={accent ? 'accent' : undefined} style={{ animationDelay: `${delay}ms` }} />
+  )
+}
+
+function Art({ children }: { children: ReactNode }) {
+  return (
+    <svg
+      viewBox="0 0 320 200"
+      preserveAspectRatio="xMidYMid meet"
+      aria-hidden="true"
+      className="card-line-art pointer-events-none absolute inset-0 size-full"
+    >
       {children}
     </svg>
   )
@@ -26,133 +25,177 @@ function Art({ id, children }: { id: string; children: ReactNode }) {
 
 function AiArt() {
   return (
-    <Art id="ai-art">
-      <Stroke d="M18 100 C 36 82, 52 70, 66 58" />
-      <Stroke d="M60 64 L 74 50" delay={70} />
-      <Stroke d="M66 58 C 82 48, 96 40, 108 28" delay={120} />
-      <Stroke d="M70 52 C 88 42, 100 36, 112 30" delay={170} />
-      <Stroke d="M62 48 C 78 36, 90 28, 100 18" delay={220} />
-      <Stroke d="M34 26 L 36 38 L 48 40 L 36 42 L 34 54 L 32 42 L 20 40 L 32 38 Z" delay={300} />
+    <Art>
+      <Stroke d="M78 28 H242 Q258 28 258 44 V156 Q258 172 242 172 H78 Q62 172 62 156 V44 Q62 28 78 28 Z" />
+      <Stroke d="M86 44 H234 V156 H86 Z" delay={60} />
+      <Stroke d={ring(160, 86, 28)} delay={120} />
+      <Stroke d="M112 156 C 122 124, 138 112, 160 112 C 182 112, 198 124, 208 156" delay={180} />
+      <Stroke d="M148 80 H154 M166 80 H172 M146 96 Q160 104 174 96" delay={230} />
+      <Stroke d="M248 36 L252 52 L268 56 L252 60 L248 76 L244 60 L228 56 L244 52 Z" accent delay={300} />
+      <Stroke d="M46 58 L70 78 L52 104" accent delay={360} />
+      <Stroke d={ring(46, 58, 4)} accent delay={400} />
+      <Stroke d={ring(70, 78, 4)} accent delay={430} />
+      <Stroke d={ring(52, 104, 4)} accent delay={460} />
     </Art>
   )
 }
 
 function Painting() {
   return (
-    <Art id="painting">
-      <Stroke d="M36 104 L 58 24 L 80 104" />
-      <Stroke d="M44 72 H 72" delay={80} />
-      <Stroke d="M46 40 H 70 V 66 H 46 Z" delay={140} />
-      <Stroke d="M84 62 H 116" delay={220} />
-      <Stroke d="M84 62 V 108" delay={280} />
-      <Stroke d="M92 72 H 116" delay={340} />
-      <Stroke d="M92 72 V 108" delay={400} />
+    <Art>
+      <Stroke d="M118 176 L160 24 L202 176" />
+      <Stroke d="M132 176 L148 112 M188 176 L172 112" delay={70} />
+      <Stroke d="M136 96 H184" delay={120} />
+      <Stroke d="M138 40 H182 V104 H138 Z" delay={170} />
+      <Stroke d="M146 78 H174" delay={220} />
+      <Stroke d="M146 90 L160 68 L174 90" delay={260} />
+      <Stroke d={ring(160, 58, 7)} accent delay={310} />
+      <Stroke d={ring(228, 132, 22)} delay={360} />
+      <Stroke d={ring(220, 126, 3.5)} accent delay={400} />
+      <Stroke d={ring(236, 124, 3.5)} accent delay={420} />
+      <Stroke d={ring(228, 140, 3.5)} accent delay={440} />
+      <Stroke d="M214 148 C 200 160, 188 168, 176 164" delay={480} />
     </Art>
   )
 }
 
 function StackExchange() {
   return (
-    <Art id="stack-exchange">
-      <Stroke d="M16 30 H 70 V 60 H 42 L 30 74 V 60 H 16 Z" />
-      <Stroke d="M10 24 L 22 36 M 64 24 L 76 36 M 10 66 L 20 56" delay={90} />
-      <Stroke d="M48 52 H 106 V 86 H 78 L 64 100 V 86 H 48 Z" delay={180} />
-      <Stroke d="M42 46 L 54 58 M 100 46 L 112 58 M 100 92 L 110 82" delay={270} />
+    <Art>
+      <Stroke d="M24 36 H148 Q162 36 162 50 V108 Q162 122 148 122 H100 L78 146 V122 H38 Q24 122 24 108 V50 Q24 36 38 36 Z" />
+      <Stroke d="M78 58 C78 46 118 44 118 64 C118 80 96 82 96 98 M96 112 V118" delay={100} />
+      <Stroke
+        d="M158 54 H296 Q310 54 310 68 V126 Q310 140 296 140 H248 L226 164 V140 H172 Q158 140 158 126 V68 Q158 54 172 54 Z"
+        delay={180}
+      />
+      <Stroke d="M186 80 H278" delay={250} />
+      <Stroke d="M186 100 H262" delay={300} />
+      <Stroke d="M186 120 H240" delay={350} />
     </Art>
   )
 }
 
+function sprockets(y: number) {
+  return Array.from({ length: 10 }, (_, i) => {
+    const x = 22 + i * 30
+    return `M ${x} ${y} h 12 v 10 h -12 Z`
+  }).join(' ')
+}
+
 function Movies() {
   return (
-    <Art id="movies">
-      <Stroke d={ring(46, 68, 26)} />
-      <Stroke d={ring(46, 68, 7)} delay={80} />
-      <Stroke d="M46 42 V 94 M 20 68 H 72 M 28 50 L 64 86 M 64 50 L 28 86" delay={150} />
-      <Stroke d="M74 22 H 114 V 42 H 74 Z" delay={230} />
-      <Stroke d="M78 22 L 84 12 H 92 L 86 22" delay={300} />
-      <Stroke d="M94 22 L 100 12 H 108 L 102 22" delay={360} />
+    <Art>
+      <Stroke d="M12 18 H308 V46 H12 Z" />
+      <Stroke d={sprockets(27)} delay={40} />
+      <Stroke d="M12 154 H308 V182 H12 Z" delay={80} />
+      <Stroke d={sprockets(163)} delay={120} />
+      <Stroke d={ring(92, 100, 36)} delay={170} />
+      <Stroke d={ring(92, 100, 10)} delay={210} />
+      <Stroke d="M92 64 V136 M56 100 H128 M66 74 L118 126 M118 74 L66 126" delay={250} />
+      <Stroke d="M168 78 H292 V148 H168 Z" delay={320} />
+      <Stroke d="M168 78 L184 52 H292 V78" delay={370} />
+      <Stroke d="M196 78 L212 52 M228 78 L244 52 M260 78 L276 52" accent delay={420} />
     </Art>
   )
 }
 
 function Books() {
   return (
-    <Art id="books">
-      <Stroke d="M58 34 C 44 36, 22 44, 20 86 C 28 74, 44 70, 58 74 Z" />
-      <Stroke d="M62 34 C 76 36, 98 44, 100 86 C 92 74, 76 70, 62 74 Z" delay={90} />
-      <Stroke d="M60 30 V 90" delay={160} />
-      <Stroke d="M78 48 A 5 5 0 0 1 84 56 A 9 9 0 0 1 72 64 A 14 14 0 0 1 86 46" delay={240} />
+    <Art>
+      <Stroke d="M28 46 L156 70 L156 168 L28 148 Z" />
+      <Stroke d="M164 70 L292 46 L292 148 L164 168 Z" delay={70} />
+      <Stroke d="M156 62 V176" delay={130} />
+      <Stroke d="M52 84 H132 M52 104 H128 M52 124 H118" delay={180} />
+      <Stroke d="M188 84 H268 M192 104 H268 M200 124 H268" delay={240} />
+      <Stroke d="M214 70 V128 L228 114 L242 128 V70" accent delay={310} />
     </Art>
   )
 }
 
 function CompetitiveCoding() {
   return (
-    <Art id="competitive-coding">
-      <Stroke d="M16 28 H 104 M16 52 H 104 M16 76 H 104 M16 100 H 104" />
-      <Stroke d="M28 16 V 108 M52 16 V 108 M76 16 V 108 M100 16 V 108" delay={80} />
-      <Stroke d="M28 100 V 76 H 52 V 52 H 76 V 28 H 100" delay={180} />
+    <Art>
+      <Stroke d="M78 48 L36 100 L78 152" />
+      <Stroke d="M108 40 L148 160" delay={70} />
+      <Stroke d="M168 48 L210 100 L168 152" delay={130} />
+      <Stroke d="M236 62 H286 V92 C286 118 270 130 252 130 C234 130 218 118 218 92 V62 Z" delay={200} />
+      <Stroke d="M218 74 C198 74 198 100 218 100" delay={260} />
+      <Stroke d="M286 74 C306 74 306 100 286 100" delay={300} />
+      <Stroke d="M244 130 H260 V146" delay={340} />
+      <Stroke d="M226 146 H278 V162 H226 Z" delay={380} />
+      <Stroke d="M252 78 L256 90 H270 L260 98 L264 112 L252 104 L240 112 L244 98 L232 90 H246 Z" accent delay={430} />
     </Art>
   )
 }
 
 function Blogging() {
   return (
-    <Art id="blogging">
-      <Stroke d="M14 74 H 106" />
-      <Stroke d="M14 90 H 106" delay={60} />
-      <Stroke d="M14 106 H 96" delay={110} />
-      <Stroke d="M28 104 C 46 78, 66 48, 98 16" delay={180} />
-      <Stroke d="M98 16 C 90 26, 86 32, 78 34" delay={250} />
-      <Stroke d="M72 46 C 62 38, 56 30, 60 20" delay={320} />
-      <Stroke d="M56 64 C 44 54, 40 44, 46 32" delay={380} />
+    <Art>
+      <Stroke d="M36 24 H196 V176 H36 Z" />
+      <Stroke d="M56 48 H168" delay={60} />
+      <Stroke d="M56 62 H140" accent delay={100} />
+      <Stroke d="M56 86 H176" delay={150} />
+      <Stroke d="M56 102 H176" delay={190} />
+      <Stroke d="M56 118 H164" delay={230} />
+      <Stroke d="M56 134 H148" delay={270} />
+      <Stroke d="M56 150 H120" delay={310} />
+      <Stroke d="M214 168 C190 120 176 78 206 30" delay={360} />
+      <Stroke d="M206 30 C196 46 190 54 178 58" delay={410} />
+      <Stroke d="M188 72 C174 60 166 48 174 34" accent delay={450} />
     </Art>
   )
 }
 
 function Programming() {
   return (
-    <Art id="programming">
-      <Stroke d="M14 22 H 106 V 104 H 14 Z" />
-      <Stroke d="M14 38 H 106" delay={70} />
-      <Stroke d={ring(26, 30, 2.4)} delay={120} />
-      <Stroke d={ring(36, 30, 2.4)} delay={150} />
-      <Stroke d={ring(46, 30, 2.4)} delay={180} />
-      <Stroke d="M32 90 V 56 H 60 V 74 H 92" delay={240} />
-      <Stroke d="M60 56 H 90 V 48" delay={320} />
-      <Stroke d={ring(32, 90, 2.6)} delay={380} />
-      <Stroke d={ring(60, 56, 2.6)} delay={420} />
-      <Stroke d={ring(92, 74, 2.6)} delay={460} />
+    <Art>
+      <Stroke d="M28 28 H292 V176 H28 Z" />
+      <Stroke d="M28 52 H292" delay={50} />
+      <Stroke d={ring(48, 40, 4)} accent delay={90} />
+      <Stroke d={ring(66, 40, 4)} delay={110} />
+      <Stroke d={ring(84, 40, 4)} delay={130} />
+      <Stroke d="M48 72 H96" delay={180} />
+      <Stroke d="M64 92 H132" delay={220} />
+      <Stroke d="M64 112 H118" delay={260} />
+      <Stroke d="M48 132 H108" delay={300} />
+      <Stroke d="M48 152 H160" delay={340} />
+      <Stroke d="M188 70 V154" delay={380} />
+      <Stroke d="M188 70 H236 M206 92 H258 M206 114 H240 M188 154 H236" delay={430} />
     </Art>
   )
 }
 
 function Certifications() {
   return (
-    <Art id="certifications">
-      <Stroke d={ring(62, 58, 32)} />
-      <Stroke d={ring(62, 58, 22)} delay={90} />
-      <Stroke d="M62 44 L 66 54 H 76 L 68 60 L 71 70 L 62 64 L 53 70 L 56 60 L 48 54 H 58 Z" delay={170} />
-      <Stroke d="M30 78 C 16 64, 16 46, 32 34" delay={260} />
-      <Stroke d="M24 70 C 30 66, 32 60, 26 56" delay={320} />
-      <Stroke d="M22 58 C 30 56, 32 50, 26 46" delay={370} />
-      <Stroke d="M26 46 C 34 46, 36 40, 32 36" delay={420} />
+    <Art>
+      <Stroke d="M24 36 H248 V164 H24 Z" />
+      <Stroke d="M40 52 H232 V148 H40 Z" delay={70} />
+      <Stroke d="M58 74 H168" delay={130} />
+      <Stroke d="M58 96 H176" delay={170} />
+      <Stroke d="M58 116 H150" delay={210} />
+      <Stroke d={ring(196, 112, 28)} delay={260} />
+      <Stroke d={ring(196, 112, 18)} delay={300} />
+      <Stroke
+        d="M196 96 L200 108 H214 L204 116 L208 128 L196 122 L184 128 L188 116 L178 108 H192 Z"
+        accent
+        delay={350}
+      />
+      <Stroke d="M180 138 L168 176" accent delay={410} />
+      <Stroke d="M212 138 L224 176" accent delay={450} />
     </Art>
   )
 }
 
 function Research() {
   return (
-    <Art id="research">
-      <Stroke d="M30 80 L 54 42 L 82 58 L 102 30" />
-      <Stroke d="M54 42 L 46 86 L 82 58" delay={80} />
-      <Stroke d="M46 86 L 70 98 L 82 58 M 30 80 L 46 86" delay={160} />
-      <Stroke d={ring(30, 80, 3.2)} delay={240} />
-      <Stroke d={ring(54, 42, 3.2)} delay={280} />
-      <Stroke d={ring(82, 58, 3.2)} delay={320} />
-      <Stroke d={ring(102, 30, 3.2)} delay={360} />
-      <Stroke d={ring(46, 86, 2.6)} delay={400} />
-      <Stroke d={ring(70, 98, 2.6)} delay={440} />
+    <Art>
+      <Stroke d="M28 36 H196 V172 H28 Z" />
+      <Stroke d="M48 58 H168" delay={60} />
+      <Stroke d="M48 78 H156" delay={100} />
+      <Stroke d="M48 98 H140" delay={140} />
+      <Stroke d="M48 148 L84 118 L116 132 L164 86" accent delay={200} />
+      <Stroke d={ring(214, 96, 52)} delay={270} />
+      <Stroke d="M252 134 L292 180" delay={340} />
     </Art>
   )
 }

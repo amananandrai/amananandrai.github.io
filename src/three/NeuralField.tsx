@@ -5,9 +5,7 @@ import * as THREE from 'three'
 
 const PURPLE = new THREE.Color('#8b93e6')
 const TEAL = new THREE.Color('#14b789')
-const INK = new THREE.Color('#e7a15c')
 const LINK_DISTANCE = 1.55
-const PHI = (1 + Math.sqrt(5)) / 2
 
 const pointVertex = /* glsl */ `
   attribute float aSize;
@@ -42,103 +40,32 @@ interface FieldProps {
   progress: MotionValue<number>
 }
 
-/** Circle, square (dropped, Vitruvian offset), and a golden spiral, in local space. */
-function layoutStudy(count: number) {
-  const nCircle = Math.round(count * 0.44)
-  const nSquare = Math.round(count * 0.38)
-  const nSpiral = count - nCircle - nSquare
-  const structured = new Float32Array(count * 3)
-  const R = 2.2
-  const circleY = 0.2
-
-  for (let i = 0; i < nCircle; i++) {
-    const a = (i / nCircle) * Math.PI * 2
-    structured[i * 3] = Math.cos(a) * R
-    structured[i * 3 + 1] = circleY + Math.sin(a) * R
-    structured[i * 3 + 2] = Math.sin(a * 2) * 0.16
-  }
-
-  const half = R
-  const squareY = -0.48
-  for (let i = 0; i < nSquare; i++) {
-    const edge = (i / nSquare) * 4
-    const side = Math.floor(edge) % 4
-    const u = edge - Math.floor(edge)
-    let x = 0
-    let y = 0
-    if (side === 0) {
-      x = -half + 2 * half * u
-      y = half
-    } else if (side === 1) {
-      x = half
-      y = half - 2 * half * u
-    } else if (side === 2) {
-      x = half - 2 * half * u
-      y = -half
-    } else {
-      x = -half
-      y = -half + 2 * half * u
-    }
-    const idx = nCircle + i
-    structured[idx * 3] = x
-    structured[idx * 3 + 1] = squareY + y
-    structured[idx * 3 + 2] = 0.04
-  }
-
-  const growth = Math.log(PHI) / (Math.PI / 2)
-  const minTheta = Math.PI * 0.65
-  const maxTheta = Math.PI * 2 * 1.55
-  const maxRad = Math.exp(growth * maxTheta)
-  const originX = -R * 0.55
-  const originY = -R * 0.95
-  for (let i = 0; i < nSpiral; i++) {
-    const t = i / Math.max(1, nSpiral - 1)
-    const theta = minTheta + t * (maxTheta - minTheta)
-    const rad = (Math.exp(growth * theta) / maxRad) * R * 0.72
-    const idx = nCircle + nSquare + i
-    structured[idx * 3] = originX + Math.cos(theta) * rad
-    structured[idx * 3 + 1] = originY + Math.sin(theta) * rad
-    structured[idx * 3 + 2] = (t - 0.5) * 0.28
-  }
-
-  return structured
-}
-
 function Field({ count, progress }: FieldProps) {
   const group = useRef<THREE.Group>(null)
   const { size, viewport, gl } = useThree()
   const pointer = useRef(new THREE.Vector2(0, 0))
 
   const data = useMemo(() => {
-    const free = new Float32Array(count * 3)
-    const structured = layoutStudy(count)
+    const base = new Float32Array(count * 3)
     const phase = new Float32Array(count * 3)
-    const freeColor = new Float32Array(count * 3)
-    const ink = new Float32Array(count * 3)
     const colors = new Float32Array(count * 3)
     const sizes = new Float32Array(count)
     const tmp = new THREE.Color()
     for (let i = 0; i < count; i++) {
-      free[i * 3] = (Math.random() - 0.5) * 14
-      free[i * 3 + 1] = (Math.random() - 0.5) * 8
-      free[i * 3 + 2] = (Math.random() - 0.5) * 6
+      base[i * 3] = (Math.random() - 0.5) * 14
+      base[i * 3 + 1] = (Math.random() - 0.5) * 8
+      base[i * 3 + 2] = (Math.random() - 0.5) * 6
       phase[i * 3] = Math.random() * Math.PI * 2
       phase[i * 3 + 1] = Math.random() * Math.PI * 2
       phase[i * 3 + 2] = 0.25 + Math.random() * 0.5
       tmp.copy(PURPLE).lerp(TEAL, Math.random() < 0.35 ? 0.9 : Math.random() * 0.25)
-      freeColor.set([tmp.r, tmp.g, tmp.b], i * 3)
-      tmp.copy(INK).lerp(PURPLE, 0.22 + (i % 5) * 0.04)
-      ink.set([tmp.r, tmp.g, tmp.b], i * 3)
       colors.set([tmp.r, tmp.g, tmp.b], i * 3)
-      sizes[i] = 2.4 + Math.random() * 4.2
+      sizes[i] = 2.5 + Math.random() * 4.5
     }
     const maxPairs = (count * (count - 1)) / 2
     return {
-      free,
-      structured,
+      base,
       phase,
-      freeColor,
-      ink,
       colors,
       sizes,
       positions: new Float32Array(count * 3),
@@ -150,7 +77,7 @@ function Field({ count, progress }: FieldProps) {
   const pointsGeo = useMemo(() => {
     const g = new THREE.BufferGeometry()
     g.setAttribute('position', new THREE.BufferAttribute(data.positions, 3))
-    g.setAttribute('aColor', new THREE.BufferAttribute(data.colors, 3).setUsage(THREE.DynamicDrawUsage))
+    g.setAttribute('aColor', new THREE.BufferAttribute(data.colors, 3))
     g.setAttribute('aSize', new THREE.BufferAttribute(data.sizes, 1))
     return g
   }, [data])
@@ -209,48 +136,33 @@ function Field({ count, progress }: FieldProps) {
     const t = state.clock.elapsedTime
     const p = progress.get()
     const spread = 1 + p * 1.8
-    const fade = 1 - THREE.MathUtils.smoothstep(p, 0.58, 1)
-    const structure = 1 - THREE.MathUtils.smoothstep(p, 0.04, 0.6)
+    const fade = Math.max(0, 1 - p * 1.25)
     pointsMat.uniforms.uFade.value = fade
     linesMat.opacity = fade
 
     const px = pointer.current.x * (viewport.width / 2)
     const py = pointer.current.y * (viewport.height / 2)
-    const { free, structured, phase, positions, linePositions, lineColors, colors, freeColor, ink } = data
-    const phone = size.width < 768
-    const tablet = !phone && size.width < 1100
-    const fit = phone ? 0.46 : tablet ? 0.72 : 1
-    const ox = phone ? 0 : tablet ? 1.85 : 1.65
-    const oy = phone ? 1.85 : 0.12
-    const wobble = 0.05 + (1 - structure) * 0.4
-    const pullStrength = 0.08 + 0.3 * (1 - structure)
+    const { base, phase, positions, linePositions, lineColors, colors } = data
 
     for (let i = 0; i < count; i++) {
       const i3 = i * 3
       const speed = phase[i3 + 2]
-      let x = THREE.MathUtils.lerp(free[i3], structured[i3] * fit + ox, structure)
-      let y = THREE.MathUtils.lerp(free[i3 + 1], structured[i3 + 1] * fit + oy, structure)
-      let z = THREE.MathUtils.lerp(free[i3 + 2], structured[i3 + 2], structure)
-      x += Math.sin(t * speed + phase[i3]) * wobble
-      y += Math.cos(t * speed * 0.8 + phase[i3 + 1]) * wobble * 0.8
-      z += Math.sin(t * speed * 0.6 + phase[i3]) * wobble * 0.5
+      let x = base[i3] + Math.sin(t * speed + phase[i3]) * 0.45
+      let y = base[i3 + 1] + Math.cos(t * speed * 0.8 + phase[i3 + 1]) * 0.35
+      const z = base[i3 + 2] + Math.sin(t * speed * 0.6 + phase[i3]) * 0.3
       const dx = px - x
       const dy = py - y
       const d2 = dx * dx + dy * dy
       if (d2 < 9) {
-        const pull = (1 - d2 / 9) * pullStrength
+        const pull = (1 - d2 / 9) * 0.35
         x += dx * pull
         y += dy * pull
       }
       positions[i3] = x * spread
       positions[i3 + 1] = y * spread
       positions[i3 + 2] = z * spread
-      colors[i3] = ink[i3] * structure + freeColor[i3] * (1 - structure)
-      colors[i3 + 1] = ink[i3 + 1] * structure + freeColor[i3 + 1] * (1 - structure)
-      colors[i3 + 2] = ink[i3 + 2] * structure + freeColor[i3 + 2] * (1 - structure)
     }
     pointsGeo.attributes.position.needsUpdate = true
-    pointsGeo.attributes.aColor.needsUpdate = true
 
     let segments = 0
     const maxD2 = LINK_DISTANCE * LINK_DISTANCE * spread * spread
