@@ -1,6 +1,11 @@
-import { creativity, footer, publications, technologies } from '../content'
+import { creativity, footer, projects, publications, technologies } from '../content'
 
-const words = [...creativity.cards.map((c) => c.title), ...technologies.cards.map((c) => c.title), publications.heading]
+const words = [
+  ...creativity.cards.map((c) => c.title),
+  ...projects.cards.map((c) => c.title),
+  ...technologies.cards.map((c) => c.title),
+  publications.heading,
+]
 
 export function Footer() {
   const year = new Date().getFullYear()

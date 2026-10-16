@@ -8,15 +8,18 @@ import {
   BsBrush,
   BsChevronDown,
   BsCodeSquare,
+  BsFileEarmarkText,
   BsFilm,
   BsGithub,
+  BsImages,
+  BsJournalBookmark,
   BsJournalText,
   BsPalette,
   BsPencilSquare,
   BsSearch,
   BsStack,
 } from 'react-icons/bs'
-import { creativity, gallery, technologies, type CardLink, type IconName, type LinkCard } from '../content'
+import { creativity, gallery, projects, technologies, type CardLink, type IconName, type LinkCard } from '../content'
 
 export const icons: Record<IconName, IconType> = {
   palette: BsPalette,
@@ -30,6 +33,9 @@ export const icons: Record<IconName, IconType> = {
   journal: BsJournalText,
   award: BsAward,
   search: BsSearch,
+  images: BsImages,
+  notebook: BsJournalBookmark,
+  document: BsFileEarmarkText,
 }
 
 const ease = [0.16, 1, 0.3, 1] as const
@@ -46,19 +52,24 @@ const logoFit: Record<string, string> = {
   '/images/logos/webp/codechef.webp': 'scale-[1.45]',
 }
 
-export function LogoTile({ link, size = 'md' }: { link: CardLink; size?: 'sm' | 'md' }) {
+export function LogoTile({ link, size = 'md', icon }: { link: CardLink; size?: 'sm' | 'md'; icon?: IconType }) {
   const dims = size === 'sm' ? 'size-10 p-1' : 'size-12 p-1.5'
+  const Fallback = icon
   return (
     <span
       className={`grid shrink-0 place-items-center overflow-hidden rounded-xl bg-white ring-1 ring-slate-200 ${dims}`}
     >
-      <img
-        src={link.logo}
-        alt={link.logoAlt}
-        loading="lazy"
-        decoding="async"
-        className={`size-full rounded-md object-contain ${logoFit[link.logo] ?? ''}`}
-      />
+      {link.logo ? (
+        <img
+          src={link.logo}
+          alt={link.logoAlt ?? ''}
+          loading="lazy"
+          decoding="async"
+          className={`size-full rounded-md object-contain ${logoFit[link.logo] ?? ''}`}
+        />
+      ) : Fallback ? (
+        <Fallback aria-hidden="true" className="text-xl text-brand" />
+      ) : null}
     </span>
   )
 }
@@ -150,7 +161,7 @@ function SingleTile({ card, className }: { card: LinkCard; className: string }) 
       />
       {card.id === 'painting' && <PaintingStrip />}
       <span className="mt-auto flex items-center gap-3">
-        <LogoTile link={link} />
+        <LogoTile link={link} icon={icons[card.icon]} />
         <span className="text-base font-medium text-slate-700 group-hover:text-brand-900">{link.label}</span>
       </span>
       {card.flair && <Flair flair={card.flair} />}
@@ -378,6 +389,7 @@ export function Cards() {
   return (
     <>
       <Group heading={creativity.heading} cards={creativity.cards} layout={creativityLayout} columns="lg:grid-cols-4" />
+      <Group heading={projects.heading} cards={projects.cards} layout={{}} columns="lg:grid-cols-3" />
       <Group
         heading={technologies.heading}
         cards={technologies.cards}
