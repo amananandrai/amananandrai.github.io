@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b",
-    "images": "node scripts/optimize-images.mjs"
+    "images": "node scripts/optimize-images.mjs",
+    "intro:render": "bash scripts/render-hero-intro.sh"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",

@@ -72,6 +72,8 @@ export function Hero() {
         className="absolute -left-40 bottom-[-30%] -z-20 size-[640px] rounded-full bg-teal/25 blur-[120px]"
       />
 
+      {!reduced && <IntroClip playing={inView} dimmed={fieldReady} />}
+
       {canRender3D && (
         <motion.div
           aria-hidden="true"
@@ -163,6 +165,39 @@ export function Hero() {
         Scroll
       </motion.a>
     </section>
+  )
+}
+
+/** Looping HyperFrames-rendered backdrop; plays as the intro, then sits under the 3D field. */
+function IntroClip({ playing, dimmed }: { playing: boolean; dimmed: boolean }) {
+  const video = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const el = video.current
+    if (!el) return
+    if (playing) el.play().catch(() => {})
+    else el.pause()
+  }, [playing])
+
+  return (
+    <motion.video
+      ref={video}
+      aria-hidden="true"
+      tabIndex={-1}
+      className="absolute inset-0 -z-20 size-full object-cover"
+      poster={hero.introClip.poster}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: dimmed ? 0.45 : 1 }}
+      transition={{ duration: 1.2 }}
+    >
+      <source src={hero.introClip.webm} type="video/webm" />
+      <source src={hero.introClip.mp4} type="video/mp4" />
+    </motion.video>
   )
 }
 
