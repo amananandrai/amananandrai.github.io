@@ -66,7 +66,6 @@ export const hero = {
   cta: { label: "Let's begin", href: '#section_2' },
   portrait: '/images/aman_profile-removebg.webp',
   portraitAlt: 'Portrait of Aman Anand Rai',
-  introClip: { webm: '/media/hero-intro.webm', mp4: '/media/hero-intro.mp4', poster: '/media/hero-intro-poster.webp' },
 }
 
 export const about = {
