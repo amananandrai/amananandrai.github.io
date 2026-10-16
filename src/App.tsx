@@ -1,19 +1,25 @@
 import { MotionConfig } from 'framer-motion'
-import { about, hero, site } from './content'
+import { SmoothScrollProvider } from './lib/smoothScroll'
+import { Hero } from './sections/Hero'
+import { Nav } from './sections/Nav'
 
 export default function App() {
   return (
     <MotionConfig reducedMotion="user">
-      <main>
-        <section id="section_1" className="p-10">
-          <h1 className="text-4xl font-bold">{hero.greeting}</h1>
-          <p>{hero.tagline}</p>
-          <p className="text-brand">{site.brand}</p>
-        </section>
-        <section id="section_2" className="p-10">
-          <h2 className="text-3xl font-bold">{about.heading}</h2>
-        </section>
-      </main>
+      <SmoothScrollProvider>
+        <a
+          href="#section_2"
+          className="sr-only z-[70] rounded-lg bg-white px-4 py-2 font-medium text-brand-900 focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        >
+          Skip to content
+        </a>
+        <Nav />
+        <main>
+          <Hero />
+          <section id="section_2" className="h-[150vh] p-10" />
+          <section id="section_3" className="h-screen p-10" />
+        </main>
+      </SmoothScrollProvider>
     </MotionConfig>
   )
 }
