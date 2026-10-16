@@ -6,6 +6,7 @@ import {
   BsAward,
   BsBook,
   BsBrush,
+  BsBuildings,
   BsChevronDown,
   BsCodeSquare,
   BsFileEarmarkText,
@@ -14,10 +15,12 @@ import {
   BsImages,
   BsJournalBookmark,
   BsJournalText,
+  BsMap,
   BsPalette,
   BsPencilSquare,
   BsSearch,
   BsStack,
+  BsTree,
 } from 'react-icons/bs'
 import { creativity, gallery, projects, technologies, type CardLink, type IconName, type LinkCard } from '../content'
 
@@ -36,6 +39,9 @@ export const icons: Record<IconName, IconType> = {
   images: BsImages,
   notebook: BsJournalBookmark,
   document: BsFileEarmarkText,
+  farm: BsTree,
+  city: BsBuildings,
+  map: BsMap,
 }
 
 const ease = [0.16, 1, 0.3, 1] as const
