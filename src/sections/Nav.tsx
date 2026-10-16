@@ -57,7 +57,9 @@ export function Nav() {
         <nav
           aria-label="Primary"
           className={`glass mx-auto flex h-14 max-w-6xl items-center justify-between rounded-2xl border border-white/60 pl-5 pr-2 transition-shadow duration-300 ${
-            scrolled ? 'shadow-[0_10px_40px_-12px_rgba(27,31,69,0.35)]' : 'shadow-[0_4px_20px_-10px_rgba(27,31,69,0.25)]'
+            scrolled
+              ? 'shadow-[0_10px_40px_-12px_rgba(27,31,69,0.35)]'
+              : 'shadow-[0_4px_20px_-10px_rgba(27,31,69,0.25)]'
           }`}
         >
           <a

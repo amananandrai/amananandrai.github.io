@@ -1,15 +1,5 @@
 export type IconName =
-  | 'palette'
-  | 'brush'
-  | 'stack'
-  | 'film'
-  | 'book'
-  | 'code'
-  | 'pencil'
-  | 'github'
-  | 'journal'
-  | 'award'
-  | 'search'
+  'palette' | 'brush' | 'stack' | 'film' | 'book' | 'code' | 'pencil' | 'github' | 'journal' | 'award' | 'search'
 
 export interface CardLink {
   label: string
@@ -100,22 +90,39 @@ export const creativity: { heading: string; cards: LinkCard[] } = {
       title: 'AI Art',
       icon: 'palette',
       links: [
-        { label: 'NightCafe', href: 'https://creator.nightcafe.studio/u/Aman_Anand', logo: logo('nightcafe.png'), logoAlt: 'NightCafe Logo' },
-        { label: 'AI Image Gallery', href: 'https://ai-album.vercel.app/', logo: logo('ai_image_gallery.jpg'), logoAlt: 'AI Image Gallery Logo' },
+        {
+          label: 'NightCafe',
+          href: 'https://creator.nightcafe.studio/u/Aman_Anand',
+          logo: logo('nightcafe.png'),
+          logoAlt: 'NightCafe Logo',
+        },
+        {
+          label: 'AI Image Gallery',
+          href: 'https://ai-album.vercel.app/',
+          logo: logo('ai_image_gallery.jpg'),
+          logoAlt: 'AI Image Gallery Logo',
+        },
       ],
     },
     {
       id: 'painting',
       title: 'Painting',
       icon: 'brush',
-      links: [{ label: 'Gallery', href: '/gallery/', logo: logo('gallery.jpg'), logoAlt: 'Gallery Logo', internal: true }],
+      links: [
+        { label: 'Gallery', href: '/gallery/', logo: logo('gallery.jpg'), logoAlt: 'Gallery Logo', internal: true },
+      ],
     },
     {
       id: 'stack-exchange',
       title: 'Stack Exchange',
       icon: 'stack',
       links: [
-        { label: 'Stack Exchange', href: 'https://stackexchange.com/users/7329417/codeczar', logo: logo('stackexchange.png'), logoAlt: 'Stack Exchange Logo' },
+        {
+          label: 'Stack Exchange',
+          href: 'https://stackexchange.com/users/7329417/codeczar',
+          logo: logo('stackexchange.png'),
+          logoAlt: 'Stack Exchange Logo',
+        },
       ],
       flair: {
         src: 'https://stackexchange.com/users/flair/7329417.png',
@@ -129,14 +136,26 @@ export const creativity: { heading: string; cards: LinkCard[] } = {
       id: 'movies',
       title: 'Movies',
       icon: 'film',
-      links: [{ label: 'Letterboxd', href: 'https://letterboxd.com/aman_anand/', logo: logo('letterboxd.png'), logoAlt: 'Letterboxd Logo' }],
+      links: [
+        {
+          label: 'Letterboxd',
+          href: 'https://letterboxd.com/aman_anand/',
+          logo: logo('letterboxd.png'),
+          logoAlt: 'Letterboxd Logo',
+        },
+      ],
     },
     {
       id: 'books',
       title: 'Books',
       icon: 'book',
       links: [
-        { label: 'Goodreads', href: 'https://www.goodreads.com/user/show/191410906-aman-anand', logo: logo('goodreads.jpg'), logoAlt: 'Goodreads Logo' },
+        {
+          label: 'Goodreads',
+          href: 'https://www.goodreads.com/user/show/191410906-aman-anand',
+          logo: logo('goodreads.jpg'),
+          logoAlt: 'Goodreads Logo',
+        },
       ],
     },
   ],
@@ -150,11 +169,36 @@ export const technologies: { heading: string; cards: LinkCard[] } = {
       title: 'Competitive Coding',
       icon: 'code',
       links: [
-        { label: 'Hackerrank', href: 'https://www.hackerrank.com/aman_rai', logo: logo('hackerrank.png'), logoAlt: 'Hackerrank Logo' },
-        { label: 'HackerEarth', href: 'https://www.hackerearth.com/@amananandrai', logo: logo('hackerearth.png'), logoAlt: 'HackerEarth Logo' },
-        { label: 'Spoj', href: 'https://www.spoj.com/users/amananandrai', logo: logo('spoj.png'), logoAlt: 'Spoj Logo' },
-        { label: 'Leetcode', href: 'https://leetcode.com/u/aman_rai/', logo: logo('leetcode.png'), logoAlt: 'Leetcode Logo' },
-        { label: 'Codechef', href: 'https://www.codechef.com/users/sangadak', logo: logo('codechef.png'), logoAlt: 'Codechef Logo' },
+        {
+          label: 'Hackerrank',
+          href: 'https://www.hackerrank.com/aman_rai',
+          logo: logo('hackerrank.png'),
+          logoAlt: 'Hackerrank Logo',
+        },
+        {
+          label: 'HackerEarth',
+          href: 'https://www.hackerearth.com/@amananandrai',
+          logo: logo('hackerearth.png'),
+          logoAlt: 'HackerEarth Logo',
+        },
+        {
+          label: 'Spoj',
+          href: 'https://www.spoj.com/users/amananandrai',
+          logo: logo('spoj.png'),
+          logoAlt: 'Spoj Logo',
+        },
+        {
+          label: 'Leetcode',
+          href: 'https://leetcode.com/u/aman_rai/',
+          logo: logo('leetcode.png'),
+          logoAlt: 'Leetcode Logo',
+        },
+        {
+          label: 'Codechef',
+          href: 'https://www.codechef.com/users/sangadak',
+          logo: logo('codechef.png'),
+          logoAlt: 'Codechef Logo',
+        },
       ],
     },
     {
@@ -163,7 +207,12 @@ export const technologies: { heading: string; cards: LinkCard[] } = {
       icon: 'pencil',
       links: [
         { label: 'Dev.to', href: 'https://dev.to/amananandrai', logo: logo('devto.png'), logoAlt: 'Dev.to Logo' },
-        { label: 'Hashnode', href: 'https://amananandrai.hashnode.dev/', logo: logo('hashnode.png'), logoAlt: 'Hashnode Logo' },
+        {
+          label: 'Hashnode',
+          href: 'https://amananandrai.hashnode.dev/',
+          logo: logo('hashnode.png'),
+          logoAlt: 'Hashnode Logo',
+        },
       ],
     },
     {
@@ -172,7 +221,12 @@ export const technologies: { heading: string; cards: LinkCard[] } = {
       icon: 'github',
       links: [
         { label: 'Github', href: 'https://github.com/amananandrai', logo: logo('github.png'), logoAlt: 'Github Logo' },
-        { label: 'Kaggle', href: 'https://www.kaggle.com/amananandrai', logo: logo('kaggle.png'), logoAlt: 'Kaggle Logo' },
+        {
+          label: 'Kaggle',
+          href: 'https://www.kaggle.com/amananandrai',
+          logo: logo('kaggle.png'),
+          logoAlt: 'Kaggle Logo',
+        },
       ],
     },
     {
@@ -180,8 +234,18 @@ export const technologies: { heading: string; cards: LinkCard[] } = {
       title: 'Certifications',
       icon: 'award',
       links: [
-        { label: 'Credly', href: 'https://www.credly.com/users/aman-anand-rai/', logo: logo('credly.png'), logoAlt: 'Credly Logo' },
-        { label: 'Accredible', href: 'https://www.credential.net/profile/amananandrai53325/wallet', logo: logo('accredible.jpg'), logoAlt: 'Accredible Logo' },
+        {
+          label: 'Credly',
+          href: 'https://www.credly.com/users/aman-anand-rai/',
+          logo: logo('credly.png'),
+          logoAlt: 'Credly Logo',
+        },
+        {
+          label: 'Accredible',
+          href: 'https://www.credential.net/profile/amananandrai53325/wallet',
+          logo: logo('accredible.jpg'),
+          logoAlt: 'Accredible Logo',
+        },
       ],
     },
     {
@@ -189,8 +253,18 @@ export const technologies: { heading: string; cards: LinkCard[] } = {
       title: 'Research',
       icon: 'search',
       links: [
-        { label: 'ResearchGate', href: 'https://www.researchgate.net/profile/Aman-Rai-9?ev=prf_overview', logo: logo('researchgate.png'), logoAlt: 'ResearchGate Logo' },
-        { label: 'Google Scholar', href: 'https://scholar.google.com/citations?user=khuuiBIAAAAJ&hl=en', logo: logo('googlescholar.png'), logoAlt: 'Google Scholar Logo' },
+        {
+          label: 'ResearchGate',
+          href: 'https://www.researchgate.net/profile/Aman-Rai-9?ev=prf_overview',
+          logo: logo('researchgate.png'),
+          logoAlt: 'ResearchGate Logo',
+        },
+        {
+          label: 'Google Scholar',
+          href: 'https://scholar.google.com/citations?user=khuuiBIAAAAJ&hl=en',
+          logo: logo('googlescholar.png'),
+          logoAlt: 'Google Scholar Logo',
+        },
       ],
     },
   ],
@@ -255,8 +329,32 @@ export const gallery = {
     { id: 'neon', name: 'Neon Glow', description: 'Vibrant pink illumination' },
   ] satisfies FrameStyle[],
   paintings: [
-    { id: 'p1', src: '/img/optimized/tm-img-01-1200.webp', full: '/img/optimized/tm-img-01-2400.webp', original: '/img/tm-img-01.jpg', width: 4000, height: 3000, alt: 'Image 1' },
-    { id: 'p2', src: '/img/optimized/tm-img-02-1200.webp', full: '/img/optimized/tm-img-02-2400.webp', original: '/img/tm-img-02.jpg', width: 4000, height: 2966, alt: 'Image 2' },
-    { id: 'p3', src: '/img/optimized/tm-img-03-1200.webp', full: '/img/optimized/tm-img-03-2400.webp', original: '/img/tm-img-03.jpg', width: 3049, height: 4377, alt: 'Image 3' },
+    {
+      id: 'p1',
+      src: '/img/optimized/tm-img-01-1200.webp',
+      full: '/img/optimized/tm-img-01-2400.webp',
+      original: '/img/tm-img-01.jpg',
+      width: 4000,
+      height: 3000,
+      alt: 'Image 1',
+    },
+    {
+      id: 'p2',
+      src: '/img/optimized/tm-img-02-1200.webp',
+      full: '/img/optimized/tm-img-02-2400.webp',
+      original: '/img/tm-img-02.jpg',
+      width: 4000,
+      height: 2966,
+      alt: 'Image 2',
+    },
+    {
+      id: 'p3',
+      src: '/img/optimized/tm-img-03-1200.webp',
+      full: '/img/optimized/tm-img-03-2400.webp',
+      original: '/img/tm-img-03.jpg',
+      width: 3049,
+      height: 4377,
+      alt: 'Image 3',
+    },
   ] satisfies Painting[],
 }

@@ -1,5 +1,6 @@
 import { MotionConfig } from 'framer-motion'
 import { SmoothScrollProvider } from './lib/smoothScroll'
+import { About } from './sections/About'
 import { Hero } from './sections/Hero'
 import { Nav } from './sections/Nav'
 
@@ -16,7 +17,7 @@ export default function App() {
         <Nav />
         <main>
           <Hero />
-          <section id="section_2" className="h-[150vh] p-10" />
+          <About />
           <section id="section_3" className="h-screen p-10" />
         </main>
       </SmoothScrollProvider>
