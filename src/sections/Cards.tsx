@@ -16,6 +16,7 @@ import {
   BsSearch,
   BsStack,
 } from 'react-icons/bs'
+import { CardLineArt } from '../cards/lineArt'
 import { creativity, gallery, technologies, type CardLink, type IconName, type LinkCard } from '../content'
 
 export const icons: Record<IconName, IconType> = {
@@ -112,7 +113,7 @@ function Spotlight() {
 function TileHeader({ card, trailing }: { card: LinkCard; trailing?: ReactNode }) {
   const Icon = icons[card.icon]
   return (
-    <div className="flex items-center gap-3">
+    <div className="relative z-10 flex items-center gap-3">
       <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-xl text-brand">
         <Icon aria-hidden="true" />
       </span>
@@ -138,6 +139,7 @@ function SingleTile({ card, className }: { card: LinkCard; className: string }) 
       variants={tileVariants}
       className={`${tileBase} flex flex-col gap-5 ${className}`}
     >
+      <CardLineArt id={card.id} />
       <Spotlight />
       <TileHeader
         card={card}
@@ -149,7 +151,7 @@ function SingleTile({ card, className }: { card: LinkCard; className: string }) 
         }
       />
       {card.id === 'painting' && <PaintingStrip />}
-      <span className="mt-auto flex items-center gap-3">
+      <span className="relative z-10 mt-auto flex items-center gap-3">
         <LogoTile link={link} />
         <span className="text-base font-medium text-slate-700 group-hover:text-brand-900">{link.label}</span>
       </span>
@@ -160,7 +162,7 @@ function SingleTile({ card, className }: { card: LinkCard; className: string }) 
 
 function PaintingStrip() {
   return (
-    <span className="flex items-center justify-center gap-2 px-1 sm:gap-4 lg:flex-1" aria-hidden="true">
+    <span className="relative z-10 flex items-center justify-center gap-2 px-1 sm:gap-4 lg:flex-1" aria-hidden="true">
       {gallery.paintings.map((p, i) => (
         <span
           key={p.id}
@@ -188,7 +190,7 @@ function PaintingStrip() {
 function Flair({ flair }: { flair: NonNullable<LinkCard['flair']> }) {
   const [failed, setFailed] = useState(false)
   return (
-    <span className="flex h-[58px] items-center">
+    <span className="relative z-10 flex h-[58px] items-center">
       {failed ? (
         <span className="text-sm text-slate-500">profile for codeczar on Stack Exchange</span>
       ) : (
@@ -232,8 +234,9 @@ function MultiTile({
       }}
       className={`${tileBase} flex cursor-pointer flex-col gap-5 ${expanded ? 'col-span-full lg:row-span-1' : className}`}
     >
+      <CardLineArt id={card.id} />
       <Spotlight />
-      <motion.div layout="position">
+      <motion.div layout="position" className="relative z-10">
         <TileHeader card={card} />
       </motion.div>
 
@@ -247,7 +250,7 @@ function MultiTile({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8, transition: { duration: 0.15 } }}
             transition={{ duration: 0.4, ease, delay: 0.1 }}
-            className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3"
+            className="relative z-10 grid gap-2 sm:grid-cols-2 lg:grid-cols-3"
           >
             {card.links.map((link, i) => (
               <motion.li
@@ -276,14 +279,14 @@ function MultiTile({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.12 } }}
-            className="text-sm leading-snug text-slate-500"
+            className="relative z-10 text-sm leading-snug text-slate-500"
           >
             {card.links.map((l) => l.label).join(' · ')}
           </motion.p>
         )}
       </AnimatePresence>
 
-      <motion.div layout="position" className="mt-auto flex items-end gap-2">
+      <motion.div layout="position" className="relative z-10 mt-auto flex items-end gap-2">
         {!expanded && (
           <ul className="flex flex-wrap gap-2" aria-label={`${card.title} links`}>
             {card.links.map((link) => (
