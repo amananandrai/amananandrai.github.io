@@ -1,11 +1,24 @@
 export type IconName =
-  'palette' | 'brush' | 'stack' | 'film' | 'book' | 'code' | 'pencil' | 'github' | 'journal' | 'award' | 'search'
+  | 'palette'
+  | 'brush'
+  | 'stack'
+  | 'film'
+  | 'book'
+  | 'code'
+  | 'pencil'
+  | 'github'
+  | 'journal'
+  | 'award'
+  | 'search'
+  | 'images'
+  | 'notebook'
+  | 'document'
 
 export interface CardLink {
   label: string
   href: string
-  logo: string
-  logoAlt: string
+  logo?: string
+  logoAlt?: string
   internal?: boolean
 }
 
@@ -95,12 +108,6 @@ export const creativity: { heading: string; cards: LinkCard[] } = {
           logo: logo('nightcafe.png'),
           logoAlt: 'NightCafe Logo',
         },
-        {
-          label: 'AI Image Gallery',
-          href: 'https://ai-album.vercel.app/',
-          logo: logo('ai_image_gallery.jpg'),
-          logoAlt: 'AI Image Gallery Logo',
-        },
       ],
     },
     {
@@ -156,6 +163,37 @@ export const creativity: { heading: string; cards: LinkCard[] } = {
           logoAlt: 'Goodreads Logo',
         },
       ],
+    },
+  ],
+}
+
+export const projects: { heading: string; cards: LinkCard[] } = {
+  heading: 'Projects',
+  cards: [
+    {
+      id: 'ai-image-gallery',
+      title: 'AI Image Gallery',
+      icon: 'images',
+      links: [
+        {
+          label: 'AI Image Gallery',
+          href: 'https://ai-album.vercel.app/',
+          logo: logo('ai_image_gallery.jpg'),
+          logoAlt: 'AI Image Gallery Logo',
+        },
+      ],
+    },
+    {
+      id: 'notebooklm',
+      title: 'NotebookLM',
+      icon: 'notebook',
+      links: [{ label: 'NotebookLM', href: 'https://notebooklm-dusky.vercel.app/' }],
+    },
+    {
+      id: 'document-editor',
+      title: 'Document Editor',
+      icon: 'document',
+      links: [{ label: 'Document Editor', href: 'https://document-editor-react-tiptap.vercel.app/' }],
     },
   ],
 }
