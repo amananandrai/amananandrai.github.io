@@ -13,6 +13,9 @@ export type IconName =
   | 'images'
   | 'notebook'
   | 'document'
+  | 'farm'
+  | 'city'
+  | 'map'
 
 export interface CardLink {
   label: string
@@ -194,6 +197,24 @@ export const projects: { heading: string; cards: LinkCard[] } = {
       title: 'Document Editor',
       icon: 'document',
       links: [{ label: 'Document Editor', href: 'https://document-editor-react-tiptap.vercel.app/' }],
+    },
+    {
+      id: 'farm-simulator',
+      title: 'Farm Simulator',
+      icon: 'farm',
+      links: [{ label: 'Farm Simulator', href: 'https://farm-simulator-2.vercel.app/' }],
+    },
+    {
+      id: 'city-builder',
+      title: 'City Builder',
+      icon: 'city',
+      links: [{ label: 'City Builder', href: 'https://city-builder-omega.vercel.app/' }],
+    },
+    {
+      id: 'sim-city',
+      title: 'Sim City',
+      icon: 'map',
+      links: [{ label: 'Sim City', href: 'https://sim-city-seven.vercel.app/' }],
     },
   ],
 }
