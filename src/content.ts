@@ -93,9 +93,9 @@ export const hero = {
   eyebrow: "I'm Aman Anand Rai",
   greeting: 'Hello friend!',
   sides: [
-    { label: 'Code · Research · Writing', href: '#tech' },
-    { label: 'Painting · AI Art · Books · Movies', href: '#hobbies' },
-  ],
+    { id: 'tech', label: 'Code · Research · Writing', href: '#tech' },
+    { id: 'hobbies', label: 'Painting · AI Art · Books · Movies', href: '#hobbies' },
+  ] as const,
   cta: { label: "Let's begin", href: '#section_2' },
   portrait: '/images/aman_profile-removebg.webp',
   portraitAlt: 'Portrait of Aman Anand Rai',
