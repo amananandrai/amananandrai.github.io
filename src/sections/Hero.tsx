@@ -122,14 +122,52 @@ export function Hero() {
 
       <div className="mx-auto grid w-full max-w-6xl items-center gap-12 px-6 md:grid-cols-[1.25fr_1fr] md:gap-8 lg:px-8">
         <motion.div style={{ y: reduced ? 0 : textY }} className="order-2 text-center md:order-1 md:text-left">
+          <motion.p
+            className="mb-4 text-sm font-semibold uppercase tracking-[0.25em] text-teal sm:text-base"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease, delay: 0.05 }}
+          >
+            {hero.eyebrow}
+          </motion.p>
           <h1 className="text-5xl font-bold leading-[1.02] tracking-[-0.035em] sm:text-6xl lg:text-7xl xl:text-8xl">
             <WordReveal text={hero.greeting} delay={0.15} />
           </h1>
-          <p className="mx-auto mt-5 max-w-xl text-xl font-medium leading-snug text-brand-100 sm:text-2xl md:mx-0 lg:text-[1.7rem]">
-            <WordReveal text={hero.tagline} delay={0.45} />
-          </p>
+          <motion.ul
+            className="mx-auto mt-6 flex max-w-xl flex-col items-center gap-2.5 md:mx-0 md:items-start"
+            initial="hidden"
+            animate="show"
+            variants={{ show: { transition: { staggerChildren: 0.12, delayChildren: 0.5 } } }}
+          >
+            {hero.sides.map((side) => (
+              <motion.li
+                key={side.href}
+                variants={{
+                  hidden: { opacity: 0, y: 14 },
+                  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
+                }}
+              >
+                <a
+                  href={side.href}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    scrollTo(side.href)
+                  }}
+                  className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-base font-medium text-brand-100 backdrop-blur transition-colors hover:border-teal/60 hover:text-white sm:text-lg"
+                >
+                  {side.label}
+                  <span
+                    aria-hidden="true"
+                    className="text-teal transition-transform duration-300 group-hover:translate-x-0.5"
+                  >
+                    →
+                  </span>
+                </a>
+              </motion.li>
+            ))}
+          </motion.ul>
           <motion.div
-            className="mt-10 flex justify-center md:justify-start"
+            className="mt-9 flex justify-center md:justify-start"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease, delay: 1.05 }}

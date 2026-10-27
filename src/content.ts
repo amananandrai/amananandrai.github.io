@@ -30,7 +30,17 @@ export interface LinkCard {
   title: string
   icon: IconName
   links: CardLink[]
+  description?: string
+  tags?: string[]
   flair?: { src: string; width: number; height: number; alt: string; title: string }
+}
+
+export interface CardGroup {
+  id: string
+  eyebrow: string
+  heading: string
+  intro: string
+  cards: LinkCard[]
 }
 
 export interface Paper {
@@ -66,19 +76,26 @@ export interface FrameStyle {
 }
 
 export const site = {
-  title: "Aman Anand Rai's Portfolio",
+  title: 'Aman Anand Rai',
   brand: 'Aman',
 }
 
 export const nav = [
   { id: 'section_1', label: 'Home' },
   { id: 'section_2', label: 'About' },
+  { id: 'tech', label: 'Tech' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'hobbies', label: 'Hobbies' },
   { id: 'section_3', label: 'Contact' },
 ] as const
 
 export const hero = {
+  eyebrow: "I'm Aman Anand Rai",
   greeting: 'Hello friend!',
-  tagline: "Let's build something great together.",
+  sides: [
+    { label: 'Code · Research · Writing', href: '#tech' },
+    { label: 'Painting · AI Art · Books · Movies', href: '#hobbies' },
+  ],
   cta: { label: "Let's begin", href: '#section_2' },
   portrait: '/images/aman_profile-removebg.webp',
   portraitAlt: 'Portrait of Aman Anand Rai',
@@ -86,142 +103,48 @@ export const hero = {
 
 export const about = {
   heading: 'About Me',
-  subheading: 'Blending Creativity with Technology',
-  paragraphs: [
-    "Hello and welcome to my portfolio! I'm someone who thrives on blending creativity with technology, transforming ideas into solutions that make an impact. My passions include exploring AI art, diving deep into data analytics, unraveling machine learning mysteries, innovating with generative AI, and honing my skills in competitive coding. Alongside this, I blog about my journey in machine learning and computer science, sharing insights, challenges, and breakthroughs with like-minded enthusiasts.",
-    "What drives me is a genuine curiosity to understand and create. From decoding complex algorithms to crafting intelligent models and experimenting with the artistic potential of AI, I find joy in every discovery and every challenge overcome. My blog reflects this spirit—a place where I demystify technical concepts, share projects I'm working on, and spark engaging conversations about the future of computer science.",
-    "This portfolio is not just a showcase of skills and projects but a testament to my journey, my growth, and my aspirations. I hope you'll enjoy exploring my work as much as I've enjoyed creating it.",
-  ],
-  highlights: ['AI art', 'data analytics', 'machine learning', 'generative AI', 'competitive coding'],
+  subheading: 'Two sides, one curious mind',
+  paragraph:
+    "I'm a developer and researcher who writes about machine learning, builds things with generative AI, and solves problems on competitive coding sites. Away from the keyboard I paint, make AI art, and keep up with books and films. This site brings both sides together.",
+  highlights: ['machine learning', 'generative AI', 'competitive coding', 'paint', 'AI art', 'books and films'],
 }
 
 const logo = (file: string) => `/images/logos/webp/${file.replace(/\.(png|jpe?g)$/i, '.webp')}`
 
-export const creativity: { heading: string; cards: LinkCard[] } = {
-  heading: 'Creativity',
+export const tech: CardGroup = {
+  id: 'tech',
+  eyebrow: 'The technical side',
+  heading: 'Tech',
+  intro: 'Writing, code and research.',
   cards: [
     {
-      id: 'ai-art',
-      title: 'AI Art',
-      icon: 'palette',
+      id: 'blogging',
+      title: 'Blogging',
+      icon: 'pencil',
       links: [
+        { label: 'Dev.to', href: 'https://dev.to/amananandrai', logo: logo('devto.png'), logoAlt: 'Dev.to Logo' },
         {
-          label: 'NightCafe',
-          href: 'https://creator.nightcafe.studio/u/Aman_Anand',
-          logo: logo('nightcafe.png'),
-          logoAlt: 'NightCafe Logo',
+          label: 'Hashnode',
+          href: 'https://amananandrai.hashnode.dev/',
+          logo: logo('hashnode.png'),
+          logoAlt: 'Hashnode Logo',
         },
       ],
     },
     {
-      id: 'painting',
-      title: 'Painting',
-      icon: 'brush',
+      id: 'programming',
+      title: 'Programming',
+      icon: 'github',
       links: [
-        { label: 'Gallery', href: '/gallery/', logo: logo('gallery.jpg'), logoAlt: 'Gallery Logo', internal: true },
-      ],
-    },
-    {
-      id: 'stack-exchange',
-      title: 'Stack Exchange',
-      icon: 'stack',
-      links: [
+        { label: 'Github', href: 'https://github.com/amananandrai', logo: logo('github.png'), logoAlt: 'Github Logo' },
         {
-          label: 'Stack Exchange',
-          href: 'https://stackexchange.com/users/7329417/codeczar',
-          logo: logo('stackexchange.png'),
-          logoAlt: 'Stack Exchange Logo',
-        },
-      ],
-      flair: {
-        src: 'https://stackexchange.com/users/flair/7329417.png',
-        width: 208,
-        height: 58,
-        alt: 'profile for codeczar on Stack Exchange, a network of free, community-driven Q&A sites',
-        title: 'profile for codeczar on Stack Exchange, a network of free, community-driven Q&A sites',
-      },
-    },
-    {
-      id: 'movies',
-      title: 'Movies',
-      icon: 'film',
-      links: [
-        {
-          label: 'Letterboxd',
-          href: 'https://letterboxd.com/aman_anand/',
-          logo: logo('letterboxd.png'),
-          logoAlt: 'Letterboxd Logo',
+          label: 'Kaggle',
+          href: 'https://www.kaggle.com/amananandrai',
+          logo: logo('kaggle.png'),
+          logoAlt: 'Kaggle Logo',
         },
       ],
     },
-    {
-      id: 'books',
-      title: 'Books',
-      icon: 'book',
-      links: [
-        {
-          label: 'Goodreads',
-          href: 'https://www.goodreads.com/user/show/191410906-aman-anand',
-          logo: logo('goodreads.jpg'),
-          logoAlt: 'Goodreads Logo',
-        },
-      ],
-    },
-  ],
-}
-
-export const projects: { heading: string; cards: LinkCard[] } = {
-  heading: 'Projects',
-  cards: [
-    {
-      id: 'ai-image-gallery',
-      title: 'AI Image Gallery',
-      icon: 'images',
-      links: [
-        {
-          label: 'AI Image Gallery',
-          href: 'https://ai-album.vercel.app/',
-          logo: logo('ai_image_gallery.jpg'),
-          logoAlt: 'AI Image Gallery Logo',
-        },
-      ],
-    },
-    {
-      id: 'notebooklm',
-      title: 'NotebookLM',
-      icon: 'notebook',
-      links: [{ label: 'NotebookLM', href: 'https://notebooklm-dusky.vercel.app/' }],
-    },
-    {
-      id: 'document-editor',
-      title: 'Document Editor',
-      icon: 'document',
-      links: [{ label: 'Document Editor', href: 'https://document-editor-react-tiptap.vercel.app/' }],
-    },
-    {
-      id: 'farm-simulator',
-      title: 'Farm Simulator',
-      icon: 'farm',
-      links: [{ label: 'Farm Simulator', href: 'https://farm-simulator-2.vercel.app/' }],
-    },
-    {
-      id: 'city-builder',
-      title: 'City Builder',
-      icon: 'city',
-      links: [{ label: 'City Builder', href: 'https://city-builder-omega.vercel.app/' }],
-    },
-    {
-      id: 'sim-city',
-      title: 'Sim City',
-      icon: 'map',
-      links: [{ label: 'Sim City', href: 'https://sim-city-seven.vercel.app/' }],
-    },
-  ],
-}
-
-export const technologies: { heading: string; cards: LinkCard[] } = {
-  heading: 'Technologies & Activities',
-  cards: [
     {
       id: 'competitive-coding',
       title: 'Competitive Coding',
@@ -260,30 +183,21 @@ export const technologies: { heading: string; cards: LinkCard[] } = {
       ],
     },
     {
-      id: 'blogging',
-      title: 'Blogging',
-      icon: 'pencil',
+      id: 'research',
+      title: 'Research',
+      icon: 'search',
       links: [
-        { label: 'Dev.to', href: 'https://dev.to/amananandrai', logo: logo('devto.png'), logoAlt: 'Dev.to Logo' },
         {
-          label: 'Hashnode',
-          href: 'https://amananandrai.hashnode.dev/',
-          logo: logo('hashnode.png'),
-          logoAlt: 'Hashnode Logo',
+          label: 'ResearchGate',
+          href: 'https://www.researchgate.net/profile/Aman-Rai-9?ev=prf_overview',
+          logo: logo('researchgate.png'),
+          logoAlt: 'ResearchGate Logo',
         },
-      ],
-    },
-    {
-      id: 'programming',
-      title: 'Programming',
-      icon: 'github',
-      links: [
-        { label: 'Github', href: 'https://github.com/amananandrai', logo: logo('github.png'), logoAlt: 'Github Logo' },
         {
-          label: 'Kaggle',
-          href: 'https://www.kaggle.com/amananandrai',
-          logo: logo('kaggle.png'),
-          logoAlt: 'Kaggle Logo',
+          label: 'Google Scholar',
+          href: 'https://scholar.google.com/citations?user=khuuiBIAAAAJ&hl=en',
+          logo: logo('googlescholar.png'),
+          logoAlt: 'Google Scholar Logo',
         },
       ],
     },
@@ -307,21 +221,142 @@ export const technologies: { heading: string; cards: LinkCard[] } = {
       ],
     },
     {
-      id: 'research',
-      title: 'Research',
-      icon: 'search',
+      id: 'stack-exchange',
+      title: 'Stack Exchange',
+      icon: 'stack',
       links: [
         {
-          label: 'ResearchGate',
-          href: 'https://www.researchgate.net/profile/Aman-Rai-9?ev=prf_overview',
-          logo: logo('researchgate.png'),
-          logoAlt: 'ResearchGate Logo',
+          label: 'Stack Exchange',
+          href: 'https://stackexchange.com/users/7329417/codeczar',
+          logo: logo('stackexchange.png'),
+          logoAlt: 'Stack Exchange Logo',
         },
+      ],
+      flair: {
+        src: 'https://stackexchange.com/users/flair/7329417.png',
+        width: 208,
+        height: 58,
+        alt: 'profile for codeczar on Stack Exchange, a network of free, community-driven Q&A sites',
+        title: 'profile for codeczar on Stack Exchange, a network of free, community-driven Q&A sites',
+      },
+    },
+  ],
+}
+
+export const projects: CardGroup = {
+  id: 'projects',
+  eyebrow: 'Built for the browser',
+  heading: 'Projects',
+  intro: 'Small apps and games I have built. Each one runs right in the browser.',
+  cards: [
+    {
+      id: 'notebooklm',
+      description: 'A NotebookLM-style app for asking questions about your own documents.',
+      tags: ['Generative AI', 'Web app'],
+      title: 'NotebookLM',
+      icon: 'notebook',
+      links: [{ label: 'NotebookLM', href: 'https://notebooklm-dusky.vercel.app/' }],
+    },
+    {
+      id: 'document-editor',
+      description: 'A rich-text document editor built with React and Tiptap.',
+      tags: ['React', 'Tiptap'],
+      title: 'Document Editor',
+      icon: 'document',
+      links: [{ label: 'Document Editor', href: 'https://document-editor-react-tiptap.vercel.app/' }],
+    },
+    {
+      id: 'ai-image-gallery',
+      description: 'An online album of AI-generated artwork.',
+      tags: ['AI art', 'Web app'],
+      title: 'AI Image Gallery',
+      icon: 'images',
+      links: [
         {
-          label: 'Google Scholar',
-          href: 'https://scholar.google.com/citations?user=khuuiBIAAAAJ&hl=en',
-          logo: logo('googlescholar.png'),
-          logoAlt: 'Google Scholar Logo',
+          label: 'AI Image Gallery',
+          href: 'https://ai-album.vercel.app/',
+          logo: logo('ai_image_gallery.jpg'),
+          logoAlt: 'AI Image Gallery Logo',
+        },
+      ],
+    },
+    {
+      id: 'farm-simulator',
+      description: 'A farming simulation game that runs in the browser.',
+      tags: ['Game', 'Simulation'],
+      title: 'Farm Simulator',
+      icon: 'farm',
+      links: [{ label: 'Farm Simulator', href: 'https://farm-simulator-2.vercel.app/' }],
+    },
+    {
+      id: 'city-builder',
+      description: 'A city-building game that runs in the browser.',
+      tags: ['Game', 'Strategy'],
+      title: 'City Builder',
+      icon: 'city',
+      links: [{ label: 'City Builder', href: 'https://city-builder-omega.vercel.app/' }],
+    },
+    {
+      id: 'sim-city',
+      description: 'A SimCity-style city simulation in the browser.',
+      tags: ['Game', 'Simulation'],
+      title: 'Sim City',
+      icon: 'map',
+      links: [{ label: 'Sim City', href: 'https://sim-city-seven.vercel.app/' }],
+    },
+  ],
+}
+
+export const hobbies: CardGroup = {
+  id: 'hobbies',
+  eyebrow: 'The hobby side',
+  heading: 'Hobbies',
+  intro: 'Painting, AI art, books and films.',
+  cards: [
+    {
+      id: 'painting',
+      title: 'Painting',
+      icon: 'brush',
+      links: [
+        { label: 'Gallery', href: '/gallery/', logo: logo('gallery.jpg'), logoAlt: 'Gallery Logo', internal: true },
+      ],
+    },
+    {
+      id: 'ai-art',
+      title: 'AI Art',
+      icon: 'palette',
+      links: [
+        {
+          label: 'NightCafe',
+          href: 'https://creator.nightcafe.studio/u/Aman_Anand',
+          logo: logo('nightcafe.png'),
+          logoAlt: 'NightCafe Logo',
+        },
+      ],
+    },
+    {
+      id: 'books',
+      title: 'Books',
+      icon: 'book',
+      links: [
+        {
+          label: 'Goodreads',
+          href: 'https://www.goodreads.com/user/show/191410906-aman-anand',
+          logo: logo('goodreads.jpg'),
+          logoAlt: 'Goodreads Logo',
+        },
+      ],
+    },
+    {
+      id: 'movies',
+      title: 'Movies',
+      icon: 'film',
+      links: [
+        {
+          label: 'Letterboxd',
+          href: 'https://letterboxd.com/aman_anand/',
+          logo: logo('letterboxd.png'),
+          logoAlt: 'Letterboxd Logo',
         },
       ],
     },
@@ -377,7 +412,7 @@ export const gallery = {
   intro: 'Choose a frame style for the Gallery.',
   button: 'Change Frame Style',
   modalTitle: 'Select Frame',
-  backLink: 'Back to portfolio',
+  backLink: 'Back home',
   defaultFrame: 'modern' as FrameStyle['id'],
   frames: [
     { id: 'none', name: 'None', description: 'Standard clean edges' },

@@ -22,7 +22,17 @@ import {
   BsStack,
   BsTree,
 } from 'react-icons/bs'
-import { creativity, gallery, projects, technologies, type CardLink, type IconName, type LinkCard } from '../content'
+import {
+  gallery,
+  hobbies,
+  projects,
+  tech,
+  type CardGroup,
+  type CardLink,
+  type IconName,
+  type LinkCard,
+} from '../content'
+import { projectArt } from './projectArt'
 
 export const icons: Record<IconName, IconType> = {
   palette: BsPalette,
@@ -46,12 +56,14 @@ export const icons: Record<IconName, IconType> = {
 
 const ease = [0.16, 1, 0.3, 1] as const
 
-const creativityLayout: Record<string, string> = {
-  painting: 'sm:col-span-2 lg:row-span-2',
+const hobbiesLayout: Record<string, string> = {
+  painting: 'sm:col-span-2 lg:row-span-3',
+  movies: 'sm:col-span-2 lg:col-span-1',
 }
 
-const technologyLayout: Record<string, string> = {
+const techLayout: Record<string, string> = {
   'competitive-coding': 'sm:col-span-2',
+  'stack-exchange': 'sm:col-span-2',
 }
 
 const logoFit: Record<string, string> = {
@@ -286,18 +298,7 @@ function MultiTile({
               </motion.li>
             ))}
           </motion.ul>
-        ) : (
-          <motion.p
-            key="collapsed"
-            layout
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.12 } }}
-            className="text-sm leading-snug text-slate-500"
-          >
-            {card.links.map((l) => l.label).join(' · ')}
-          </motion.p>
-        )}
+        ) : null}
       </AnimatePresence>
 
       <motion.div layout="position" className="mt-auto flex items-end gap-2">
@@ -340,68 +341,145 @@ const tileVariants = {
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6, ease } },
 }
 
-function Group({
-  heading,
-  cards,
-  layout,
-  columns,
-}: {
-  heading: string
-  cards: LinkCard[]
-  layout: Record<string, string>
-  columns: string
-}) {
+function SideHeader({ group }: { group: CardGroup }) {
+  return (
+    <motion.header
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.7, ease }}
+      className="mb-10 max-w-2xl"
+    >
+      <p className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-teal-600">
+        <span aria-hidden="true" className="h-0.5 w-8 rounded bg-teal" />
+        {group.eyebrow}
+      </p>
+      <h2 className="mt-3 text-4xl font-bold tracking-[-0.03em] text-brand-900 sm:text-5xl">{group.heading}</h2>
+      <p className="mt-3 text-lg text-slate-500">{group.intro}</p>
+    </motion.header>
+  )
+}
+
+const stagger = { show: { transition: { staggerChildren: 0.07 } } }
+
+function Group({ group, layout, columns }: { group: CardGroup; layout: Record<string, string>; columns: string }) {
   const [expanded, setExpanded] = useState<string | null>(null)
   return (
-    <div className="mt-20">
-      <motion.h3
-        initial={{ opacity: 0, x: -16 }}
-        whileInView={{ opacity: 1, x: 0 }}
+    <LayoutGroup id={group.id}>
+      <motion.div
+        initial="hidden"
+        whileInView="show"
         viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.6, ease }}
-        className="mb-6 flex items-center gap-3 text-2xl font-bold tracking-tight text-teal-600 sm:text-3xl"
+        variants={stagger}
+        className={`grid grid-flow-row-dense gap-4 sm:grid-cols-2 ${columns}`}
       >
-        <span aria-hidden="true" className="h-0.5 w-8 rounded bg-teal" />
-        {heading}
-      </motion.h3>
-      <LayoutGroup id={heading}>
+        {group.cards.map((card) =>
+          card.links.length > 1 ? (
+            <MultiTile
+              key={card.id}
+              card={card}
+              className={layout[card.id] ?? ''}
+              expanded={expanded === card.id}
+              onToggle={() => setExpanded((cur) => (cur === card.id ? null : card.id))}
+            />
+          ) : (
+            <SingleTile key={card.id} card={card} className={layout[card.id] ?? ''} />
+          ),
+        )}
+      </motion.div>
+    </LayoutGroup>
+  )
+}
+
+function ProjectTile({ card }: { card: LinkCard }) {
+  const tilt = useTilt(true)
+  const link = card.links[0]
+  const Icon = icons[card.icon]
+  const Art = projectArt[card.id]
+  return (
+    <motion.a {...linkProps(link)} {...tilt} variants={tileVariants} className={`${tileBase} flex flex-col p-3`}>
+      <Spotlight />
+      <span
+        aria-hidden="true"
+        className="relative block h-36 overflow-hidden rounded-2xl bg-gradient-to-br from-brand-50 via-white to-teal/10 text-brand ring-1 ring-brand-100/70"
+      >
+        {Art ? (
+          <Art className="size-full transition-transform duration-700 ease-out group-hover:-translate-y-1 group-hover:scale-[1.06]" />
+        ) : (
+          <Icon className="absolute inset-0 m-auto text-5xl opacity-40" />
+        )}
+      </span>
+      <span className="flex flex-1 flex-col gap-3 p-3 pt-5">
+        <span className="flex items-center gap-3">
+          <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-brand-50 text-lg text-brand">
+            <Icon aria-hidden="true" />
+          </span>
+          <h3 className="min-w-0 flex-1 text-lg font-bold leading-tight tracking-tight text-brand-900 sm:text-xl">
+            {card.title}
+          </h3>
+          <BsArrowUpRight
+            aria-hidden="true"
+            className="text-lg text-slate-400 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-teal"
+          />
+        </span>
+        {card.description && <span className="text-[15px] leading-relaxed text-slate-600">{card.description}</span>}
+        {card.tags && (
+          <span className="mt-auto flex flex-wrap gap-2 pt-1">
+            {card.tags.map((tag) => (
+              <span key={tag} className="rounded-full bg-teal/10 px-2.5 py-0.5 text-xs font-semibold text-teal-600">
+                {tag}
+              </span>
+            ))}
+          </span>
+        )}
+      </span>
+    </motion.a>
+  )
+}
+
+const container = 'mx-auto max-w-6xl px-6 lg:px-8'
+
+export function Tech() {
+  return (
+    <section id={tech.id} className="bg-paper pb-16 pt-8 sm:pb-20">
+      <div className={container}>
+        <SideHeader group={tech} />
+        <Group group={tech} layout={techLayout} columns="lg:grid-cols-4" />
+      </div>
+    </section>
+  )
+}
+
+export function Projects() {
+  return (
+    <section id={projects.id} className="bg-paper pb-24 sm:pb-32">
+      <div className={container}>
+        <SideHeader group={projects} />
         <motion.div
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: '-60px' }}
-          variants={{ show: { transition: { staggerChildren: 0.07 } } }}
-          className={`grid grid-flow-row-dense gap-4 sm:grid-cols-2 ${columns}`}
+          variants={stagger}
+          className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {cards.map((card) =>
-            card.links.length > 1 ? (
-              <MultiTile
-                key={card.id}
-                card={card}
-                className={layout[card.id] ?? ''}
-                expanded={expanded === card.id}
-                onToggle={() => setExpanded((cur) => (cur === card.id ? null : card.id))}
-              />
-            ) : (
-              <SingleTile key={card.id} card={card} className={layout[card.id] ?? ''} />
-            ),
-          )}
+          {projects.cards.map((card) => (
+            <ProjectTile key={card.id} card={card} />
+          ))}
         </motion.div>
-      </LayoutGroup>
-    </div>
+      </div>
+    </section>
   )
 }
 
-export function Cards() {
+export function Hobbies() {
   return (
-    <>
-      <Group heading={creativity.heading} cards={creativity.cards} layout={creativityLayout} columns="lg:grid-cols-4" />
-      <Group heading={projects.heading} cards={projects.cards} layout={{}} columns="lg:grid-cols-3" />
-      <Group
-        heading={technologies.heading}
-        cards={technologies.cards}
-        layout={technologyLayout}
-        columns="lg:grid-cols-3"
-      />
-    </>
+    <section id={hobbies.id} className="bg-paper px-3 pb-10 sm:px-5">
+      <div className="mx-auto max-w-6xl rounded-[2rem] bg-brand-50 py-20 ring-1 ring-brand-100 sm:rounded-[2.5rem] sm:py-24">
+        <div className="px-3 sm:px-7 lg:px-8">
+          <SideHeader group={hobbies} />
+          <Group group={hobbies} layout={hobbiesLayout} columns="lg:grid-cols-3" />
+        </div>
+      </div>
+    </section>
   )
 }
