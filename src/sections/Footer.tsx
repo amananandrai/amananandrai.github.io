@@ -1,10 +1,10 @@
-import { creativity, footer, projects, publications, technologies } from '../content'
+import { footer, hobbies, projects, publications, tech } from '../content'
 
 const words = [
-  ...creativity.cards.map((c) => c.title),
-  ...projects.cards.map((c) => c.title),
-  ...technologies.cards.map((c) => c.title),
+  ...tech.cards.map((c) => c.title),
   publications.heading,
+  ...projects.cards.map((c) => c.title),
+  ...hobbies.cards.map((c) => c.title),
 ]
 
 export function Footer() {

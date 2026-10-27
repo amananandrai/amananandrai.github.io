@@ -1,6 +1,7 @@
 import { MotionConfig } from 'framer-motion'
 import { SmoothScrollProvider } from './lib/smoothScroll'
 import { About } from './sections/About'
+import { Hobbies, Projects, Tech } from './sections/Cards'
 import { Contact } from './sections/Contact'
 import { Footer } from './sections/Footer'
 import { Hero } from './sections/Hero'
@@ -21,7 +22,10 @@ export default function App() {
         <main>
           <Hero />
           <About />
+          <Tech />
           <Publications />
+          <Projects />
+          <Hobbies />
           <Contact />
         </main>
         <Footer />

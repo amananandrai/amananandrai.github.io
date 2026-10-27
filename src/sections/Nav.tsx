@@ -5,7 +5,7 @@ import { useSmoothScroll } from '../lib/smoothScroll'
 import { useActiveSection } from '../lib/useActiveSection'
 
 const NAV_IDS = nav.map((n) => n.id)
-const SECTION_ALIASES = { publications: 'section_2' }
+const SECTION_ALIASES = { publications: 'tech' }
 
 export function Nav() {
   const { scrollY } = useScroll()
@@ -87,7 +87,7 @@ export function Nav() {
             <span className="text-teal">.</span>
           </a>
 
-          <ul className="hidden items-center gap-1 md:flex">
+          <ul className="hidden items-center gap-0.5 md:flex lg:gap-1">
             {nav.map((item) => {
               const isActive = active === item.id
               return (
@@ -96,7 +96,7 @@ export function Nav() {
                     href={`#${item.id}`}
                     onClick={(e) => go(e, item.id)}
                     aria-current={isActive ? 'true' : undefined}
-                    className={`relative z-10 block rounded-xl px-4 py-2 text-[15px] font-medium transition-colors ${
+                    className={`relative z-10 block rounded-xl px-3 py-2 text-[15px] lg:px-4 font-medium transition-colors ${
                       isActive ? 'text-white' : 'text-brand-900/75 hover:text-brand-900'
                     }`}
                   >
