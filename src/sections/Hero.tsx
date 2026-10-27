@@ -1,13 +1,32 @@
-import { motion, useInView, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion'
-import { lazy, Suspense, useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNode } from 'react'
+import { motion, useInView, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion'
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+  type PointerEvent,
+  type ReactNode,
+} from 'react'
 import { hero } from '../content'
 import { MagneticLink } from '../lib/Magnetic'
 import { supportsWebGL } from '../lib/device'
 import { useSmoothScroll } from '../lib/smoothScroll'
+import type { FieldSide } from '../three/NeuralField'
 
 const NeuralField = lazy(() => import('../three/NeuralField'))
 
 const ease = [0.16, 1, 0.3, 1] as const
+
+const ringTints: Record<'base' | 'tech' | 'hobbies', string> = {
+  base: 'bg-[conic-gradient(from_200deg,#14b789,#535da1,#8b93e6,#14b789)]',
+  tech: 'bg-[conic-gradient(from_200deg,#14b789,#5ff0c4,#1b1f45,#14b789)]',
+  hobbies: 'bg-[conic-gradient(from_200deg,#ff8a5c,#ffc857,#f06292,#ff8a5c)]',
+}
+
+const finePointer = () => window.matchMedia('(pointer: fine)').matches
 
 /**
  * Touch and small screens get the 3D field only after the first interaction, so the static gradient
@@ -72,6 +91,13 @@ export function Hero() {
   const [canRender3D, setCanRender3D] = useState(false)
   const { scrollTo } = useSmoothScroll()
   const markReady = useCallback(() => setFieldReady(true), [])
+  const [side, setSide] = useState<FieldSide>(null)
+  const [origin, setOrigin] = useState<{ x: number; y: number } | null>(null)
+  const portraitRef = useRef<HTMLDivElement>(null)
+  const tiltX = useMotionValue(0)
+  const tiltY = useMotionValue(0)
+  const rotateX = useSpring(tiltX, { stiffness: 120, damping: 18 })
+  const rotateY = useSpring(tiltY, { stiffness: 120, damping: 18 })
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
   const portraitY = useTransform(scrollYProgress, [0, 1], [0, 90])
@@ -81,8 +107,31 @@ export function Hero() {
 
   useEffect(() => {
     if (reduced || canRender3D || !inView || !supportsWebGL()) return
-    return whenReadyFor3D(() => setCanRender3D(true))
+    return whenReadyFor3D(() => {
+      // The field bursts out of the portrait, so hand it the portrait's centre in the canvas's -1..1 space.
+      const hero = ref.current?.getBoundingClientRect()
+      const portrait = portraitRef.current?.getBoundingClientRect()
+      if (hero && portrait) {
+        setOrigin({
+          x: ((portrait.left + portrait.width / 2 - hero.left) / hero.width) * 2 - 1,
+          y: -(((portrait.top + portrait.height / 2 - hero.top) / hero.height) * 2 - 1),
+        })
+      }
+      setCanRender3D(true)
+    })
   }, [reduced, inView, canRender3D])
+
+  const onPointerMove = (e: PointerEvent<HTMLElement>) => {
+    if (reduced || e.pointerType !== 'mouse' || !portraitRef.current) return
+    const r = portraitRef.current.getBoundingClientRect()
+    tiltY.set(((e.clientX - (r.left + r.width / 2)) / window.innerWidth) * 18)
+    tiltX.set(-((e.clientY - (r.top + r.height / 2)) / window.innerHeight) * 14)
+  }
+  const onPointerLeave = () => {
+    tiltX.set(0)
+    tiltY.set(0)
+  }
+  const ring = side ?? 'base'
 
   const begin = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
@@ -93,6 +142,8 @@ export function Hero() {
     <section
       ref={ref}
       id="section_1"
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
       className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-brand-900 pb-24 pt-28 text-white md:min-h-[min(100svh,960px)]"
     >
       <div
@@ -101,7 +152,11 @@ export function Hero() {
       />
       <div
         aria-hidden="true"
-        className="absolute -left-40 bottom-[-30%] -z-20 size-[640px] rounded-full bg-teal/25 blur-[120px]"
+        className="absolute -left-40 bottom-[-30%] -z-20 size-[640px] rounded-full bg-teal/25 blur-[120px] [animation:mesh-drift_24s_ease-in-out_infinite]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -right-32 top-[-20%] -z-20 size-[520px] rounded-full bg-[#8b93e6]/25 blur-[110px] [animation:mesh-drift_30s_ease-in-out_infinite_reverse]"
       />
 
       {canRender3D && (
@@ -114,7 +169,7 @@ export function Hero() {
         >
           <Suspense fallback={null}>
             <FieldMount onReady={markReady}>
-              <NeuralField progress={smoothProgress} active={inView} />
+              <NeuralField progress={smoothProgress} active={inView} side={side} origin={origin} pulseTarget={ref} />
             </FieldMount>
           </Suspense>
         </motion.div>
@@ -139,23 +194,27 @@ export function Hero() {
             animate="show"
             variants={{ show: { transition: { staggerChildren: 0.12, delayChildren: 0.5 } } }}
           >
-            {hero.sides.map((side) => (
+            {hero.sides.map((item) => (
               <motion.li
-                key={side.href}
+                key={item.href}
                 variants={{
                   hidden: { opacity: 0, y: 14 },
                   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
                 }}
               >
                 <a
-                  href={side.href}
+                  href={item.href}
                   onClick={(e) => {
                     e.preventDefault()
-                    scrollTo(side.href)
+                    scrollTo(item.href)
                   }}
+                  onPointerEnter={() => finePointer() && setSide(item.id)}
+                  onPointerLeave={() => setSide(null)}
+                  onFocus={() => setSide(item.id)}
+                  onBlur={() => setSide(null)}
                   className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-base font-medium text-brand-100 backdrop-blur transition-colors hover:border-teal/60 hover:text-white sm:text-lg"
                 >
-                  {side.label}
+                  {item.label}
                   <span
                     aria-hidden="true"
                     className="text-teal transition-transform duration-300 group-hover:translate-x-0.5"
@@ -194,15 +253,23 @@ export function Hero() {
           className="order-1 flex justify-center md:order-2 md:justify-end"
         >
           <motion.div
+            ref={portraitRef}
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.1, ease, delay: 0.05 }}
+            style={{ rotateX, rotateY, transformPerspective: 800 }}
             className="relative"
           >
-            <div
-              aria-hidden="true"
-              className="absolute -inset-3 rounded-full bg-[conic-gradient(from_200deg,#14b789,#535da1,#8b93e6,#14b789)] opacity-90 blur-[2px]"
-            />
+            <div aria-hidden="true" className="absolute -inset-3 [animation:ring-spin_14s_linear_infinite]">
+              {(Object.keys(ringTints) as (keyof typeof ringTints)[]).map((tint) => (
+                <div
+                  key={tint}
+                  className={`absolute inset-0 rounded-full blur-[2px] transition-opacity duration-700 ${ringTints[tint]} ${
+                    ring === tint ? 'opacity-90' : 'opacity-0'
+                  }`}
+                />
+              ))}
+            </div>
             <div className="relative size-48 overflow-hidden rounded-full border-4 border-brand-900 bg-gradient-to-b from-white to-brand-50 sm:size-60 lg:size-72 xl:size-80">
               <img
                 src={hero.portrait}
