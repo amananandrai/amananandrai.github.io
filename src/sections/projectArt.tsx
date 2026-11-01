@@ -264,7 +264,99 @@ function AIImageGallery({ className }: ArtProps) {
   )
 }
 
+const nodes: [number, number, number, boolean][] = [
+  [40, 70, 34, false],
+  [118, 36, 30, false],
+  [118, 104, 30, true],
+  [196, 70, 34, false],
+  [270, 36, 28, true],
+  [270, 104, 28, false],
+]
+
+const edges: [number, number][] = [
+  [0, 1],
+  [0, 2],
+  [1, 3],
+  [2, 3],
+  [3, 4],
+  [3, 5],
+]
+
+function SystemDesign({ className }: ArtProps) {
+  return (
+    <Frame className={className}>
+      <g stroke={brand} strokeWidth="2" opacity="0.4" fill="none">
+        {edges.map(([a, b]) => {
+          const [x1, y1, w1] = nodes[a]
+          const [x2, y2, w2] = nodes[b]
+          const sx = x1 + w1 / 2
+          const ex = x2 - w2 / 2
+          const mx = (sx + ex) / 2
+          return <path key={`${a}-${b}`} d={`M${sx} ${y1} C${mx} ${y1} ${mx} ${y2} ${ex} ${y2}`} />
+        })}
+      </g>
+      {nodes.map(([x, y, w, accent], i) => (
+        <g key={i}>
+          <rect
+            x={x - w / 2}
+            y={y - 13}
+            width={w}
+            height="26"
+            rx="6"
+            fill={accent ? teal : brand}
+            opacity={accent ? 0.45 : 0.3}
+          />
+          <rect x={x - w / 2 + 6} y={y - 2} width={w - 12} height="4" rx="2" fill="white" opacity="0.8" />
+        </g>
+      ))}
+      <g transform="translate(196 70)" fill={brand} opacity="0.55">
+        <ellipse cx="0" cy="38" rx="14" ry="4" />
+        <rect x="-14" y="38" width="28" height="18" />
+        <ellipse cx="0" cy="56" rx="14" ry="4" />
+      </g>
+      <ellipse cx="196" cy="108" rx="14" ry="4" fill={teal} opacity="0.7" />
+    </Frame>
+  )
+}
+
+function Monuments({ className }: ArtProps) {
+  return (
+    <Frame className={className}>
+      <circle cx="268" cy="30" r="14" fill={teal} opacity="0.45" />
+      <rect x="0" y="122" width="320" height="18" fill={brand} opacity="0.3" />
+      <rect x="100" y="118" width="120" height="6" fill={brand} opacity="0.4" />
+      {/* minarets */}
+      {[96, 224].map((x) => (
+        <g key={x} fill={brand} opacity="0.45">
+          <rect x={x - 3} y="54" width="6" height="64" />
+          <rect x={x - 5} y="72" width="10" height="2" />
+          <rect x={x - 5} y="94" width="10" height="2" />
+          <path d={`M${x - 5} 54 Q${x} 42 ${x + 5} 54Z`} />
+        </g>
+      ))}
+      {/* main hall and dome */}
+      <rect x="124" y="74" width="72" height="44" fill={brand} opacity="0.4" />
+      <path d="M134 74 C134 38 186 38 186 74Z" fill={brand} opacity="0.6" />
+      <rect x="158.5" y="28" width="3" height="16" fill={teal} />
+      <path d="M150 118 V96 Q160 82 170 96 V118Z" fill="white" opacity="0.8" />
+      {[132, 182].map((x) => (
+        <path key={x} d={`M${x} 104 Q${x + 3} 98 ${x + 6} 104 V112 H${x}Z`} fill="white" opacity="0.6" />
+      ))}
+      {/* small pavilions */}
+      {[118, 202].map((x) => (
+        <path key={x} d={`M${x - 6} 74 Q${x} 62 ${x + 6} 74Z`} fill={teal} opacity="0.6" />
+      ))}
+      {/* fort wall on the left, temple spire on the right */}
+      <path d="M0 122 V96 H8 V90 H16 V96 H26 V90 H34 V96 H44 V90 H52 V96 H60 V122Z" fill={brand} opacity="0.25" />
+      <path d="M262 122 V96 L276 60 L290 96 V122Z" fill={brand} opacity="0.3" />
+      <rect x="274.5" y="50" width="3" height="10" fill={teal} opacity="0.8" />
+    </Frame>
+  )
+}
+
 export const projectArt: Record<string, ComponentType<ArtProps>> = {
+  'system-design-explainer': SystemDesign,
+  'monuments-of-india': Monuments,
   'farm-simulator': Farm,
   'city-builder': CityBuilder,
   'sim-city': SimCity,
