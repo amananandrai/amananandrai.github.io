@@ -16,6 +16,8 @@ export type IconName =
   | 'farm'
   | 'city'
   | 'map'
+  | 'diagram'
+  | 'monument'
 
 export interface CardLink {
   label: string
@@ -249,6 +251,22 @@ export const projects: CardGroup = {
   heading: 'Projects',
   intro: 'Small apps and games I have built. Each one runs right in the browser.',
   cards: [
+    {
+      id: 'system-design-explainer',
+      description: 'An interactive guide to how YouTube, Uber, Amazon and 30 more large systems are built.',
+      tags: ['Next.js', 'System design'],
+      title: 'System Design Explainer',
+      icon: 'diagram',
+      links: [{ label: 'System Design Explainer', href: 'https://system-design-explainer.vercel.app/' }],
+    },
+    {
+      id: 'monuments-of-india',
+      description: '101 Indian landmarks across 26 states and union territories, modelled in interactive 3D.',
+      tags: ['three.js', '3D'],
+      title: 'Monuments of India',
+      icon: 'monument',
+      links: [{ label: 'Monuments of India', href: 'https://monuments-of-india-nu.vercel.app/' }],
+    },
     {
       id: 'notebooklm',
       description: 'A NotebookLM-style app for asking questions about your own documents.',

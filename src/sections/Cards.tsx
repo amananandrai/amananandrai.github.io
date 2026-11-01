@@ -4,11 +4,13 @@ import type { IconType } from 'react-icons'
 import {
   BsArrowUpRight,
   BsAward,
+  BsBank,
   BsBook,
   BsBrush,
   BsBuildings,
   BsChevronDown,
   BsCodeSquare,
+  BsDiagram3,
   BsFileEarmarkText,
   BsFilm,
   BsGithub,
@@ -52,6 +54,8 @@ export const icons: Record<IconName, IconType> = {
   farm: BsTree,
   city: BsBuildings,
   map: BsMap,
+  diagram: BsDiagram3,
+  monument: BsBank,
 }
 
 const ease = [0.16, 1, 0.3, 1] as const
