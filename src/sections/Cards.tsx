@@ -10,6 +10,7 @@ import {
   BsBuildings,
   BsChevronDown,
   BsCodeSquare,
+  BsCpu,
   BsDiagram3,
   BsFileEarmarkText,
   BsFilm,
@@ -56,6 +57,7 @@ export const icons: Record<IconName, IconType> = {
   map: BsMap,
   diagram: BsDiagram3,
   monument: BsBank,
+  cpu: BsCpu,
 }
 
 const ease = [0.16, 1, 0.3, 1] as const

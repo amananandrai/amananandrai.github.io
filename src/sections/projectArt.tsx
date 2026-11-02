@@ -354,7 +354,48 @@ function Monuments({ className }: ArtProps) {
   )
 }
 
+const tokens = [34, 28, 40, 22, 30]
+const probs = [0.82, 0.46, 0.3, 0.18, 0.1]
+
+function LLMExplained({ className }: ArtProps) {
+  const layers = [104, 140, 176]
+  const ys = [34, 58, 82, 106]
+  return (
+    <Frame className={className}>
+      {/* input tokens */}
+      {tokens.map((w, i) => {
+        const y = 24 + i * 22
+        return (
+          <g key={i}>
+            <rect x={56 - w / 2} y={y} width={w} height="14" rx="7" fill={i === 2 ? teal : brand} opacity={i === 2 ? 0.5 : 0.25} />
+          </g>
+        )
+      })}
+      {/* network layers */}
+      <g stroke={brand} strokeWidth="1" opacity="0.18">
+        {layers.slice(0, -1).map((x, li) =>
+          ys.flatMap((y1) => ys.map((y2) => <line key={`${li}-${y1}-${y2}`} x1={x} y1={y1} x2={layers[li + 1]} y2={y2} />)),
+        )}
+      </g>
+      {layers.map((x, li) =>
+        ys.map((y, i) => (
+          <circle key={`${x}-${y}`} cx={x} cy={y} r="6" fill={(li + i) % 3 === 1 ? teal : brand} opacity={0.35 + li * 0.12} />
+        )),
+      )}
+      {/* next-token probabilities */}
+      {probs.map((p, i) => (
+        <g key={i}>
+          <rect x="214" y={26 + i * 20} width="16" height="10" rx="3" fill={brand} opacity="0.3" />
+          <rect x="236" y={26 + i * 20} width={p * 76} height="10" rx="3" fill={i === 0 ? teal : brand} opacity={i === 0 ? 0.75 : 0.25} />
+        </g>
+      ))}
+      <path d="M300 128 l2 -6 l2 6 l6 2 l-6 2 l-2 6 l-2 -6 l-6 -2Z" fill={teal} opacity="0.8" />
+    </Frame>
+  )
+}
+
 export const projectArt: Record<string, ComponentType<ArtProps>> = {
+  'llm-explained': LLMExplained,
   'system-design-explainer': SystemDesign,
   'monuments-of-india': Monuments,
   'farm-simulator': Farm,

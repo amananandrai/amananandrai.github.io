@@ -18,6 +18,7 @@ export type IconName =
   | 'map'
   | 'diagram'
   | 'monument'
+  | 'cpu'
 
 export interface CardLink {
   label: string
@@ -251,6 +252,14 @@ export const projects: CardGroup = {
   heading: 'Projects',
   intro: 'Small apps and games I have built. Each one runs right in the browser.',
   cards: [
+    {
+      id: 'llm-explained',
+      description: 'A scroll-driven, interactive course on how large language models work, across 43 pages.',
+      tags: ['Generative AI', 'Interactive'],
+      title: 'LLM Explained',
+      icon: 'cpu',
+      links: [{ label: 'LLM Explained', href: 'https://llm-explained-lovat.vercel.app/' }],
+    },
     {
       id: 'system-design-explainer',
       description: 'An interactive guide to how YouTube, Uber, Amazon and 30 more large systems are built.',
