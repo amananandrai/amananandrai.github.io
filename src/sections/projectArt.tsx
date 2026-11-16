@@ -100,69 +100,6 @@ function CityBuilder({ className }: ArtProps) {
   )
 }
 
-const blocks: [number, number, number][] = [
-  [1, 2, 18],
-  [2, 2, 26],
-  [1, 5, 20],
-  [2, 4, 12],
-  [4, 1, 22],
-  [3, 3, 40],
-  [5, 3, 14],
-  [4, 5, 30],
-]
-
-function SimCity({ className }: ArtProps) {
-  const at = (i: number, j: number) => ({ cx: 160 + (i - j) * 16, cy: 26 + (i + j) * 8 })
-  const tiles = []
-  for (let i = 0; i < 7; i++) {
-    for (let j = 0; j < 7; j++) {
-      const { cx, cy } = at(i, j)
-      const road = i === 3 || j === 2
-      tiles.push(
-        <path
-          key={`${i}-${j}`}
-          d={`M${cx} ${cy - 8} L${cx + 16} ${cy} L${cx} ${cy + 8} L${cx - 16} ${cy}Z`}
-          fill={road ? brand : 'none'}
-          fillOpacity={road ? 0.12 : 0}
-          stroke={brand}
-          strokeOpacity="0.3"
-        />,
-      )
-    }
-  }
-  const cubes = [...blocks]
-    .sort((a, b) => a[0] + a[1] - (b[0] + b[1]))
-    .map(([i, j, h]) => {
-      const { cx, cy } = at(i, j)
-      const accent = i === 3 && j === 3
-      return (
-        <g key={`${i}-${j}`}>
-          <path
-            d={`M${cx - 16} ${cy - h} L${cx} ${cy + 8 - h} L${cx} ${cy + 8} L${cx - 16} ${cy}Z`}
-            fill={accent ? teal : brand}
-            opacity="0.55"
-          />
-          <path
-            d={`M${cx + 16} ${cy - h} L${cx} ${cy + 8 - h} L${cx} ${cy + 8} L${cx + 16} ${cy}Z`}
-            fill={accent ? teal : brand}
-            opacity="0.75"
-          />
-          <path
-            d={`M${cx} ${cy - 8 - h} L${cx + 16} ${cy - h} L${cx} ${cy + 8 - h} L${cx - 16} ${cy - h}Z`}
-            fill={accent ? teal : brand}
-            opacity="0.35"
-          />
-        </g>
-      )
-    })
-  return (
-    <Frame className={className}>
-      {tiles}
-      {cubes}
-    </Frame>
-  )
-}
-
 function DocumentEditor({ className }: ArtProps) {
   const lines = [96, 118, 84, 110, 64]
   return (
@@ -400,7 +337,6 @@ export const projectArt: Record<string, ComponentType<ArtProps>> = {
   'monuments-of-india': Monuments,
   'farm-simulator': Farm,
   'city-builder': CityBuilder,
-  'sim-city': SimCity,
   'document-editor': DocumentEditor,
   notebooklm: NotebookLM,
   'ai-image-gallery': AIImageGallery,

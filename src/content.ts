@@ -323,14 +323,6 @@ export const projects: CardGroup = {
       icon: 'city',
       links: [{ label: 'City Builder', href: 'https://city-builder-omega.vercel.app/' }],
     },
-    {
-      id: 'sim-city',
-      description: 'A SimCity-style city simulation in the browser.',
-      tags: ['Game', 'Simulation'],
-      title: 'Sim City',
-      icon: 'map',
-      links: [{ label: 'Sim City', href: 'https://sim-city-seven.vercel.app/' }],
-    },
   ],
 }
 
